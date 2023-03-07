@@ -5,9 +5,12 @@ export default function TempPage() {
   /**
    * State values
    */
-   const [dataFromBackend, setDataFromBackend] = React.useState<string>("");
+  const [dataFromBackend, setDataFromBackend] = React.useState<string>("");
 
+  // Backend url (dev)
   const backendUrl = 'http://localhost:3001';
+  // Backend url (production virtual machine)
+  // const backendUrl = '/api';
 
   React.useEffect(() => {
     // Fetch jurisdictions
