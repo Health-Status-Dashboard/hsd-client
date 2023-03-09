@@ -49,7 +49,6 @@ export default function TempPage() {
     var dataArr = [];
     try {
       dataArr = JSON.parse(dataFromBackend);
-      console.log(dataArr)
     } catch (error) {
       console.log(error)
     }
