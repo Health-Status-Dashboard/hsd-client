@@ -9,8 +9,8 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={ <App/> } />
-        <Route path="/temp" element={ <TempPage/> } />
+        <Route path="/" element={ <TempPage/> } />
+        {/* <Route path="/temp" element={ <TempPage/> } /> */}
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,
