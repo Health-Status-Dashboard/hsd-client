@@ -41,7 +41,7 @@ export default function TempPage() {
     Tooltip,
     Legend
   );
-
+  
   //Creating chart 
   //state labels
   const getlabels=()=> {
@@ -62,15 +62,38 @@ export default function TempPage() {
 
       dataMap= new Map([...dataMap.entries()].sort((a,b) => a[1]-b[1]));
       var states = Array.from(dataMap.keys());
+      return states;
+    } catch (error) {
+      console.log(error)
+    } 
+  }
+  const getPopulation=()=> {
+    
+    var dataArr = [];
+    try {
+      dataArr = JSON.parse(dataFromBackend);
+    } catch (error) {
+      console.log(error)
+    }
+
+    let dataMap = new Map<string, number>();
+
+    try {
+      for (var i = 1; i < dataArr.length; i++){
+        dataMap.set(dataArr[i].name, parseInt(dataArr[i].population));
+      }
+
+      dataMap= new Map([...dataMap.entries()].sort((a,b) => a[1]-b[1]));
       var populations = Array.from(dataMap.values());
 
-      return [states, populations];
+      return populations;
     } catch (error) {
       console.log(error)
     } 
   }
 
-  const[states, populations] = getlabels();
+  const states = getlabels();
+  const populations = getPopulation();
 
   //state population data
   var data = {
