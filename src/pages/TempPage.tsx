@@ -25,7 +25,8 @@ export default function TempPage() {
   React.useEffect(() => {
     // Fetch jurisdictions
     //const getJurisdictionsUrl = `${backendUrl}/getCollection`
-    const getJurisdictionsUrl = `http://localhost:3001/api/getStates`
+    //const getJurisdictionsUrl = `http://localhost:3001/api/getStates`
+    const getJurisdictionsUrl = `/api/getStates`
     fetch(getJurisdictionsUrl)
       .then(response => response.json())
       .then(data => {
