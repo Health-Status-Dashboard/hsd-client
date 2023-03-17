@@ -11,10 +11,10 @@ export const RegionCard = (data: any) => {
     return (
         <div className="region-container">
             <div>
-                <h4>{data.name}</h4>
+                <h2>{data.name}</h2>
             </div>
             <div>
-                <h4>{data.population}</h4>
+                <h4>Population: {data.population}</h4>
             </div>
         </div>
 
