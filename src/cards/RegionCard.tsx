@@ -1,10 +1,11 @@
 //import React from "react";
 import '../index.css';
-import { Region } from '../interfaces/Region';
-//import { Link } from "react-router-dom";
+
 
 
 //TODO make "any" here "Region" - should work but it doesn't
+import { Region } from '../interfaces/Region';
+
 export const RegionCard = (data: any) => {
 
 
@@ -21,7 +22,6 @@ export const RegionCard = (data: any) => {
     );
 };
 
-export default Region;
 
 
 

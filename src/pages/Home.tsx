@@ -11,6 +11,9 @@ import {
 import { Bar } from 'react-chartjs-2';
 import { Region } from '../interfaces/Region'
 import { RegionCard } from '../cards/RegionCard'
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 
 // this is a placeholder
 const USDATA: Region = {
@@ -28,29 +31,22 @@ const USDATA: Region = {
 
 
 export default function Home() {
-    <div>
-        <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-            <div className="container-fluid">
-                <a href="#" className="navbar-brand">MITRE | HSD</a>
-                <button type="button" className="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarCollapse">
-                    <div className="navbar-nav">
-                        <a href="#" className="nav-item nav-link">Regions</a>
-                        <a href="#" className="nav-item nav-link">Risks</a>
-                        <a href="#" className="nav-item nav-link">Health Systems</a>
-                    </div>
-                    <div className="navbar-nav ms-auto">
-                        <a href="https://www.mitre.org/" className="nav-item nav-link">MITRE</a>
-                    </div>
-                </div>
+    return (
+        <>
+            <Navbar bg="dark" variant="dark">
+                <Container>
+                    <Navbar.Brand href="#home">MITRE | HSD</Navbar.Brand>
+                    <Nav className="me-auto">
+                        <Nav.Link href="#home">Regions</Nav.Link>
+                        <Nav.Link href="#features">Risks</Nav.Link>
+                        <Nav.Link href="#pricing">Health Systems</Nav.Link>
+                    </Nav>
+                </Container>
+            </Navbar>
+
+            <div>
+                <RegionCard data={USDATA} />
             </div>
-        </nav>
-
-        <div>
-            <RegionCard data={USDATA} />
-        </div>
-    </div>
-
+        </>
+    );
 }
