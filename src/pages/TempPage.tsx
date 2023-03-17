@@ -12,10 +12,19 @@ import {
 import { Bar } from 'react-chartjs-2';
 export default function TempPage() {
 
+  interface State {
+    _id: string
+    name: string
+    population: string
+    code: string
+  }
+
   /**
    * State values
    */
-  const [dataFromBackend, setDataFromBackend] = React.useState<string>("");
+  //const [dataFromBackend, setDataFromBackend] = React.useState<string>("");
+  const [dataFromBackend, setDataFromBackend] = React.useState<Array<State>>([]);
+
 
   // Backend url (dev)
   const backendUrl = 'http://localhost:3001';
@@ -25,12 +34,12 @@ export default function TempPage() {
   React.useEffect(() => {
     // Fetch jurisdictions
     //const getJurisdictionsUrl = `${backendUrl}/getCollection`
-    //const getJurisdictionsUrl = `http://localhost:3001/api/getStates`
-    const getJurisdictionsUrl = `/api/getStates`
+    const getJurisdictionsUrl = `http://localhost:3001/api/getStates`
+    //const getJurisdictionsUrl = `/api/getStates`
     fetch(getJurisdictionsUrl)
       .then(response => response.json())
       .then(data => {
-        setDataFromBackend(JSON.stringify(data));
+        setDataFromBackend(data);
       })
   }, []);
 
@@ -42,14 +51,14 @@ export default function TempPage() {
     Tooltip,
     Legend
   );
-  
+
   //Creating chart 
   //state labels
-  const getlabels=()=> {
-    
-    var dataArr = [];
+  const getlabels = () => {
+
+    var dataArr: Array<State> = [];
     try {
-      dataArr = JSON.parse(dataFromBackend);
+      dataArr = dataFromBackend;
     } catch (error) {
       console.log(error)
     }
@@ -57,22 +66,22 @@ export default function TempPage() {
     let dataMap = new Map<string, number>();
 
     try {
-      for (var i = 1; i < dataArr.length; i++){
+      for (var i = 1; i < dataArr.length; i++) {
         dataMap.set(dataArr[i].name, parseInt(dataArr[i].population));
       }
 
-      dataMap= new Map([...dataMap.entries()].sort((a,b) => a[1]-b[1]));
+      dataMap = new Map([...dataMap.entries()].sort((a, b) => a[1] - b[1]));
       var states = Array.from(dataMap.keys());
       return states;
     } catch (error) {
       console.log(error)
-    } 
+    }
   }
-  const getPopulation=()=> {
-    
-    var dataArr = [];
+  const getPopulation = () => {
+
+    var dataArr: Array<State> = [];
     try {
-      dataArr = JSON.parse(dataFromBackend);
+      dataArr = dataFromBackend;
     } catch (error) {
       console.log(error)
     }
@@ -80,17 +89,17 @@ export default function TempPage() {
     let dataMap = new Map<string, number>();
 
     try {
-      for (var i = 1; i < dataArr.length; i++){
+      for (var i = 1; i < dataArr.length; i++) {
         dataMap.set(dataArr[i].name, parseInt(dataArr[i].population));
       }
 
-      dataMap= new Map([...dataMap.entries()].sort((a,b) => a[1]-b[1]));
+      dataMap = new Map([...dataMap.entries()].sort((a, b) => a[1] - b[1]));
       var populations = Array.from(dataMap.values());
 
       return populations;
     } catch (error) {
       console.log(error)
-    } 
+    }
   }
 
   const states = getlabels();
@@ -100,45 +109,45 @@ export default function TempPage() {
   var data = {
     labels: states,
     datasets: [
-    {
-      barThickness:4,
-     
-      label: 'Number of people',
-      data: populations,
-      borderColor: ['rgb(255, 99, 132)'],
-      backgroundColor: ['rgba(255, 99, 132)'],
-    }
+      {
+        barThickness: 4,
+
+        label: 'Number of people',
+        data: populations,
+        borderColor: ['rgb(255, 99, 132)'],
+        backgroundColor: ['rgba(255, 99, 132)'],
+      }
     ]
-    }
-  
-    //state population options
-    var options =  {
-      scales: {
-          x: {
-              ticks: {
-                  autoSkip: false,
-                  maxRotation: 50,
-                  minRotation: 30,
-              }
-          }
-      },
-      plugins: {
+  }
+
+  //state population options
+  var options = {
+    scales: {
+      x: {
+        ticks: {
+          autoSkip: false,
+          maxRotation: 50,
+          minRotation: 30,
+        }
+      }
+    },
+    plugins: {
       title: {
-              display: true,
-              text: 'Population by US state',
-            }
-          }
+        display: true,
+        text: 'Population by US state',
+      }
+    }
   }
 
   return (
     <section>
       <h1>Health Status Dashboard</h1>
-    <Bar 
+      <Bar
         data={data}
         height={500}
-        width={1200} 
+        width={1200}
         options={options}
-    />
+      />
     </section>
   );
 }
