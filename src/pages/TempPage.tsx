@@ -53,7 +53,7 @@ export default function TempPage() {
   }
 
   //total life expectancies
-  const getlifeexp=(props)=> {
+  const getlifeexp=(props: string)=> {
     var dataArr = [];
 
     try {
