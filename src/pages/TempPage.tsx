@@ -35,7 +35,7 @@ export default function TempPage() {
     // Fetch jurisdictions
     //const getJurisdictionsUrl = `${backendUrl}/getCollection`
     console.log('before')
-    const getJurisdictionsUrl = `http://localhost:3001/api/getStates`
+    const getJurisdictionsUrl = '/api/getStates'
     console.log('after')
     //const getJurisdictionsUrl = `/api/getStates`
     fetch(getJurisdictionsUrl)
