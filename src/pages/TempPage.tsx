@@ -34,11 +34,14 @@ export default function TempPage() {
   React.useEffect(() => {
     // Fetch jurisdictions
     //const getJurisdictionsUrl = `${backendUrl}/getCollection`
+    console.log('before')
     const getJurisdictionsUrl = `http://localhost:3001/api/getStates`
+    console.log('after')
     //const getJurisdictionsUrl = `/api/getStates`
     fetch(getJurisdictionsUrl)
       .then(response => response.json())
       .then(data => {
+        console.log('heres the data for the states', data)
         setDataFromBackend(data);
       })
   }, []);
