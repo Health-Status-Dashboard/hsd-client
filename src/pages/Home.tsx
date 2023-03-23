@@ -40,6 +40,8 @@ export default function Home() {
             <div>
                 <RegionCard data={USDATA} />
             </div>
+            <div className="foot">
+            </div>
         </>
     );
 

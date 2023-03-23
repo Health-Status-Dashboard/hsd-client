@@ -64,7 +64,7 @@ export const RegionCard = (region: any) => {
             <div className="row">
                 <div className="col">
                 </div>
-                <div className="col-6">
+                <div className="col-8">
                     <div className="region-container">
                         <div>
                             <h4>{region.data.name}</h4>
@@ -72,12 +72,10 @@ export const RegionCard = (region: any) => {
                         <div>
                             <h6>Population: {region.data.population}</h6>
                         </div>
-                        <div className="chart">
-                            <Line data={regionData}
-                                height={500}
-                                width={1200}
-                                options={options} />
-                        </div>
+                        <Line data={regionData}
+                            height={500}
+                            width={800}
+                            options={options} />
                     </div>
                 </div>
                 <div className="col">
