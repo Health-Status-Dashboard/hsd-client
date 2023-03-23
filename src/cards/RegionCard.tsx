@@ -74,7 +74,7 @@ export const RegionCard = (region: any) => {
                         </div>
                         <Line data={regionData}
                             height={500}
-                            width={1200}
+                            width={800}
                             options={options} />
                     </div>
                 </div>
