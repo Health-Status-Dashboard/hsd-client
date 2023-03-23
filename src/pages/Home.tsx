@@ -1,14 +1,5 @@
 import * as React from 'react'
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+
 import { Region } from '../interfaces/Region'
 import { RegionCard } from '../cards/RegionCard'
 import Container from 'react-bootstrap/Container';
@@ -38,15 +29,18 @@ export default function Home() {
                     <Navbar.Brand href="#home">MITRE | HSD</Navbar.Brand>
                     <Nav className="me-auto">
                         <Nav.Link href="#home">Regions</Nav.Link>
-                        <Nav.Link href="#features">Risks</Nav.Link>
-                        <Nav.Link href="#pricing">Health Systems</Nav.Link>
+                        <Nav.Link href="#risks">Risks</Nav.Link>
+                        <Nav.Link href="#systems">Health Systems</Nav.Link>
                     </Nav>
                 </Container>
             </Navbar>
-
+            <br />
+            <h2 className="title" >Health Status Dashboard</h2>
+            <br />
             <div>
                 <RegionCard data={USDATA} />
             </div>
         </>
     );
+
 }

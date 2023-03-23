@@ -136,7 +136,8 @@ export default function TempPage() {
         display: true,
         text: 'Population by US state',
       }
-    }
+    },
+    maintainAspectRatio: false
   }
 
   return (
