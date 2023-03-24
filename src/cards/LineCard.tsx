@@ -12,8 +12,7 @@ import {
     Legend,
 } from 'chart.js';
 
-//TODO make "any" here "Region" - should work but it doesn't
-import { Region } from '../interfaces/Region';
+import { Longitudinal } from '../interfaces/Longitudinal';
 
 ChartJS.register(
     CategoryScale,
@@ -25,19 +24,18 @@ ChartJS.register(
     Legend
 );
 
-export const LineCard = (region: any) => {
-    //
-    //
-    //
-    const labels = region.data.lifeExpectancy.years
-    var regionData = {
+type LongData = { data: Longitudinal };
+
+export const LineCard = (data: LongData) => {
+    const labels = data.data.x
+    var longData = {
         labels,
         datasets: [
             {
-                label: 'US Life Expectancy',
-                data: region.data.lifeExpectancy.ages,
-                borderColor: ['rgb(16,44,76)'],
-                backgroundColor: ['rgba(16,44,76)'],
+                label: data.data.label,
+                data: data.data.y,
+                borderColor: [data.data.color],
+                backgroundColor: [data.data.color],
             }
         ]
     }
@@ -55,33 +53,15 @@ export const LineCard = (region: any) => {
         plugins: {
             title: {
                 display: true,
-                text: 'US Life Expectancy (1970 - 2020)',
+                text: data.data.title,
             }
         }
     }
     return (
-        <div className="container">
-            <div className="row">
-                <div className="col">
-                </div>
-                <div className="col-8">
-                    <div className="region-container">
-                        <div>
-                            <h4>{region.data.name}</h4>
-                        </div>
-                        <div>
-                            <h6>Population: {region.data.population}</h6>
-                        </div>
-                        <Line data={regionData}
-                            height={500}
-                            width={800}
-                            options={options} />
-                    </div>
-                </div>
-                <div className="col">
-                </div>
-            </div>
-        </div>
+        <Line data={longData}
+            height={500}
+            width={800}
+            options={options} />
 
     );
 };
@@ -90,13 +70,3 @@ export const LineCard = (region: any) => {
 
 
 
-
-
-/*
-<div>
-                <h4>{Region.lifeExpectancy}</h4>
-            </div>
-
-            
-      
-*/
