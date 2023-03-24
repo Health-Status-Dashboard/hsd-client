@@ -10,7 +10,7 @@ import Navbar from 'react-bootstrap/Navbar';
 const USDATA: Region = {
     _id: "1",
     name: "United States",
-    population: "332,000,000",
+    population: "334,533,505",
     code: "123456789",
     lifeExpectancy: {
         years: [1970, 1980, 1990, 2000, 2010, 2020],
