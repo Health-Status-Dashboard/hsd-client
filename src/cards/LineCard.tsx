@@ -25,7 +25,7 @@ ChartJS.register(
     Legend
 );
 
-export const RegionCard = (region: any) => {
+export const LineCard = (region: any) => {
     //
     //
     //
@@ -71,9 +71,6 @@ export const RegionCard = (region: any) => {
                         </div>
                         <div>
                             <h6>Population: {region.data.population}</h6>
-                        </div>
-                        <div>
-                            <h6>Fertility Rate: <span className="red">1.754</span></h6>
                         </div>
                         <Line data={regionData}
                             height={500}
