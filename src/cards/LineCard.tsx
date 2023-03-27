@@ -27,6 +27,8 @@ ChartJS.register(
 type LongData = { data: Longitudinal };
 
 export const LineCard = (data: LongData) => {
+    console.log("in the card")
+    console.log(data)
     const labels = data.data.x
     var longData = {
         labels,
