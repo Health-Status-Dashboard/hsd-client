@@ -40,22 +40,16 @@ const summaryData: Summary = {
 
 const USDATA = {} as Region;
 
-/*
-React.useEffect(() => {
-    // Fetch jurisdictions
-    //const getJurisdictionsUrl = `${backendUrl}/getCollection`
-    const getJurisdictionsUrl = `http://localhost:3001/api/getStates`
-    //const getJurisdictionsUrl = `/api/getStates`
-    fetch(getJurisdictionsUrl)
-        .then(response => response.json())
-        .then(data => {
-            setDataFromBackend(data);
-        })
-}, []);
-*/
-
-
 export default function Home() {
+    const [lifeExpectancy, saveLifeExpectancy] = React.useState({});
+    React.useEffect(() => {
+        const getJurisdictionsUrl = `http://localhost:3001/api/getLifeExpectancy`
+        fetch(getJurisdictionsUrl)
+            .then(response => response.json())
+            .then(data => {
+                saveLifeExpectancy(data[0]);
+            })
+    }, []);
     return (
         <>
             <Navbar bg="dark" variant="dark">
@@ -79,7 +73,7 @@ export default function Home() {
                         <div className="col-8">
                             <div className="region-container">
                                 <SummaryCard data={summaryData} />
-                                <LineCard data={lineData} />
+                                <LineCard data={lifeExpectancy} />
                             </div>
                         </div>
                         <div className="col">
