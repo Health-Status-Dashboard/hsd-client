@@ -5,24 +5,18 @@ import { Summary } from '../interfaces/Summary';
 type SummaryData = { data: Summary };
 
 export const SummaryCard = (sumData: SummaryData) => {
+    const descriptors = sumData.data.headers.map((h) =>
+        <div key={h.label}>
+            <h6 key={h.label}>{h.label}: {h.value}</h6>
+        </div >
+    );
     return (
         <div>
             <div>
                 <h4>{sumData.data.title}</h4>
             </div>
             <>
-                {sumData.data.population !== undefined && (
-                    <div>
-                        <h6>Population: {sumData.data.population}</h6>
-                    </div>
-
-                )}
-                {sumData.data.fertility !== undefined && (
-                    <div>
-                        <h6>Fertility Rate: <span className="red">{sumData.data.fertility}</span></h6>
-                    </div>
-
-                )}
+                <div>{descriptors}</div>
             </>
         </div>
     )
