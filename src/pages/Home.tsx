@@ -116,26 +116,40 @@ const alcoholData: Stats = {
     // tobacco: https://chronicdata.cdc.gov/resource/g4ie-h725.json?locationabbr=US&yearend=2021&stratification1=Overall&topic=Tobacco
 }
 
-
+const initJurisdictionsUrl = `http://localhost:3001/api/initLifeExpectancy`
+const getJurisdictionsUrl = `http://localhost:3001/api/getLifeExpectancy`
+//const initJurisdictionsUrl = `http://healthdashboard.mitre.org/api/initLifeExpectancy`
+//const getJurisdictionsUrl = `http://healthdashboard.mitre.org/api/getLifeExpectancy`
 
 const USDATA = {} as Region;
 
-/*
-React.useEffect(() => {
-    // Fetch jurisdictions
-    //const getJurisdictionsUrl = `${backendUrl}/getCollection`
-    const getJurisdictionsUrl = `http://localhost:3001/api/getStates`
-    //const getJurisdictionsUrl = `/api/getStates`
-    fetch(getJurisdictionsUrl)
-        .then(response => response.json())
-        .then(data => {
-            setDataFromBackend(data);
-        })
-}, []);
-*/
-
-
 export default function Home() {
+
+
+    const [lifeExpectancy, saveLifeExpectancy] = React.useState(lineData);
+    React.useEffect(() => {
+
+        const initData = async (url: string) => {
+            try {
+                const response = await fetch(url);
+                const { status } = response;
+                return status;
+            } catch (err) {
+                // handle error
+                console.error(err);
+            }
+        }
+        initData(initJurisdictionsUrl).then(response => {
+            if (response) {
+                fetch(getJurisdictionsUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        saveLifeExpectancy(data[0]);
+                    })
+            }
+        })
+
+    }, []);
     return (
         <>
             <Navbar bg="dark" variant="dark">
@@ -166,7 +180,7 @@ export default function Home() {
                         <div className="col-6">
                             <div className="region-container">
                                 <SummaryCard data={summaryData} />
-                                <LineCard data={lineData} />
+                                <LineCard data={lifeExpectancy} />
                             </div>
                         </div>
 
