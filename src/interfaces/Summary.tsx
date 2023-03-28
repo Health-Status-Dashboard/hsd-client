@@ -1,6 +1,9 @@
 export interface Summary {
     title: string
-    description?: string
-    population?: number
-    fertility?: number
+    headers: Array<Header>
+}
+interface Header {
+    value: any
+    label: string
+
 }
