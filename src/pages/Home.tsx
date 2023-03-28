@@ -2,6 +2,7 @@ import * as React from 'react'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import Button from 'react-bootstrap/Button';
 
 import { Region } from '../interfaces/Region'
 import { SummaryCard } from '../cards/SummaryCard'
@@ -30,7 +31,7 @@ const USDATA: Region = {
 
 
 const obesitySummary: Summary = {
-    title: "Weight Status",
+    title: "Weight Management",
     headers: [
         {
             value: "1.6",
@@ -43,7 +44,7 @@ const obesitySummary: Summary = {
     ]
 }
 const pieData: Proportional = {
-    title: 'US Weight Breakdown',
+    title: 'Weight Breakdown',
     labels: ['Obese', 'Overweight', 'Healthy', 'Other/Underweight'],
     datasets: [{
         label: 'Percentage of Population',
@@ -61,17 +62,9 @@ const pieData: Proportional = {
         borderWidth: 1
     }]
 }
+// weight data
 // https://chronicdata.cdc.gov/resource/g4ie-h725.json?locationabbr=US&yearend=2021&stratification1=Overall&topic=Nutrition, Physical Activity, and Weight Status
 
-
-
-const lineData: Longitudinal = {
-    title: 'US Life Expectancy (1970 - 2020)',
-    label: 'US Life Expectancy',
-    x: [1970, 1980, 1990, 2000, 2010, 2020],
-    y: [70.8, 73.3, 75.4, 76.8, 78.7, 77.0],
-    color: 'rgba(16,44,76)'
-}
 
 const summaryData: Summary = {
     title: "United States Overview",
@@ -86,6 +79,16 @@ const summaryData: Summary = {
         }
     ]
 }
+
+const lineData: Longitudinal = {
+    title: 'US Life Expectancy (1970 - 2020)',
+    label: 'US Life Expectancy',
+    x: [1970, 1980, 1990, 2000, 2010, 2020],
+    y: [70.8, 73.3, 75.4, 76.8, 78.7, 77.0],
+    color: 'rgba(16,44,76)'
+}
+
+
 
 const alcoholData: Stats = {
     title: "Alcohol & Tobacco",
@@ -112,16 +115,43 @@ const alcoholData: Stats = {
         }
 
     ]
-    // alcohol: https://chronicdata.cdc.gov/resource/5hba-acwf.json?locationabbr=US&stratification1=Overall&$where=yearstart%20%3E%202020
+    // alcohol: https://chronicdata.cdc.gov/resource/5hba-acwf.json?locationabbr=US&stratification1=Overall&$where=yearstart%20%3E%202020&topic=Alcohol
     // tobacco: https://chronicdata.cdc.gov/resource/g4ie-h725.json?locationabbr=US&yearend=2021&stratification1=Overall&topic=Tobacco
 }
 
-const initJurisdictionsUrl = `http://localhost:3001/api/initLifeExpectancy`
-const getJurisdictionsUrl = `http://localhost:3001/api/getLifeExpectancy`
+//const initJurisdictionsUrl = `http://localhost:3001/api/initLifeExpectancy`
+//const getJurisdictionsUrl = `http://localhost:3001/api/getLifeExpectancy`
 //const initJurisdictionsUrl = `http://healthdashboard.mitre.org/api/initLifeExpectancy`
-//const getJurisdictionsUrl = `http://healthdashboard.mitre.org/api/getLifeExpectancy`
+const getJurisdictionsUrl = `http://healthdashboard.mitre.org/api/getLifeExpectancy`
 
 const USDATA = {} as Region;
+
+/*
+const initData = async (url: string) => {
+    try {
+        const response = await fetch(url);
+        const { status } = response;
+        return status;
+    } catch (err) {
+        // handle error
+        console.error(err);
+    }
+}
+*/
+
+async function initData(event: React.MouseEvent<HTMLButtonElement>) {
+    event.preventDefault();
+    try {
+        const response = await fetch(`http://localhost:3001/api/initLifeExpectancy`);
+        const { status } = response;
+        return status;
+    } catch (err) {
+        // handle error
+        console.error(err);
+    }
+}
+
+
 
 export default function Home() {
 
@@ -129,25 +159,11 @@ export default function Home() {
     const [lifeExpectancy, saveLifeExpectancy] = React.useState(lineData);
     React.useEffect(() => {
 
-        const initData = async (url: string) => {
-            try {
-                const response = await fetch(url);
-                const { status } = response;
-                return status;
-            } catch (err) {
-                // handle error
-                console.error(err);
-            }
-        }
-        initData(initJurisdictionsUrl).then(response => {
-            if (response) {
-                fetch(getJurisdictionsUrl)
-                    .then(response => response.json())
-                    .then(data => {
-                        saveLifeExpectancy(data[0]);
-                    })
-            }
-        })
+        fetch(getJurisdictionsUrl)
+            .then(response => response.json())
+            .then(data => {
+                saveLifeExpectancy(data[0]);
+            })
 
     }, []);
     return (
@@ -159,6 +175,10 @@ export default function Home() {
                         <Nav.Link href="#home">Regions</Nav.Link>
                         <Nav.Link href="#risks">Risks</Nav.Link>
                         <Nav.Link href="#systems">Health Systems</Nav.Link>
+
+                    </Nav>
+                    <Nav className="ml-auto">
+                        <Button onClick={initData} variant="light" style={{ marginLeft: "auto" }}>Reset</Button>
                     </Nav>
                 </Container>
             </Navbar>
