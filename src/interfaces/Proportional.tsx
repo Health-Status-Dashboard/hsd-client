@@ -5,7 +5,7 @@ export interface Proportional {
 }
 
 interface dataset {
-    label: 'Percentage of Population'
+    label: string
     data: Array<number>
     backgroundColor: Array<string>
     borderColor: Array<string>
