@@ -1,3 +1,5 @@
+
+
 import * as React from 'react'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -14,6 +16,8 @@ import { Longitudinal } from '../interfaces/Longitudinal';
 import { Summary } from '../interfaces/Summary';
 import { Stats } from '../interfaces/Stats';
 import { Proportional } from '../interfaces/Proportional';
+
+import { initLocalJurisdictions, getLocalJurisdictions, initJurisdictions, getJurisdictions } from '../endpoints/lifeExpectancy'
 
 // this is a placeholder
 /*
@@ -88,11 +92,6 @@ const lineData: Longitudinal = {
     color: 'rgba(16,44,76)'
 }
 
-//const initJurisdictionsUrl = `http://localhost:3001/api/initLifeExpectancy`
-//const getJurisdictionsUrl = `http://localhost:3001/api/getLifeExpectancy`
-const initJurisdictionsUrl = `http://healthdashboard.mitre.org/api/initLifeExpectancy`
-const getJurisdictionsUrl = `http://healthdashboard.mitre.org/api/getLifeExpectancy`
-
 
 
 const alcoholData: Stats = {
@@ -124,17 +123,12 @@ const alcoholData: Stats = {
     // tobacco: https://chronicdata.cdc.gov/resource/g4ie-h725.json?locationabbr=US&yearend=2021&stratification1=Overall&topic=Tobacco
 }
 
-//const initJurisdictionsUrl = `http://localhost:3001/api/initLifeExpectancy`
-//const getJurisdictionsUrl = `http://localhost:3001/api/getLifeExpectancy`
-//const initJurisdictionsUrl = `http://healthdashboard.mitre.org/api/initLifeExpectancy`
-const getJurisdictionsUrl = `http://healthdashboard.mitre.org/api/getLifeExpectancy`
-
 const USDATA = {} as Region;
 
 async function initData(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
     try {
-        const response = await fetch(`http://localhost:3001/api/initLifeExpectancy`);
+        const response = await fetch(initJurisdictions);
         const { status } = response;
         return status;
     } catch (err) {
@@ -151,7 +145,7 @@ export default function Home() {
     const [lifeExpectancy, saveLifeExpectancy] = React.useState(lineData);
     React.useEffect(() => {
 
-        fetch(getJurisdictionsUrl)
+        fetch(getJurisdictions)
             .then(response => response.json())
             .then(data => {
                 saveLifeExpectancy(data[0]);
