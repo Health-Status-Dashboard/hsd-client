@@ -36,8 +36,10 @@ const summaryData: Summary = {
     fertility: 1.754
 }
 
-const initJurisdictionsUrl = `http://localhost:3001/api/initLifeExpectancy`
-const getJurisdictionsUrl = `http://localhost:3001/api/getLifeExpectancy`
+//const initJurisdictionsUrl = `http://localhost:3001/api/initLifeExpectancy`
+//const getJurisdictionsUrl = `http://localhost:3001/api/getLifeExpectancy`
+const initJurisdictionsUrl = `http://healthdashboard.mitre.org/api/initLifeExpectancy`
+const getJurisdictionsUrl = `http://healthdashboard.mitre.org/api/getLifeExpectancy`
 
 
 
