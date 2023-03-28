@@ -17,7 +17,7 @@ import { Summary } from '../interfaces/Summary';
 import { Stats } from '../interfaces/Stats';
 import { Proportional } from '../interfaces/Proportional';
 
-import { initLocalJurisdictions, getLocalJurisdictions, initJurisdictions, getJurisdictions } from '../endpoints/lifeExpectancy'
+import { initLocalJurisdictions, getLocalJurisdictions, initJurisdictions, getJurisdictions } from '../endpoints/lifeExpectancyURLs'
 
 // this is a placeholder
 /*
