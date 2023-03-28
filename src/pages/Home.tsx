@@ -88,6 +88,11 @@ const lineData: Longitudinal = {
     color: 'rgba(16,44,76)'
 }
 
+//const initJurisdictionsUrl = `http://localhost:3001/api/initLifeExpectancy`
+//const getJurisdictionsUrl = `http://localhost:3001/api/getLifeExpectancy`
+const initJurisdictionsUrl = `http://healthdashboard.mitre.org/api/initLifeExpectancy`
+const getJurisdictionsUrl = `http://healthdashboard.mitre.org/api/getLifeExpectancy`
+
 
 
 const alcoholData: Stats = {
@@ -126,19 +131,6 @@ const getJurisdictionsUrl = `http://healthdashboard.mitre.org/api/getLifeExpecta
 
 const USDATA = {} as Region;
 
-/*
-const initData = async (url: string) => {
-    try {
-        const response = await fetch(url);
-        const { status } = response;
-        return status;
-    } catch (err) {
-        // handle error
-        console.error(err);
-    }
-}
-*/
-
 async function initData(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
     try {
@@ -164,7 +156,6 @@ export default function Home() {
             .then(data => {
                 saveLifeExpectancy(data[0]);
             })
-
     }, []);
     return (
         <>
