@@ -1,11 +1,11 @@
 //import React from "react";
 import '../index.css';
-import { Summary } from '../interfaces/ISummary';
+import { ISummary, Header } from '../interfaces/ISummary';
 
-type SummaryData = { data: Summary };
+type SummaryData = { data: ISummary };
 
 export const SummaryCard = (sumData: SummaryData) => {
-    const descriptors = sumData.data.headers.map((h) =>
+    const descriptors = sumData.data.headers.map((h: Header) =>
         <div key={h.label}>
             <h6 key={h.label}>{h.label}: {h.value}</h6>
         </div >
