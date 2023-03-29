@@ -1,6 +1,6 @@
 //import React from "react";
 import '../index.css';
-import { Summary } from '../interfaces/Summary';
+import { Summary } from '../interfaces/ISummary';
 
 type SummaryData = { data: Summary };
 
