@@ -32,6 +32,12 @@
   margin-top: 10%
 }
 
+.wide-container {
+  margin-top: 20px;
+  padding: 30px;
+}
+
+
 /*
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

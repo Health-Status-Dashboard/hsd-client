@@ -11,11 +11,13 @@ import { SummaryCard } from '../cards/SummaryCard'
 import { StatsCard } from '../cards/StatsCard'
 import { LineCard } from '../cards/LineCard'
 import { PieCard } from '../cards/PieCard'
+import { BarCard } from '../cards/BarCard'
 
 import { Longitudinal } from '../interfaces/Longitudinal';
 import { Summary } from '../interfaces/Summary';
 import { Stats } from '../interfaces/Stats';
 import { Proportional } from '../interfaces/Proportional';
+import { IBar } from '../interfaces/IBar';
 
 import { initLocalJurisdictions, getLocalJurisdictions, initJurisdictions, getJurisdictions } from '../endpoints/lifeExpectancyURLs'
 
@@ -123,7 +125,36 @@ const alcoholData: Stats = {
     // tobacco: https://chronicdata.cdc.gov/resource/g4ie-h725.json?locationabbr=US&yearend=2021&stratification1=Overall&topic=Tobacco
 }
 
-const USDATA = {} as Region;
+
+
+
+const causeOfDeathSummary: Summary = {
+    title: "US Causes of Death",
+    headers: [
+        {
+            value: "85,463",
+            label: "All Causes"
+        }
+    ]
+}
+
+const causesOfDeath: IBar = {
+    title: "US Causes of Death (March 2023)",
+    labels: ['Septicemia', 'Malignant Neoplasms', 'Diabetes', 'Alzheimers', 'Influenza',
+        'Chronic Lower Respiratory Diseases', 'Other Respiratory Diseases', 'Nephritis', 'Abnormal/Other', 'Heart Disease',
+        'Cerebrovascular Disease', 'COVID-19 Multiple Causes', 'COVID-19 Primary Cause'],
+    datasets: [
+        {
+            label: 'March 2023 Data',
+            backgroundColor: 'rgba(16,44,76,0.8)',
+            borderColor: 'rgba(16,44,76,0.8)',
+            borderWidth: 1,
+            data: [1254, 18261, 2386, 3617, 1249, 4542, 1550, 1559, 5855, 19090, 4757, 2719, 1742]
+        }
+    ]
+}
+// monthly cause of Death Data: https://data.cdc.gov/resource/9dzk-mvmi.json?year=2023
+
 
 async function initData(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
@@ -197,6 +228,16 @@ export default function Home() {
                                 <PieCard data={pieData} />
                             </div>
                         </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-12">
+                            <div className="region-container wide-container">
+                                <SummaryCard data={causeOfDeathSummary} />
+                                <BarCard data={causesOfDeath} />
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
