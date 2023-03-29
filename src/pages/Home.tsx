@@ -19,7 +19,7 @@ import { IProportional } from '../interfaces/IProportional';
 import { IBar } from '../interfaces/IBar';
 
 import { initLocalJurisdictions, getLocalJurisdictions, initJurisdictions, getJurisdictions } from '../endpoints/lifeExpectancyURLs'
-import { colors } from '../colors/colors'
+import { colors, gradient } from '../colors/colors'
 
 // this is all placeholder data
 
