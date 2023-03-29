@@ -12,10 +12,10 @@ import { StatsCard } from '../cards/StatsCard'
 import { LineCard } from '../cards/LineCard'
 import { PieCard } from '../cards/PieCard'
 
-import { Longitudinal } from '../interfaces/ILongitudinal';
-import { Summary } from '../interfaces/ISummary';
-import { Stats } from '../interfaces/IStats';
-import { Proportional } from '../interfaces/IProportional';
+import { ILongitudinal } from '../interfaces/ILongitudinal';
+import { ISummary } from '../interfaces/ISummary';
+import { IStats } from '../interfaces/IStats';
+import { IProportional } from '../interfaces/IProportional';
 
 import { initLocalJurisdictions, getLocalJurisdictions, initJurisdictions, getJurisdictions } from '../endpoints/lifeExpectancyURLs'
 
@@ -34,7 +34,7 @@ const USDATA: Region = {
 */
 
 
-const obesitySummary: Summary = {
+const obesitySummary: ISummary = {
     title: "Weight Management",
     headers: [
         {
@@ -47,7 +47,7 @@ const obesitySummary: Summary = {
         }
     ]
 }
-const pieData: Proportional = {
+const pieData: IProportional = {
     title: 'Weight Breakdown',
     labels: ['Obese', 'Overweight', 'Healthy', 'Other/Underweight'],
     datasets: [{
@@ -70,7 +70,7 @@ const pieData: Proportional = {
 // https://chronicdata.cdc.gov/resource/g4ie-h725.json?locationabbr=US&yearend=2021&stratification1=Overall&topic=Nutrition, Physical Activity, and Weight Status
 
 
-const summaryData: Summary = {
+const summaryData: ISummary = {
     title: "United States Overview",
     headers: [
         {
@@ -84,7 +84,7 @@ const summaryData: Summary = {
     ]
 }
 
-const lineData: Longitudinal = {
+const lineData: ILongitudinal = {
     title: 'US Life Expectancy (1970 - 2020)',
     label: 'US Life Expectancy',
     x: [1970, 1980, 1990, 2000, 2010, 2020],
@@ -94,7 +94,7 @@ const lineData: Longitudinal = {
 
 
 
-const alcoholData: Stats = {
+const alcoholData: IStats = {
     title: "Alcohol & Tobacco",
     stats: [
         {
