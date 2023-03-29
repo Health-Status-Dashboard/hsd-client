@@ -1,14 +1,21 @@
 //import React from "react";
 import '../index.css';
-import { Stats } from '../interfaces/Stats';
+import { IStats } from '../interfaces/IStats';
 
-type StatsData = { data: Stats };
+type StatsData = { data: IStats };
 
 export const StatsCard = (statsData: StatsData) => {
     const descriptors = statsData.data.stats.map((stat) =>
         <div key={stat.label} className="item">
             <br />
-            <h6 key={stat.label}>{stat.value} {stat.label}</h6>
+            <div className="row">
+                <div className="col-4">
+                    <h5>{stat.value}</h5>
+                </div>
+                <div className="col-8">
+                    <h6 key={stat.label}> {stat.label}</h6>
+                </div>
+            </div>
         </div >
     );
     return (

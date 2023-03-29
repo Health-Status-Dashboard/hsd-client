@@ -1,4 +1,4 @@
-export interface Longitudinal {
+export interface ILongitudinal {
     title: string
     label: any
     x: Array<any>

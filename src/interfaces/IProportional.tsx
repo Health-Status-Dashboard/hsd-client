@@ -1,4 +1,4 @@
-export interface Proportional {
+export interface IProportional {
     title: string
     labels: Array<string>
     datasets: Array<dataset>

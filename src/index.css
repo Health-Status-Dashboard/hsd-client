@@ -32,9 +32,17 @@
   margin-top: 10%
 }
 
+.summ-space {
+  margin-bottom: 5%
+}
+
 .wide-container {
   margin-top: 20px;
   padding: 30px;
+}
+
+.narrow-container {
+  padding: 5px;
 }
 
 

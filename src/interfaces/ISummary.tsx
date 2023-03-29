@@ -1,4 +1,4 @@
-export interface Summary {
+export interface ISummary {
     title: string
     headers: Array<Header>
 }

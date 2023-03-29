@@ -12,7 +12,7 @@ import {
     Legend,
 } from 'chart.js';
 
-import { Longitudinal } from '../interfaces/Longitudinal';
+import { ILongitudinal } from '../interfaces/ILongitudinal';
 
 ChartJS.register(
     CategoryScale,
@@ -24,7 +24,7 @@ ChartJS.register(
     Legend
 );
 
-type LongData = { data: Longitudinal };
+type LongData = { data: ILongitudinal };
 
 export const LineCard = (data: LongData) => {
     console.log("in the card")
@@ -43,6 +43,8 @@ export const LineCard = (data: LongData) => {
     }
 
     var options = {
+        responsive: true,
+        maintainAspectRatio: true,
         scales: {
             x: {
                 ticks: {

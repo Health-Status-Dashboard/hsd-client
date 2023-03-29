@@ -6,22 +6,22 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 
-import { Region } from '../interfaces/Region'
 import { SummaryCard } from '../cards/SummaryCard'
 import { StatsCard } from '../cards/StatsCard'
 import { LineCard } from '../cards/LineCard'
 import { PieCard } from '../cards/PieCard'
 import { BarCard } from '../cards/BarCard'
 
-import { Longitudinal } from '../interfaces/Longitudinal';
-import { Summary } from '../interfaces/Summary';
-import { Stats } from '../interfaces/Stats';
-import { Proportional } from '../interfaces/Proportional';
+import { ILongitudinal } from '../interfaces/ILongitudinal';
+import { ISummary } from '../interfaces/ISummary';
+import { IStats } from '../interfaces/IStats';
+import { IProportional } from '../interfaces/IProportional';
 import { IBar } from '../interfaces/IBar';
 
 import { initLocalJurisdictions, getLocalJurisdictions, initJurisdictions, getJurisdictions } from '../endpoints/lifeExpectancyURLs'
 
-// this is a placeholder
+// this is all placeholder data
+
 /*
 const USDATA: Region = {
     _id: "1",
@@ -36,7 +36,7 @@ const USDATA: Region = {
 */
 
 
-const obesitySummary: Summary = {
+const obesitySummary: ISummary = {
     title: "Weight Management",
     headers: [
         {
@@ -49,7 +49,23 @@ const obesitySummary: Summary = {
         }
     ]
 }
-const pieData: Proportional = {
+
+/*
+const obesitySummary: Stats = {
+    title: "Weight Management",
+    stats: [
+        {
+            value: "1.6",
+            label: "Adult Median Daily Frequency of Vegetable Consumption"
+        },
+        {
+            value: "23.7%",
+            label: "No Reported Leisure-time Physical Activity among Adults"
+        }
+    ]
+}
+*/
+const pieData: IProportional = {
     title: 'Weight Breakdown',
     labels: ['Obese', 'Overweight', 'Healthy', 'Other/Underweight'],
     datasets: [{
@@ -72,7 +88,7 @@ const pieData: Proportional = {
 // https://chronicdata.cdc.gov/resource/g4ie-h725.json?locationabbr=US&yearend=2021&stratification1=Overall&topic=Nutrition, Physical Activity, and Weight Status
 
 
-const summaryData: Summary = {
+const summaryData: ISummary = {
     title: "United States Overview",
     headers: [
         {
@@ -86,7 +102,7 @@ const summaryData: Summary = {
     ]
 }
 
-const lineData: Longitudinal = {
+const lineData: ILongitudinal = {
     title: 'US Life Expectancy (1970 - 2020)',
     label: 'US Life Expectancy',
     x: [1970, 1980, 1990, 2000, 2010, 2020],
@@ -96,7 +112,7 @@ const lineData: Longitudinal = {
 
 
 
-const alcoholData: Stats = {
+const alcoholData: IStats = {
     title: "Alcohol & Tobacco",
     stats: [
         {
@@ -128,24 +144,42 @@ const alcoholData: Stats = {
 
 
 
-const causeOfDeathSummary: Summary = {
+const causeOfDeathSummary: ISummary = {
     title: "US Causes of Death",
     headers: [
         {
-            value: "85,463",
-            label: "All Causes"
+            value: "599,156",
+            label: "All Causes (3 month period)"
+        },
+        {
+            value: "Accidents, Suicide, OD's, Homicides",
+            label: "Not Shown"
         }
     ]
 }
 
 const causesOfDeath: IBar = {
-    title: "US Causes of Death (March 2023)",
+    title: "US Causes of Death (current period)",
     labels: ['Septicemia', 'Malignant Neoplasms', 'Diabetes', 'Alzheimers', 'Influenza',
         'Chronic Lower Respiratory Diseases', 'Other Respiratory Diseases', 'Nephritis', 'Abnormal/Other', 'Heart Disease',
         'Cerebrovascular Disease', 'COVID-19 Multiple Causes', 'COVID-19 Primary Cause'],
     datasets: [
         {
-            label: 'March 2023 Data',
+            label: 'January 2023',
+            backgroundColor: 'rgba(16,44,76,0.3)',
+            borderColor: 'rgba(16,44,76,0.8)',
+            borderWidth: 1,
+            data: [3973, 51911, 8616, 10862, 5804, 13692, 4652, 5099, 13131, 60477, 14727, 14681, 9848]
+        },
+        {
+            label: 'February 2023',
+            backgroundColor: 'rgba(16,44,76,0.5)',
+            borderColor: 'rgba(16,44,76,0.8)',
+            borderWidth: 1,
+            data: [3051, 45406, 7066, 8936, 3461, 11363, 3765, 4182, 14286, 49699, 12076, 8411, 5425]
+        },
+        {
+            label: 'March 2023',
             backgroundColor: 'rgba(16,44,76,0.8)',
             borderColor: 'rgba(16,44,76,0.8)',
             borderWidth: 1,
@@ -154,6 +188,10 @@ const causesOfDeath: IBar = {
     ]
 }
 // monthly cause of Death Data: https://data.cdc.gov/resource/9dzk-mvmi.json?year=2023
+
+
+
+
 
 
 async function initData(event: React.MouseEvent<HTMLButtonElement>) {
@@ -215,7 +253,9 @@ export default function Home() {
 
                         <div className="col-6">
                             <div className="region-container">
-                                <SummaryCard data={summaryData} />
+                                <div className="summ-space">
+                                    <SummaryCard data={summaryData} />
+                                </div>
                                 <LineCard data={lifeExpectancy} />
                             </div>
                         </div>

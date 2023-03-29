@@ -1,4 +1,4 @@
-export interface Stats {
+export interface IStats {
     title: string
     stats: Array<Stat>
 }

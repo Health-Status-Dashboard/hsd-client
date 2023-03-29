@@ -11,7 +11,7 @@ import {
     Legend,
 } from 'chart.js';
 
-import { Proportional } from '../interfaces/Proportional';
+import { Proportional } from '../interfaces/IProportional';
 
 ChartJS.register(
     CategoryScale,
@@ -40,7 +40,8 @@ export const PieCard = (myData: propData) => {
         }
     }
     return (
-        <Pie data={propData}
+        <Pie
+            data={propData}
             height={800}
             width={800}
             options={options} />

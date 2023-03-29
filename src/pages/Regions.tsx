@@ -12,10 +12,10 @@ import { StatsCard } from '../cards/StatsCard'
 import { LineCard } from '../cards/LineCard'
 import { PieCard } from '../cards/PieCard'
 
-import { Longitudinal } from '../interfaces/Longitudinal';
-import { Summary } from '../interfaces/Summary';
-import { Stats } from '../interfaces/Stats';
-import { Proportional } from '../interfaces/Proportional';
+import { Longitudinal } from '../interfaces/ILongitudinal';
+import { Summary } from '../interfaces/ISummary';
+import { Stats } from '../interfaces/IStats';
+import { Proportional } from '../interfaces/IProportional';
 
 import { initLocalJurisdictions, getLocalJurisdictions, initJurisdictions, getJurisdictions } from '../endpoints/lifeExpectancyURLs'
 
