@@ -1,45 +1,37 @@
 //import React from "react";
 import '../index.css';
-import { Line, Bar } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
     CategoryScale,
     LinearScale,
-    PointElement,
+    BarElement,
     LineElement,
     Title,
     Tooltip,
     Legend,
 } from 'chart.js';
 
-import { Longitudinal } from '../interfaces/Longitudinal';
+import { IBar } from '../interfaces/IBar';
 
 ChartJS.register(
     CategoryScale,
     LinearScale,
-    PointElement,
+    BarElement,
     LineElement,
     Title,
     Tooltip,
     Legend
 );
 
-type LongData = { data: Longitudinal };
+type BarData = { data: IBar };
 
-export const LineCard = (data: LongData) => {
-    console.log("in the card")
-    console.log(data)
-    const labels = data.data.x
-    var longData = {
-        labels,
-        datasets: [
-            {
-                label: data.data.label,
-                data: data.data.y,
-                borderColor: [data.data.color],
-                backgroundColor: [data.data.color],
-            }
-        ]
+export const BarCard = (data: BarData) => {
+    var labels = data.data.labels
+    var datasets = data.data.datasets
+    var propData = {
+        labels: labels,
+        datasets: datasets
     }
 
     var options = {
@@ -60,7 +52,7 @@ export const LineCard = (data: LongData) => {
         }
     }
     return (
-        <Line data={longData}
+        <Bar data={propData}
             height={500}
             width={800}
             options={options} />
