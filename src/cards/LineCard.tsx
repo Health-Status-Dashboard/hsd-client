@@ -24,11 +24,11 @@ ChartJS.register(
     Legend
 );
 
+
 type LongData = { data: ILongitudinal };
 
 export const LineCard = (data: LongData) => {
-    console.log("in the card")
-    console.log(data)
+    const colors = ["rgb(16,44,76)"]
     const labels = data.data.x
     var longData = {
         labels,
@@ -36,8 +36,8 @@ export const LineCard = (data: LongData) => {
             {
                 label: data.data.label,
                 data: data.data.y,
-                borderColor: [data.data.color],
-                backgroundColor: [data.data.color],
+                borderColor: [colors[0]],
+                backgroundColor: [colors[0]],
             }
         ]
     }
