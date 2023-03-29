@@ -19,6 +19,7 @@ import { IProportional } from '../interfaces/IProportional';
 import { IBar } from '../interfaces/IBar';
 
 import { initLocalJurisdictions, getLocalJurisdictions, initJurisdictions, getJurisdictions } from '../endpoints/lifeExpectancyURLs'
+import { colors, gradient } from '../colors/colors'
 
 // this is all placeholder data
 
@@ -71,17 +72,17 @@ const pieData: IProportional = {
     datasets: [{
         label: 'Percentage of Population',
         data: [33.9, 34.5, 29.9, 1.7],
-        backgroundColor: ['rgba(16,44,76,1)',
-            'rgba(16,44,76,0.8)',
-            'rgba(16,44,76,0.5)',
-            'rgba(16,44,76,0.2)',
-            'rgba(16,44,76,0)'],
-        borderColor: ['rgba(16,44,76)',
-            'rgba(16,44,76)',
-            'rgba(16,44,76)',
-            'rgba(16,44,76)',
-            'rgba(16,44,76)'],
-        borderWidth: 1
+        backgroundColor: [
+            colors.vermilion,
+            colors.saffron,
+            colors.green,
+            colors.mitreDarkBlue],
+        borderColor: [
+            colors.vermilion,
+            colors.saffron,
+            colors.green,
+            colors.white],
+        borderWidth: 0
     }]
 }
 // weight data
@@ -96,7 +97,7 @@ const summaryData: ISummary = {
             label: "Population"
         },
         {
-            value: <span className='red'>1.754</span>,
+            value: 1.754,
             label: "Fertility Rate"
         }
     ]
@@ -168,21 +169,21 @@ const causesOfDeath: IBar = {
             label: 'January 2023',
             backgroundColor: 'rgba(16,44,76,0.3)',
             borderColor: 'rgba(16,44,76,0.8)',
-            borderWidth: 1,
+            borderWidth: 0,
             data: [3973, 51911, 8616, 10862, 5804, 13692, 4652, 5099, 13131, 60477, 14727, 14681, 9848]
         },
         {
             label: 'February 2023',
             backgroundColor: 'rgba(16,44,76,0.5)',
             borderColor: 'rgba(16,44,76,0.8)',
-            borderWidth: 1,
+            borderWidth: 0,
             data: [3051, 45406, 7066, 8936, 3461, 11363, 3765, 4182, 14286, 49699, 12076, 8411, 5425]
         },
         {
             label: 'March 2023',
             backgroundColor: 'rgba(16,44,76,0.8)',
             borderColor: 'rgba(16,44,76,0.8)',
-            borderWidth: 1,
+            borderWidth: 0,
             data: [1254, 18261, 2386, 3617, 1249, 4542, 1550, 1559, 5855, 19090, 4757, 2719, 1742]
         }
     ]
