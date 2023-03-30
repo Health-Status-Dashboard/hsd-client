@@ -333,7 +333,7 @@ const uninsuredByAge: IBar = {
 async function initData(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
     try {
-        const response = await fetch(initLocalJurisdictions);
+        const response = await fetch(initJurisdictions);
         const { status } = response;
         return status;
     } catch (err) {
@@ -350,7 +350,7 @@ export default function Home() {
     const [lifeExpectancy, saveLifeExpectancy] = React.useState(lineData);
     React.useEffect(() => {
 
-        fetch(getLocalJurisdictions)
+        fetch(getJurisdictions)
             .then(response => response.json())
             .then(data => {
                 saveLifeExpectancy(data[0]);
