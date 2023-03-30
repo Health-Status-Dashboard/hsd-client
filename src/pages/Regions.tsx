@@ -1,5 +1,5 @@
 
-/*
+
 import * as React from 'react'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -19,7 +19,7 @@ import { IProportional } from '../interfaces/IProportional';
 
 import { initLocalJurisdictions, getLocalJurisdictions, initJurisdictions, getJurisdictions } from '../endpoints/lifeExpectancyURLs'
 
-
+/*
 
 
 const obesitySummary: ISummary = {
