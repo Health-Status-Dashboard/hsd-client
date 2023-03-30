@@ -11,12 +11,14 @@ import { StatsCard } from '../cards/StatsCard'
 import { LineCard } from '../cards/LineCard'
 import { PieCard } from '../cards/PieCard'
 import { BarCard } from '../cards/BarCard'
+import { SingleLineCard } from '../cards/SingleLineCard'
 
 import { ILongitudinal } from '../interfaces/ILongitudinal';
 import { ISummary } from '../interfaces/ISummary';
 import { IStats } from '../interfaces/IStats';
 import { IProportional } from '../interfaces/IProportional';
 import { IBar } from '../interfaces/IBar';
+import { ILine } from '../interfaces/ILine';
 
 import { initLocalJurisdictions, getLocalJurisdictions, initJurisdictions, getJurisdictions } from '../endpoints/lifeExpectancyURLs'
 import { colors, gradient } from '../colors/colors'
@@ -103,6 +105,7 @@ const summaryData: ISummary = {
     ]
 }
 
+/*
 const lineData: ILongitudinal = {
     title: 'US Life Expectancy (1970 - 2020)',
     labels: ['1970', '1980', '1990', '2000', '2010', '2020'],
@@ -117,7 +120,16 @@ const lineData: ILongitudinal = {
 
 
 }
+*/
 
+const lineData: ILine = {
+    title: 'US Life Expectancy (1970 - 2020)',
+    label: 'US Life Expectancy',
+    x: ['1970', '1980', '1990', '2000', '2010', '2020'],
+    y: [70.8, 73.3, 75.4, 76.8, 78.7, 77.0],
+    color: colors.mitreBlue
+
+}
 
 
 const alcoholData: IStats = {
@@ -346,6 +358,7 @@ export default function Home() {
                 saveLifeExpectancy(data[0]);
             })
     }, []);
+    console.log(lifeExpectancy)
     return (
         <>
             <Navbar bg="dark" variant="dark">
@@ -380,7 +393,7 @@ export default function Home() {
                                 <div className="summ-space">
                                     <SummaryCard data={summaryData} />
                                 </div>
-                                <LineCard data={lifeExpectancy} />
+                                <SingleLineCard data={lifeExpectancy} />
                             </div>
                         </div>
 
