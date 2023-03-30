@@ -1,5 +1,5 @@
 
-
+/*
 import * as React from 'react'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -19,19 +19,7 @@ import { IProportional } from '../interfaces/IProportional';
 
 import { initLocalJurisdictions, getLocalJurisdictions, initJurisdictions, getJurisdictions } from '../endpoints/lifeExpectancyURLs'
 
-// this is a placeholder
-/*
-const USDATA: Region = {
-    _id: "1",
-    name: "United States",
-    population: "334,533,505",
-    code: "123456789",
-    lifeExpectancy: {
-        years: [1970, 1980, 1990, 2000, 2010, 2020],
-        ages: [70.8, 73.3, 75.4, 76.8, 78.7, 77.0]
-    }
-}
-*/
+
 
 
 const obesitySummary: ISummary = {
@@ -206,3 +194,4 @@ export default function Home() {
     );
 
 }
+*/
