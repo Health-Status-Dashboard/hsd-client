@@ -5,6 +5,13 @@
   height: 100%;
 }
 
+.blue {
+  background-color: #EEF4FF;
+  height: 100%;
+  margin-right: 10px;
+  margin-left: 10px
+}
+
 .title {
   text-align: center;
   color: rgba(16, 44, 76);
@@ -33,18 +40,37 @@
 }
 
 .summ-space {
-  margin-bottom: 5%
-}
-
-.wide-container {
-  margin-top: 20px;
-  padding: 30px;
+  margin-bottom: 10%
 }
 
 .narrow-container {
   padding: 5px;
 }
 
+.center {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+/*
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+
+.wide-container {
+  margin-top: 20px;
+  padding: 30px;
+}
+*/
 
 /*
 :root {

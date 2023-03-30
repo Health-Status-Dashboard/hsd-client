@@ -28,18 +28,11 @@ ChartJS.register(
 type LongData = { data: ILongitudinal };
 
 export const LineCard = (data: LongData) => {
-    const colors = ["rgb(16,44,76)"]
-    const labels = data.data.x
-    var longData = {
-        labels,
-        datasets: [
-            {
-                label: data.data.label,
-                data: data.data.y,
-                borderColor: [colors[0]],
-                backgroundColor: [colors[0]],
-            }
-        ]
+    var labels = data.data.labels
+    var datasets = data.data.datasets
+    var propData = {
+        labels: labels,
+        datasets: datasets
     }
 
     var options = {
@@ -62,7 +55,7 @@ export const LineCard = (data: LongData) => {
         }
     }
     return (
-        <Line data={longData}
+        <Line data={propData}
             height={500}
             width={800}
             options={options} />
