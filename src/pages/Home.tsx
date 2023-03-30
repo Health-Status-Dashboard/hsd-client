@@ -44,11 +44,11 @@ const obesitySummary: ISummary = {
     headers: [
         {
             value: "1.6",
-            label: "Adult Median Daily Frequency of Vegetable Consumption"
+            label: "Adult Median Daily Frequency of Vegetable Consumption (2021)"
         },
         {
             value: "23.7%",
-            label: "No Reported Leisure-time Physical Activity among Adults"
+            label: "Proportion of Adults Reporting no Leisure-Time Physical Activity in the last month (2021)"
         }
     ]
 }
@@ -69,7 +69,7 @@ const obesitySummary: Stats = {
 }
 */
 const pieData: IProportional = {
-    title: 'Weight Breakdown',
+    title: 'US Adult Weight Breakdown (2021)',
     labels: ['Obese', 'Overweight', 'Healthy', 'Other/Underweight'],
     datasets: [{
         label: 'Percentage of Population',
@@ -117,8 +117,6 @@ const lineData: ILongitudinal = {
             borderColor: colors.mitreBlue
         }
     ]
-
-
 }
 */
 
@@ -137,11 +135,11 @@ const alcoholData: IStats = {
     stats: [
         {
             value: <strong>15.4%</strong>,
-            label: "adults report heavy drinking in 2021"
+            label: "adults report recent heavy drinking in 2021"
         },
         {
             value: <strong>6.3%</strong>,
-            label: "adults report binge drinking in 2021"
+            label: "adults report recent binge drinking in 2021"
         },
         {
             value: <strong>14.4%</strong>,
@@ -335,7 +333,7 @@ const uninsuredByAge: IBar = {
 async function initData(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
     try {
-        const response = await fetch(initJurisdictions);
+        const response = await fetch(initLocalJurisdictions);
         const { status } = response;
         return status;
     } catch (err) {
@@ -352,7 +350,7 @@ export default function Home() {
     const [lifeExpectancy, saveLifeExpectancy] = React.useState(lineData);
     React.useEffect(() => {
 
-        fetch(getJurisdictions)
+        fetch(getLocalJurisdictions)
             .then(response => response.json())
             .then(data => {
                 saveLifeExpectancy(data[0]);
