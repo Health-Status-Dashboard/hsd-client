@@ -3,9 +3,11 @@ export const colors = {
     mitreYellow: "rgb(256,244,4)",
     mitreBlue: "rgb(0,91,148)",
     vermilion: "rgb(255,60,56)",
+    cerise: "rgb(206, 71, 96)",
     saffron: "rgb(249, 194, 46)",
     green: "rgb(77, 139, 49)",
-    white: "rgb(255,255,255)"
+    white: "rgb(255,255,255)",
+    black: "rgb(0,0,0)"
 }
 
 export function gradient(color: string, cardinality: number) {
