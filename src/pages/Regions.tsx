@@ -6,80 +6,24 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 
-import { Region } from '../interfaces/Region'
 import { SummaryCard } from '../cards/SummaryCard'
 import { StatsCard } from '../cards/StatsCard'
 import { LineCard } from '../cards/LineCard'
 import { PieCard } from '../cards/PieCard'
+import { BarCard } from '../cards/BarCard'
+import { SingleLineCard } from '../cards/SingleLineCard'
 
 import { ILongitudinal } from '../interfaces/ILongitudinal';
 import { ISummary } from '../interfaces/ISummary';
 import { IStats } from '../interfaces/IStats';
 import { IProportional } from '../interfaces/IProportional';
+import { IBar } from '../interfaces/IBar';
+import { ILine } from '../interfaces/ILine';
 
 import { initLocalJurisdictions, getLocalJurisdictions, initJurisdictions, getJurisdictions } from '../endpoints/lifeExpectancyURLs'
+import { colors, gradient } from '../colors/colors'
 
-/*
-
-
-const obesitySummary: ISummary = {
-    title: "Weight Management",
-    headers: [
-        {
-            value: "1.6",
-            label: "Adult Median Daily Frequency of Vegetable Consumption"
-        },
-        {
-            value: "23.7%",
-            label: "No Reported Leisure-time Physical Activity among Adults"
-        }
-    ]
-}
-const pieData: IProportional = {
-    title: 'Weight Breakdown',
-    labels: ['Obese', 'Overweight', 'Healthy', 'Other/Underweight'],
-    datasets: [{
-        label: 'Percentage of Population',
-        data: [33.9, 34.5, 29.9, 1.7],
-        backgroundColor: ['rgba(16,44,76,1)',
-            'rgba(16,44,76,0.8)',
-            'rgba(16,44,76,0.5)',
-            'rgba(16,44,76,0.2)',
-            'rgba(16,44,76,0)'],
-        borderColor: ['rgba(16,44,76)',
-            'rgba(16,44,76)',
-            'rgba(16,44,76)',
-            'rgba(16,44,76)',
-            'rgba(16,44,76)'],
-        borderWidth: 1
-    }]
-}
-// weight data
-// https://chronicdata.cdc.gov/resource/g4ie-h725.json?locationabbr=US&yearend=2021&stratification1=Overall&topic=Nutrition, Physical Activity, and Weight Status
-
-
-const summaryData: ISummary = {
-    title: "United States Overview",
-    headers: [
-        {
-            value: "334,533,505",
-            label: "Population"
-        },
-        {
-            value: <span className='red'>1.754</span>,
-            label: "Fertility Rate"
-        }
-    ]
-}
-
-const lineData: ILongitudinal = {
-    title: 'US Life Expectancy (1970 - 2020)',
-    label: 'US Life Expectancy',
-    x: [1970, 1980, 1990, 2000, 2010, 2020],
-    y: [70.8, 73.3, 75.4, 76.8, 78.7, 77.0],
-    color: 'rgba(16,44,76)'
-}
-
+// this is all placeholder data
 
 
 const alcoholData: IStats = {
@@ -87,11 +31,11 @@ const alcoholData: IStats = {
     stats: [
         {
             value: <strong>15.4%</strong>,
-            label: "adults report heavy drinking in 2021"
+            label: "adults report recent heavy drinking in 2021"
         },
         {
             value: <strong>6.3%</strong>,
-            label: "adults report binge drinking in 2021"
+            label: "adults report recent binge drinking in 2021"
         },
         {
             value: <strong>14.4%</strong>,
@@ -111,7 +55,9 @@ const alcoholData: IStats = {
     // tobacco: https://chronicdata.cdc.gov/resource/g4ie-h725.json?locationabbr=US&yearend=2021&stratification1=Overall&topic=Tobacco
 }
 
-const USDATA = {} as Region;
+
+
+
 
 async function initData(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
@@ -127,18 +73,20 @@ async function initData(event: React.MouseEvent<HTMLButtonElement>) {
 
 
 
-export default function Home() {
+export default function Regions() {
 
 
-    const [lifeExpectancy, saveLifeExpectancy] = React.useState(lineData);
+    //const [lifeExpectancy, saveLifeExpectancy] = React.useState(lineData);
     React.useEffect(() => {
-
+        /*
         fetch(getJurisdictions)
             .then(response => response.json())
             .then(data => {
                 saveLifeExpectancy(data[0]);
             })
+            */
     }, []);
+
     return (
         <>
             <Navbar bg="dark" variant="dark">
@@ -161,30 +109,12 @@ export default function Home() {
             <div>
                 <div className="container-fluid">
                     <div className="row">
-
-
                         <div className="col-3">
                             <div className="region-container">
                                 <StatsCard data={alcoholData} />
                             </div>
                         </div>
 
-
-                        <div className="col-6">
-                            <div className="region-container">
-                                <SummaryCard data={summaryData} />
-                                <LineCard data={lifeExpectancy} />
-                            </div>
-                        </div>
-
-
-                        <div className="col-3">
-                            <div className="region-container">
-                                <SummaryCard data={obesitySummary} />
-                                <br />
-                                <PieCard data={pieData} />
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -194,4 +124,3 @@ export default function Home() {
     );
 
 }
-*/
