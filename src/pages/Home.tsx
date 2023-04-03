@@ -374,7 +374,7 @@ export default function Home() {
                 </Container>
             </Navbar>
             <br />
-            <h2 className="title" >Health Status Dashboard</h2>
+            <h2 className="title" >US Health Status Dashboard</h2>
             <br />
             <div>
                 <div className="container-fluid">
