@@ -363,7 +363,7 @@ export default function Home() {
                 <Container>
                     <Navbar.Brand href="#home">MITRE | HSD</Navbar.Brand>
                     <Nav className="me-auto">
-                        <Nav.Link href="#home">Regions</Nav.Link>
+                        <Nav.Link href="regions">Regions</Nav.Link>
                         <Nav.Link href="#risks">Risks</Nav.Link>
                         <Nav.Link href="#systems">Health Systems</Nav.Link>
 
@@ -374,7 +374,7 @@ export default function Home() {
                 </Container>
             </Navbar>
             <br />
-            <h2 className="title" >Health Status Dashboard</h2>
+            <h2 className="title" >US Health Status Dashboard</h2>
             <br />
             <div>
                 <div className="container-fluid">
