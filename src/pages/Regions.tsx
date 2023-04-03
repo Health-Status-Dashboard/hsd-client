@@ -91,9 +91,9 @@ export default function Regions() {
         <>
             <Navbar bg="dark" variant="dark">
                 <Container>
-                    <Navbar.Brand href="#home">MITRE | HSD</Navbar.Brand>
+                    <Navbar.Brand href="home">MITRE | HSD</Navbar.Brand>
                     <Nav className="me-auto">
-                        <Nav.Link href="#home">Regions</Nav.Link>
+                        <Nav.Link href="regions">Regions</Nav.Link>
                         <Nav.Link href="#risks">Risks</Nav.Link>
                         <Nav.Link href="#systems">Health Systems</Nav.Link>
 
