@@ -361,7 +361,7 @@ export default function Home() {
         <>
             <Navbar bg="dark" variant="dark">
                 <Container>
-                    <Navbar.Brand href="home">MITRE | HSD</Navbar.Brand>
+                    <Navbar.Brand href="">MITRE | HSD</Navbar.Brand>
                     <Nav className="me-auto">
                         <Nav.Link href="#regions">Regions</Nav.Link>
                         <Nav.Link href="#risks">Risks</Nav.Link>
