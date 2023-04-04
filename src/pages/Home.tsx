@@ -356,14 +356,13 @@ export default function Home() {
                 saveLifeExpectancy(data[0]);
             })
     }, []);
-    console.log(lifeExpectancy)
     return (
         <>
             <Navbar bg="dark" variant="dark">
                 <Container>
-                    <Navbar.Brand href="">MITRE | HSD</Navbar.Brand>
+                    <Navbar.Brand href="/">MITRE | HSD</Navbar.Brand>
                     <Nav className="me-auto">
-                        <Nav.Link href="#regions">Regions</Nav.Link>
+                        <Nav.Link href="/regions">Regions</Nav.Link>
                         <Nav.Link href="#risks">Risks</Nav.Link>
                         <Nav.Link href="#systems">Health Systems</Nav.Link>
 
