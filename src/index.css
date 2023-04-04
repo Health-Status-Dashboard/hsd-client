@@ -7,11 +7,13 @@
 
 
 .blue {
+  position: relative;
   background-color: #EEF4FF;
   height: 100%;
-  margin-right: 10px;
-  margin-left: 10px
+  /*margin-right: 100px;
+  margin-left: 100px;*/
 }
+
 
 .title {
   text-align: center;
@@ -52,6 +54,7 @@
   margin-top: auto;
   margin-bottom: auto;
 }
+
 
 /*
 .center {
