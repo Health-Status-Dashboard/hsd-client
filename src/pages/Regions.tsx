@@ -192,51 +192,51 @@ export default function Regions() {
 
                     <div className="row">
                         <div style={{ margin: "0 auto" }}>
-                            <div className="blue" style={{ position: "relative", height: "90vh", width: "83%", margin: "0 auto", padding: "10px" }}>
-                                <Chart
-                                    className='blue'
-                                    ref={chartRef}
-                                    type="choropleth"
-                                    data={{
-                                        labels: data.map(
-                                            (d: any) => d.properties["name"]
-                                        ),
-                                        datasets: [
-                                            {
-                                                outline: data,
-                                                label: "Countries",
-                                                data: data.map((d: any) => ({
-                                                    feature: d,
-                                                    value: Number(stateData[d.properties.name])
-                                                })),
-                                                // backgroundColor: ["#94BA62", "#59A22F", "#1A830C"]
+                            <div className="blue" style={{ position: "relative", height: "70vh", width: "83%", margin: "0 auto" /*, padding: "10px"*/ }}>
+                                <div style={{ position: "relative", height: "60vh", width: "83%", margin: "0 auto", top: "10%" }}>
+                                    <Chart
+                                        className='blue'
+                                        ref={chartRef}
+                                        type="choropleth"
+                                        data={{
+                                            labels: data.map(
+                                                (d: any) => d.properties["name"]
+                                            ),
+                                            datasets: [
+                                                {
+                                                    outline: data,
+                                                    label: "Countries",
+                                                    data: data.map((d: any) => ({
+                                                        feature: d,
+                                                        value: Number(stateData[d.properties.name])
+                                                    })),
+                                                    // backgroundColor: ["#94BA62", "#59A22F", "#1A830C"]
+                                                }
+                                            ]
+                                        }}
+                                        options={{
+                                            showOutline: true,
+                                            showGraticule: true,
+                                            plugins: {
+                                                legend: {
+                                                    display: false
+                                                }
+                                            },
+                                            maintainAspectRatio: true,
+                                            responsive: true,
+                                            scales: {
+                                                // xy: {
+                                                //     projection: "equalEarth"
+                                                // }
+                                                // Hide color scale
+                                                // color: {
+                                                //   display: false
+                                                // }
                                             }
-                                        ]
-                                    }}
-                                    options={{
-                                        showOutline: true,
-                                        showGraticule: true,
-                                        plugins: {
-                                            legend: {
-                                                display: false
-                                            }
-                                        },
-                                        maintainAspectRatio: true,
-                                        responsive: true,
-                                        scales: {
-                                            // xy: {
-                                            //     projection: "equalEarth"
-                                            // }
-                                            // Hide color scale
-                                            // color: {
-                                            //   display: false
-                                            // }
-                                        }
-                                    }}
-                                />
+                                        }}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                        <div className="col-1">
                         </div>
                     </div>
                 </div>
