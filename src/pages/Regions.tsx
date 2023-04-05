@@ -2,6 +2,8 @@
 
 import * as React from 'react'
 import Container from 'react-bootstrap/Container';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
@@ -46,9 +48,10 @@ ChartJS.register(
 
 // this is all placeholder data
 
+import { deathData } from '../regionPlaceholderData'
 
 const regionSumm: ISummary = {
-    title: "Overall Death Rate Data by State",
+    title: "Death Rate Data by State",
     headers: [
         {
             value: "Deaths per 100,000",
@@ -98,7 +101,16 @@ function underscoreStates(data: any) {
     return data
 }
 
+//TODO make this an async function that makes an api call to the back end 
+// back end should do the parsing that happens here
+function getDeathData(keyWord: string) {
+    const newData = deathData.filter(obj => obj.cause_of_death === keyWord);
+    return newData
+}
 
+
+
+//TODO replace this reset button with API call 
 async function initData(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
     try {
@@ -114,12 +126,18 @@ async function initData(event: React.MouseEvent<HTMLButtonElement>) {
 export default function Regions() {
 
     const chartRef = useRef();
-    const [data, setData] = useState<any>([]);
+    const [geoData, setGeoData] = useState<any>([]);
     const [stateData, setStateData] = useState<any>([]);
-    const [info, setInfo] = useState<any>([]);
+
+    const dataHandler = (keyWord: any) => {
+        setStateData(renameStateKeys(getDeathData(keyWord)[0]))
+    }
 
     //const [lifeExpectancy, saveLifeExpectancy] = React.useState(lineData);
     React.useEffect(() => {
+        //TODO replace this API call with one to the endpoint in regionPlaceholderData
+        //https://data.cdc.gov/resource/489q-934x.json?year_and_quarter=2022%20Q3&rate_type=Age-adjusted&time_period=12%20months%20ending%20with%20quarter
+
         /*
         fetch(getJurisdictions)
             .then(response => response.json())
@@ -127,22 +145,14 @@ export default function Regions() {
                 saveLifeExpectancy(data[0]);
             })
             */
-        //let arr = Array.from({ length: 57 }, () => Math.floor(Math.random() * 57));
 
+        setStateData(renameStateKeys(sData))
 
-        const requestOptions = {
-            headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Headers": "*",
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "*"
-            }
-        }
 
         fetch('http://unpkg.com/us-atlas/states-10m.json')
             .then((response) => response.json())
             .then((value) => {
-                setData(underscoreStates(
+                setGeoData(underscoreStates(
                     ChartGeo.topojson.feature(
                         value,
                         value.objects["states"]
@@ -150,10 +160,8 @@ export default function Regions() {
                     ).features)
                 );
             });
-        setStateData(renameStateKeys(sData))
 
     }, []);
-    console.log(underscoreStates(data))
     return (
         <>
             <Navbar bg="dark" variant="dark">
@@ -184,6 +192,25 @@ export default function Regions() {
                         <div className="col-10">
                             <div className="region-container">
                                 <SummaryCard data={regionSumm} />
+                                <DropdownButton id="dropdown-basic-button" title="Causes of Death" variant="transparent">
+                                    <Dropdown.Item onClick={() => dataHandler("All causes")}>All Causes</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => dataHandler("Alzheimer disease")}>Alzheimer's Disease</Dropdown.Item>
+                                    <Dropdown.Item href="#/action-3">COVID-19</Dropdown.Item>
+                                    <Dropdown.Item href="#/action-1">Cancer</Dropdown.Item>
+                                    <Dropdown.Item href="#/action-2">Chronic Liver Disease and Cirrhosis</Dropdown.Item>
+                                    <Dropdown.Item href="#/action-3">Chronic Lower Respiratory Diseases</Dropdown.Item>
+                                    <Dropdown.Item href="#/action-1">Diabetes</Dropdown.Item>
+                                    <Dropdown.Item href="#/action-2">Heart Disease</Dropdown.Item>
+                                    <Dropdown.Item href="#/action-3">HIV Disease</Dropdown.Item>
+                                    <Dropdown.Item href="#/action-1">Homicide</Dropdown.Item>
+                                    <Dropdown.Item href="#/action-2">Hypertensiona</Dropdown.Item>
+                                    <Dropdown.Item href="#/action-3">Influenza and Pneumonia</Dropdown.Item>
+                                    <Dropdown.Item href="#/action-1">Kidney Disease</Dropdown.Item>
+                                    <Dropdown.Item href="#/action-2">Parkinson Disease</Dropdown.Item>
+                                    <Dropdown.Item href="#/action-3">Pneumonitis due to solids and liquids</Dropdown.Item>
+                                    <Dropdown.Item href="#/action-2">Septicemia</Dropdown.Item>
+                                    <Dropdown.Item href="#/action-3">Stroke</Dropdown.Item>
+                                </DropdownButton>
                             </div>
                         </div>
                         <div className="col-1">
@@ -199,18 +226,17 @@ export default function Regions() {
                                         ref={chartRef}
                                         type="choropleth"
                                         data={{
-                                            labels: data.map(
+                                            labels: geoData.map(
                                                 (d: any) => d.properties["name"]
                                             ),
                                             datasets: [
                                                 {
-                                                    outline: data,
+                                                    outline: geoData,
                                                     label: "Countries",
-                                                    data: data.map((d: any) => ({
+                                                    data: geoData.map((d: any) => ({
                                                         feature: d,
                                                         value: Number(stateData[d.properties.name])
                                                     })),
-                                                    // backgroundColor: ["#94BA62", "#59A22F", "#1A830C"]
                                                 }
                                             ]
                                         }}
