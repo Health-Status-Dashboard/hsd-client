@@ -85,12 +85,17 @@ function renameStateKeys(data: any) {
     for (var k in data) {
         if (data.hasOwnProperty(k)) {
             if (k.substring(0, 4) === "rate") {
-                var newK = k.slice(5)
-                data[newK.toLowerCase()] = data[k]
+                var spaced = k.slice(5).replace(/_/g, " ")
+                var words = spaced.split(" ");
+                var newK = words.map((word) => {
+                    return word[0].toUpperCase() + word.substring(1);
+                }).join(" ");
+                data[newK] = data[k]
                 delete data[k]
             }
         }
     }
+    console.log(data)
     return data
 }
 
@@ -133,6 +138,16 @@ export default function Regions() {
         setStateData(renameStateKeys(getDeathData(keyWord)[0]))
     }
 
+    const regionSumm: ISummary = {
+        title: "Deaths per 100,000 Residents (2022)",
+        headers: [
+            {
+                value: <strong>{stateData.cause_of_death}</strong>,
+                label: "Cause of Death"
+            }
+        ]
+    }
+
     //const [lifeExpectancy, saveLifeExpectancy] = React.useState(lineData);
     React.useEffect(() => {
         //TODO replace this API call with one to the endpoint in regionPlaceholderData
@@ -152,12 +167,12 @@ export default function Regions() {
         fetch('http://unpkg.com/us-atlas/states-10m.json')
             .then((response) => response.json())
             .then((value) => {
-                setGeoData(underscoreStates(
+                setGeoData(
                     ChartGeo.topojson.feature(
                         value,
                         value.objects["states"]
                         //@ts-ignore
-                    ).features)
+                    ).features
                 );
             });
 
@@ -192,24 +207,24 @@ export default function Regions() {
                         <div className="col-10">
                             <div className="region-container">
                                 <SummaryCard data={regionSumm} />
+
                                 <DropdownButton id="dropdown-basic-button" title="Causes of Death" variant="transparent">
                                     <Dropdown.Item onClick={() => dataHandler("All causes")}>All Causes</Dropdown.Item>
                                     <Dropdown.Item onClick={() => dataHandler("Alzheimer disease")}>Alzheimer's Disease</Dropdown.Item>
-                                    <Dropdown.Item href="#/action-3">COVID-19</Dropdown.Item>
-                                    <Dropdown.Item href="#/action-1">Cancer</Dropdown.Item>
-                                    <Dropdown.Item href="#/action-2">Chronic Liver Disease and Cirrhosis</Dropdown.Item>
-                                    <Dropdown.Item href="#/action-3">Chronic Lower Respiratory Diseases</Dropdown.Item>
-                                    <Dropdown.Item href="#/action-1">Diabetes</Dropdown.Item>
-                                    <Dropdown.Item href="#/action-2">Heart Disease</Dropdown.Item>
-                                    <Dropdown.Item href="#/action-3">HIV Disease</Dropdown.Item>
-                                    <Dropdown.Item href="#/action-1">Homicide</Dropdown.Item>
-                                    <Dropdown.Item href="#/action-2">Hypertensiona</Dropdown.Item>
-                                    <Dropdown.Item href="#/action-3">Influenza and Pneumonia</Dropdown.Item>
-                                    <Dropdown.Item href="#/action-1">Kidney Disease</Dropdown.Item>
-                                    <Dropdown.Item href="#/action-2">Parkinson Disease</Dropdown.Item>
-                                    <Dropdown.Item href="#/action-3">Pneumonitis due to solids and liquids</Dropdown.Item>
-                                    <Dropdown.Item href="#/action-2">Septicemia</Dropdown.Item>
-                                    <Dropdown.Item href="#/action-3">Stroke</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => dataHandler("COVID-19")}>COVID-19</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => dataHandler("Cancer")}>Cancer</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => dataHandler("Chronic liver disease and cirrhosis")}>Chronic Liver Disease and Cirrhosis</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => dataHandler("Chronic lower respiratory diseases")}>Chronic Lower Respiratory Diseases</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => dataHandler("Diabetes")}>Diabetes</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => dataHandler("Heart disease")}>Heart Disease</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => dataHandler("HIV disease")}>HIV Disease</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => dataHandler("Hypertension")}>Hypertension</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => dataHandler("Influenza and pneumonia")}>Influenza and Pneumonia</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => dataHandler("Kidney disease")}>Kidney Disease</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => dataHandler("Parkinson disease")}>Parkinson Disease</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => dataHandler("Pneumonitis due to solids and liquids")}>Pneumonitis due to solids and liquids</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => dataHandler("Septicemia")}>Septicemia</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => dataHandler("Stroke")}>Stroke</Dropdown.Item>
                                 </DropdownButton>
                             </div>
                         </div>
