@@ -30,7 +30,7 @@ import { IProportional } from '../interfaces/IProportional';
 import { IBar } from '../interfaces/IBar';
 import { ILine } from '../interfaces/ILine';
 
-import { initLocalJurisdictions, getLocalJurisdictions, initJurisdictions, getJurisdictions } from '../endpoints/lifeExpectancyURLs'
+import { initJurisdictions, getJurisdictions } from '../endpoints/lifeExpectancyURLs'
 import { colors, gradient } from '../colors/colors'
 
 ChartJS.register(

@@ -20,7 +20,7 @@ import { IProportional } from '../interfaces/IProportional';
 import { IBar } from '../interfaces/IBar';
 import { ILine } from '../interfaces/ILine';
 
-import { initLocalJurisdictions, getLocalJurisdictions, initJurisdictions, getJurisdictions } from '../endpoints/lifeExpectancyURLs'
+import { initJurisdictions, getJurisdictions, initAlcoholTobaccoData, getAlcoholTobaccoData } from '../endpoints/lifeExpectancyURLs'
 import { colors, gradient } from '../colors/colors'
 
 // this is all placeholder data
@@ -105,29 +105,6 @@ const summaryData: ISummary = {
     ]
 }
 
-/*
-const lineData: ILongitudinal = {
-    title: 'US Life Expectancy (1970 - 2020)',
-    labels: ['1970', '1980', '1990', '2000', '2010', '2020'],
-    datasets: [
-        {
-            label: 'US Life Expectancy',
-            data: [70.8, 73.3, 75.4, 76.8, 78.7, 77.0],
-            backgroundColor: colors.mitreBlue,
-            borderColor: colors.mitreBlue
-        }
-    ]
-}
-*/
-
-const lineData: ILine = {
-    title: 'US Life Expectancy (1970 - 2020)',
-    label: 'US Life Expectancy',
-    x: ['1970', '1980', '1990', '2000', '2010', '2020'],
-    y: [70.8, 73.3, 75.4, 76.8, 78.7, 77.0],
-    color: colors.mitreBlue
-
-}
 
 
 const alcoholData: IStats = {
@@ -155,6 +132,13 @@ const alcoholData: IStats = {
         }
 
     ]
+    // alcohol: https://chronicdata.cdc.gov/resource/5hba-acwf.json?locationabbr=US&stratification1=Overall&$where=yearstart%20%3E%202020&topic=Alcohol
+    // tobacco: https://chronicdata.cdc.gov/resource/g4ie-h725.json?locationabbr=US&yearend=2021&stratification1=Overall&topic=Tobacco
+}
+
+const emptyalcoholData: IStats = {
+    title: "",
+    stats: []
     // alcohol: https://chronicdata.cdc.gov/resource/5hba-acwf.json?locationabbr=US&stratification1=Overall&$where=yearstart%20%3E%202020&topic=Alcohol
     // tobacco: https://chronicdata.cdc.gov/resource/g4ie-h725.json?locationabbr=US&yearend=2021&stratification1=Overall&topic=Tobacco
 }
@@ -324,16 +308,11 @@ const uninsuredByAge: IBar = {
 
 
 
-
-
-
-
-
-
 async function initData(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
     try {
-        const response = await fetch(initJurisdictions);
+        var response = await fetch(initJurisdictions);
+        response = await fetch(initAlcoholTobaccoData);
         const { status } = response;
         return status;
     } catch (err) {
@@ -347,15 +326,31 @@ async function initData(event: React.MouseEvent<HTMLButtonElement>) {
 export default function Home() {
 
 
-    const [lifeExpectancy, saveLifeExpectancy] = React.useState(lineData);
+    
+    //empty object for now
+    const [lifeExpectancy, saveLifeExpectancy] = React.useState({
+        title: '',
+        label: '',
+        x: [],
+        y: [],
+        color: colors.mitreBlue
+    });
     React.useEffect(() => {
-
         fetch(getJurisdictions)
             .then(response => response.json())
             .then(data => {
                 saveLifeExpectancy(data[0]);
             })
     }, []);
+    const [alcoholDataset, saveAlcoholData] = React.useState(emptyalcoholData);
+    React.useEffect(() => {
+        fetch(getAlcoholTobaccoData)
+            .then(response => response.json())
+            .then(data => {
+                saveAlcoholData(data[0]);
+            })
+    }, []);
+
     return (
         <>
             <Navbar bg="dark" variant="dark">
@@ -380,7 +375,7 @@ export default function Home() {
                     <div className="row">
                         <div className="col-3">
                             <div className="region-container">
-                                <StatsCard data={alcoholData} />
+                                <StatsCard data={alcoholDataset} />
                             </div>
                         </div>
 
