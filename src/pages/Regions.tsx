@@ -60,24 +60,6 @@ const regionSumm: ISummary = {
     ]
 }
 
-let sData = {
-    "year_and_quarter": "2022 Q3", "time_period": "12 months ending with quarter", "cause_of_death": "All causes",
-    "rate_type": "Age-adjusted", "unit": "Deaths per 100,000", "rate_overall": "833.7", "rate_sex_female": "700.2", "rate_sex_male": "986",
-    "rate_alaska": "888.4", "rate_alabama": "1014.5", "rate_arkansas": "1027", "rate_arizona": "845.8", "rate_california": "710.1",
-    "rate_colorado": "789.1", "rate_connecticut": "716.9", "rate_district_of_columbia": "815.7", "rate_delaware": "848.3",
-    "rate_florida": "747.1", "rate_georgia": "895.7", "rate_hawaii": "633.9", "rate_iowa": "852.6", "rate_idaho": "840.6",
-    "rate_illinois": "814", "rate_indiana": "977.2", "rate_kansas": "906.5", "rate_kentucky": "1083.7", "rate_louisiana": "983.3",
-    "rate_massachusetts": "718.9", "rate_maryland": "776.8", "rate_maine": "902.6", "rate_michigan": "920", "rate_minnesota": "760.9",
-    "rate_missouri": "932.6", "rate_mississippi": "1093.2", "rate_montana": "871.9", "rate_north_carolina": "893.1",
-    "rate_north_dakota": "800.8", "rate_nebraska": "814.5", "rate_new_hampshire": "791.6", "rate_new_jersey": "702.8",
-    "rate_new_mexico": "959", "rate_nevada": "886.6", "rate_new_york": "682.9", "rate_ohio": "983", "rate_oklahoma": "1058.2",
-    "rate_oregon": "840.2", "rate_pennsylvania": "869", "rate_rhode_island": "754.4", "rate_south_carolina": "953.4",
-    "rate_south_dakota": "849.7", "rate_tennessee": "1044.7", "rate_texas": "848.2", "rate_utah": "796.6",
-    "rate_virginia": "835.6", "rate_vermont": "787.8", "rate_washington": "787.8", "rate_wisconsin": "843.5",
-    "rate_west_virginia": "1177.9", "rate_wyoming": "910.3"
-}
-//https://data.cdc.gov/resource/489q-934x.json?year_and_quarter=2022%20Q3
-
 
 
 function renameStateKeys(data: any) {
@@ -95,7 +77,6 @@ function renameStateKeys(data: any) {
             }
         }
     }
-    console.log(data)
     return data
 }
 
@@ -146,8 +127,8 @@ export default function Regions() {
         ]
     }
 
-    const barSumm: ISummary = {
-        title: "Deaths Overall",
+    const sexSumm: ISummary = {
+        title: "By Sex",
         headers: [
             {
                 value: <strong>{stateData.cause_of_death}</strong>,
@@ -156,8 +137,19 @@ export default function Regions() {
         ]
     }
 
-    const deathsByAge: IBar = {
-        title: ``,
+    const ageSumm: ISummary = {
+        title: "By Age",
+        headers: [
+            {
+                value: <strong>{stateData.cause_of_death}</strong>,
+                label: "Cause of Death"
+            }
+        ]
+    }
+
+
+    const deathsBySex: IBar = {
+        title: "Deaths per 100,000 Residents",
         labels: ["Sex"],
         datasets: [
             {
@@ -170,16 +162,96 @@ export default function Regions() {
             {
                 label: 'Female',
                 backgroundColor: colors.cerise,
-                borderColor: 'rgba(16,44,76,0.8)',
+                borderColor: colors.cerise,
                 borderWidth: 1,
                 data: [stateData["Sex Female"]]
             },
             {
                 label: "Male",
                 backgroundColor: colors.mitreBlue,
-                borderColor: 'rgba(16,44,76,0.8)',
+                borderColor: colors.mitreBlue,
                 borderWidth: 1,
                 data: [stateData["Sex Male"]]
+            }
+        ]
+    }
+
+    // color gradient by transparency
+    var grad: Array<string> = gradient('rgba(0,91,148)', 9)
+
+    const deathsByAge: IBar = {
+        title: "Deaths per 100,000 Residents",
+        labels: ["Age Range"],
+        datasets: [
+            {
+                label: 'Overall',
+                backgroundColor: colors.black,
+                borderColor: colors.black,
+                borderWidth: 1,
+                data: [stateData["Overall"]]
+            },
+            {
+                label: '1-4',
+                backgroundColor: grad[0],
+                borderColor: grad[8],
+                borderWidth: 1,
+                data: [stateData["Age 1 4"]]
+            },
+            {
+                label: "15-24",
+                backgroundColor: grad[1],
+                borderColor: grad[1],
+                borderWidth: 1,
+                data: [stateData["Age 15 24"]]
+            },
+            {
+                label: "25-34",
+                backgroundColor: grad[2],
+                borderColor: grad[2],
+                borderWidth: 1,
+                data: [stateData["Age 25 34"]]
+            },
+            {
+                label: "35-44",
+                backgroundColor: grad[3],
+                borderColor: grad[3],
+                borderWidth: 1,
+                data: [stateData["Age 35 44"]]
+            },
+            {
+                label: "45-54",
+                backgroundColor: grad[4],
+                borderColor: grad[4],
+                borderWidth: 1,
+                data: [stateData["Age 45 54"]]
+            },
+            {
+                label: "55-64",
+                backgroundColor: grad[5],
+                borderColor: grad[5],
+                borderWidth: 1,
+                data: [stateData["Age 55 64"]]
+            },
+            {
+                label: "65-74",
+                backgroundColor: grad[6],
+                borderColor: grad[6],
+                borderWidth: 1,
+                data: [stateData["65 74"]]
+            },
+            {
+                label: "75-84",
+                backgroundColor: grad[7],
+                borderColor: grad[7],
+                borderWidth: 1,
+                data: [stateData["Age 75 84"]]
+            },
+            {
+                label: "85+",
+                backgroundColor: grad[8],
+                borderColor: grad[8],
+                borderWidth: 1,
+                data: [stateData["Age 85 Plus"]]
             }
         ]
     }
@@ -201,7 +273,7 @@ export default function Regions() {
             })
             */
 
-        setStateData(renameStateKeys(sData))
+        setStateData(renameStateKeys(deathData[0]))
 
 
         fetch('http://unpkg.com/us-atlas/states-10m.json')
@@ -217,6 +289,7 @@ export default function Regions() {
             });
 
     }, []);
+    console.log(stateData)
     return (
         <>
             <Navbar bg="dark" variant="dark">
@@ -322,9 +395,15 @@ export default function Regions() {
                 <div className="row mt-4">
                     <div className="col-1">
                     </div>
-                    <div className="col-10">
+                    <div className="col-5">
                         <div className="region-container" >
-                            <SummaryCard data={barSumm} />
+                            <SummaryCard data={sexSumm} />
+                            <BarCard data={deathsBySex} />
+                        </div>
+                    </div>
+                    <div className="col-5">
+                        <div className="region-container" >
+                            <SummaryCard data={ageSumm} />
                             <BarCard data={deathsByAge} />
                         </div>
                     </div>
