@@ -10,7 +10,7 @@ export const colors = {
     black: "rgb(0,0,0)"
 }
 
-export function gradient(color: string, cardinality: number) {
+export function gradient(color: string, cardinality: number): Array<string> {
     var colors = []
     var mod_color = color.slice(0, -1)
     mod_color = mod_color
