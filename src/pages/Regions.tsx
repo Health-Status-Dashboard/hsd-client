@@ -235,12 +235,13 @@ export default function Regions() {
                                             }
                                         }}
                                     />
+                                    <br/>
+                                    <p className='source_small_font'>SOURCE.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
             <div className="foot">
             </div>

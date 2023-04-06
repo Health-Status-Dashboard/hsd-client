@@ -7,7 +7,11 @@ export const colors = {
     saffron: "rgb(249, 194, 46)",
     green: "rgb(77, 139, 49)",
     white: "rgb(255,255,255)",
-    black: "rgb(0,0,0)"
+    black: "rgb(0,0,0)", //todo need 12 colors for months 
+    lightOrange: "rgb(252, 199, 146)", //can change later
+    darkOrange: "rgb(252, 144, 35)", //can change later
+    lightBlue: "rgb(150, 220, 255)",//can change later
+    pink:"rgb(240, 77, 218)"//can change later
 }
 
 export function gradient(color: string, cardinality: number) {

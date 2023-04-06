@@ -20,176 +20,9 @@ import { IProportional } from '../interfaces/IProportional';
 import { IBar } from '../interfaces/IBar';
 import { ILine } from '../interfaces/ILine';
 
-import { initJurisdictions, getJurisdictions, initAlcoholTobaccoData, getAlcoholTobaccoData } from '../endpoints/lifeExpectancyURLs'
+import { initJurisdictions, getJurisdictions, initAlcoholTobaccoData, getAlcoholTobaccoData, initDCData, getDCData, 
+    initNAWData, getNAWData, initUSPopulationData, getUSPopulationData, initCDSummaryData, getCDSummaryData, getWeightSummary } from '../endpoints/lifeExpectancyURLs'
 import { colors, gradient } from '../colors/colors'
-
-// this is all placeholder data
-
-/*
-const USDATA: Region = {
-    _id: "1",
-    name: "United States",
-    population: "334,533,505",
-    code: "123456789",
-    lifeExpectancy: {
-        years: [1970, 1980, 1990, 2000, 2010, 2020],
-        ages: [70.8, 73.3, 75.4, 76.8, 78.7, 77.0]
-    }
-}
-*/
-
-
-const obesitySummary: ISummary = {
-    title: "Weight Management",
-    headers: [
-        {
-            value: "1.6",
-            label: "Adult Median Daily Frequency of Vegetable Consumption (2021)"
-        },
-        {
-            value: "23.7%",
-            label: "Proportion of Adults Reporting no Leisure-Time Physical Activity in the last month (2021)"
-        }
-    ]
-}
-
-/*
-const obesitySummary: Stats = {
-    title: "Weight Management",
-    stats: [
-        {
-            value: "1.6",
-            label: "Adult Median Daily Frequency of Vegetable Consumption"
-        },
-        {
-            value: "23.7%",
-            label: "No Reported Leisure-time Physical Activity among Adults"
-        }
-    ]
-}
-*/
-const pieData: IProportional = {
-    title: 'US Adult Weight Breakdown (2021)',
-    labels: ['Obese', 'Overweight', 'Healthy', 'Other/Underweight'],
-    datasets: [{
-        label: 'Percentage of Population',
-        data: [33.9, 34.5, 29.9, 1.7],
-        backgroundColor: [
-            colors.vermilion,
-            colors.saffron,
-            colors.green,
-            colors.mitreDarkBlue],
-        borderColor: [
-            colors.vermilion,
-            colors.saffron,
-            colors.green,
-            colors.white],
-        borderWidth: 0
-    }]
-}
-// weight data
-// https://chronicdata.cdc.gov/resource/g4ie-h725.json?locationabbr=US&yearend=2021&stratification1=Overall&topic=Nutrition, Physical Activity, and Weight Status
-
-
-const summaryData: ISummary = {
-    title: "United States Overview",
-    headers: [
-        {
-            value: "334,533,505",
-            label: "Population"
-        },
-        {
-            value: 1.754,
-            label: "Fertility Rate"
-        }
-    ]
-}
-
-
-
-const alcoholData: IStats = {
-    title: "Alcohol & Tobacco",
-    stats: [
-        {
-            value: <strong>15.4%</strong>,
-            label: "adults report recent heavy drinking in 2021"
-        },
-        {
-            value: <strong>6.3%</strong>,
-            label: "adults report recent binge drinking in 2021"
-        },
-        {
-            value: <strong>14.4%</strong>,
-            label: "adults report smoking in 2021"
-        },
-        {
-            value: <strong>3.5%</strong>,
-            label: "adults report using smokeless tobacco in 2021"
-        },
-        {
-            value: <strong>50.8%</strong>,
-            label: "adult smokers report attempts to quit tobacco in 2021"
-        }
-
-    ]
-    // alcohol: https://chronicdata.cdc.gov/resource/5hba-acwf.json?locationabbr=US&stratification1=Overall&$where=yearstart%20%3E%202020&topic=Alcohol
-    // tobacco: https://chronicdata.cdc.gov/resource/g4ie-h725.json?locationabbr=US&yearend=2021&stratification1=Overall&topic=Tobacco
-}
-
-const emptyalcoholData: IStats = {
-    title: "",
-    stats: []
-    // alcohol: https://chronicdata.cdc.gov/resource/5hba-acwf.json?locationabbr=US&stratification1=Overall&$where=yearstart%20%3E%202020&topic=Alcohol
-    // tobacco: https://chronicdata.cdc.gov/resource/g4ie-h725.json?locationabbr=US&yearend=2021&stratification1=Overall&topic=Tobacco
-}
-
-
-
-
-const causeOfDeathSummary: ISummary = {
-    title: "US Deaths by Cause",
-    headers: [
-        {
-            value: "599,156",
-            label: "All Causes (3 month period)"
-        },
-        {
-            value: "Accidents, Suicide, OD's, Homicides",
-            label: "Not Shown"
-        }
-    ]
-}
-
-const causesOfDeath: IBar = {
-    title: "US Causes of Death (current period)",
-    labels: ['Septicemia', 'Malignant Neoplasms', 'Diabetes', 'Alzheimers', 'Influenza',
-        'Chronic Lower Respiratory Diseases', 'Other Respiratory Diseases', 'Nephritis', 'Abnormal/Other', 'Heart Disease',
-        'Cerebrovascular Disease', 'COVID-19 Multiple Causes', 'COVID-19 Primary Cause'],
-    datasets: [
-        {
-            label: 'January 2023',
-            backgroundColor: 'rgba(16,44,76,0.3)',
-            borderColor: 'rgba(16,44,76,0.8)',
-            borderWidth: 0,
-            data: [3973, 51911, 8616, 10862, 5804, 13692, 4652, 5099, 13131, 60477, 14727, 14681, 9848]
-        },
-        {
-            label: 'February 2023',
-            backgroundColor: 'rgba(16,44,76,0.5)',
-            borderColor: 'rgba(16,44,76,0.8)',
-            borderWidth: 0,
-            data: [3051, 45406, 7066, 8936, 3461, 11363, 3765, 4182, 14286, 49699, 12076, 8411, 5425]
-        },
-        {
-            label: 'March 2023',
-            backgroundColor: 'rgba(16,44,76,0.8)',
-            borderColor: 'rgba(16,44,76,0.8)',
-            borderWidth: 0,
-            data: [1254, 18261, 2386, 3617, 1249, 4542, 1550, 1559, 5855, 19090, 4757, 2719, 1742]
-        }
-    ]
-}
-// monthly cause of Death Data: https://data.cdc.gov/resource/9dzk-mvmi.json?year=2023
 
 
 
@@ -313,6 +146,7 @@ async function initData(event: React.MouseEvent<HTMLButtonElement>) {
     try {
         var response = await fetch(initJurisdictions);
         response = await fetch(initAlcoholTobaccoData);
+        response = await fetch (initDCData); //TODO resaves
         const { status } = response;
         return status;
     } catch (err) {
@@ -325,9 +159,21 @@ async function initData(event: React.MouseEvent<HTMLButtonElement>) {
 
 export default function Home() {
 
+//general Us population data
+    const [populationData, savePopulationData] = React.useState({
+        title: "",
+        headers: []
+    });
+    React.useEffect(() => {
+        fetch(getUSPopulationData)
+            .then(response => response.json())
+            .then(data => {
+                savePopulationData(data[0]);
+            })
+    }, []);
 
-    
-    //empty object for now
+
+//life expectancy data section
     const [lifeExpectancy, saveLifeExpectancy] = React.useState({
         title: '',
         label: '',
@@ -342,7 +188,12 @@ export default function Home() {
                 saveLifeExpectancy(data[0]);
             })
     }, []);
-    const [alcoholDataset, saveAlcoholData] = React.useState(emptyalcoholData);
+
+//alcohol and tobacco data section
+    const [alcoholDataset, saveAlcoholData] = React.useState({
+        title: "",
+        stats: []
+    });
     React.useEffect(() => {
         fetch(getAlcoholTobaccoData)
             .then(response => response.json())
@@ -350,6 +201,95 @@ export default function Home() {
                 saveAlcoholData(data[0]);
             })
     }, []);
+    
+//death causes data section
+
+    const [causeOfDeathSummary, savecauseOfDeathSummary] = React.useState({
+        title: "",
+        headers: [],
+    });
+    React.useEffect(() => { 
+        fetch(getCDSummaryData)
+            .then(response => response.json())
+            .then(data => {
+                savecauseOfDeathSummary(data[0]);
+            })
+    }, []);
+
+    const [DCDataset, saveDCData] = React.useState({
+        title: "",
+        labels: [],
+        datasets: []
+    });
+    React.useEffect(() => { 
+        fetch(getDCData)
+            .then(response => response.json())
+            .then(data => {
+                var barChartColors = Object.values(colors);
+                for (var i = 0; i < data[0].datasets.length; i++){
+                    data[0].datasets[i].backgroundColor= barChartColors[i];
+                    data[0].datasets[i].borderColor = barChartColors[i];
+                    data[0].datasets[i].borderWidth= 1;
+                }
+                saveDCData(data[0]);
+            })
+    }, []);
+
+//nutrition, activity and weight data section
+
+    const [weightSummary, saveWeightSummary] = React.useState({
+        title: "",
+        headers: [],
+    });
+    React.useEffect(() => { 
+        fetch(getWeightSummary)
+            .then(response => response.json())
+            .then(data => {
+                saveWeightSummary(data[0]);
+            })
+    }, []);
+
+
+    const [NAWDataset, saveNAWData] = React.useState({
+        title: '',
+        labels: [],
+        datasets: []
+    });
+    React.useEffect(() => { 
+        fetch(getNAWData)
+            .then(response => response.json())
+            .then(data => {
+                var dataObj = data[0];
+                data[0].datasets[0].backgroundColor= [
+                    colors.vermilion,
+                    colors.saffron,
+                    colors.green,
+                    colors.mitreDarkBlue];
+                data[0].datasets[0].borderColor= [
+                    colors.vermilion,
+                    colors.saffron,
+                    colors.green,
+                    colors.white];
+                data[0].datasets[0].borderWidth= 0;
+                saveNAWData(dataObj);
+            })
+    }, []);
+
+//uninsured population section
+
+// const [uninsuredSummary, saveUninsuredSummary] = React.useState({
+//     title: "",
+//     headers: [],
+// });
+// React.useEffect(() => { 
+//     fetch(getWeightSummary)
+//         .then(response => response.json())
+//         .then(data => {
+//             saveWeightSummary(data[0]);
+//         })
+// }, []);
+
+
 
     return (
         <>
@@ -376,6 +316,8 @@ export default function Home() {
                         <div className="col-3">
                             <div className="region-container">
                                 <StatsCard data={alcoholDataset} />
+                                <br/>
+                                <p className='source_small_font'>DPH Public Inquiries- CDC Chronic Data- Alcohol; Tobacco. Sourced from: http://www.cdc.gov/nccdphp/dph/. </p>
                             </div>
                         </div>
 
@@ -383,18 +325,22 @@ export default function Home() {
                         <div className="col-6 align-items-center">
                             <div className="region-container">
                                 <div className="summ-space">
-                                    <SummaryCard data={summaryData} />
+                                    <SummaryCard data={populationData} />
                                 </div>
                                 <SingleLineCard data={lifeExpectancy} />
+                                <br/>
+                                <p className='source_small_font'>Population, fertility datasets: US Census Data 2021, SOURCE#2; Life Expectancy Dataset: National Center for Health Statistics. NCHS - Death rates and life expectancy at birth. Available from https://data.cdc.gov/d/w9j2-ggv5.</p>
                             </div>
                         </div>
 
 
                         <div className="col-3">
                             <div className="region-container">
-                                <SummaryCard data={obesitySummary} />
+                                <SummaryCard data={weightSummary} />
                                 <br />
-                                <PieCard data={pieData} />
+                                <PieCard data={NAWDataset} />
+                                <br />
+                                <p className='source_small_font'>SOURCE 1; DPH Public Inquiries- CDC Chronic Data- US Chronic Disease Indicators (CDI). Sourced from: 	http://www.cdc.gov/nccdphp/dph/. </p>
                             </div>
                         </div>
                     </div>
@@ -403,11 +349,13 @@ export default function Home() {
                         <div className="col-12">
                             <div className="region-container">
                                 <SummaryCard data={causeOfDeathSummary} />
-                                <BarCard data={causesOfDeath} />
+                                <BarCard data={DCDataset} />
+                                <br/>
+                                <p className='source_small_font'>National Center for Health Statistics. Monthly Provisional Counts of Deaths by Select Causes, 2020-2023. Available from https://data.cdc.gov/d/9dzk-mvmi.</p>
+
                             </div>
                         </div>
                     </div>
-
 
                     <div className="row mt-4">
                         <div className="col-12">
@@ -422,6 +370,8 @@ export default function Home() {
                                 <div className="summ-space">
                                 </div>
                                 <LineCard data={USUninsured} />
+                                <br/>
+                                <p className='source_small_font'>SOURCE.</p>
                             </div>
                         </div>
 
@@ -429,12 +379,11 @@ export default function Home() {
                             <div className="region-container">
                                 <BarCard data={uninsuredByEducation} />
                                 <BarCard data={uninsuredByAge} />
+                                <br />
+                                <p className='source_small_font'>SOURCE.</p>
                             </div>
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
             <div className="foot">
