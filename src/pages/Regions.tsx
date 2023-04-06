@@ -99,6 +99,8 @@ function renameStateKeys(data: any) {
     return data
 }
 
+
+// no longer using this
 function underscoreStates(data: any) {
     for (const obj of data) {
         obj.properties.name = obj.properties.name.replace(/ /g, "_").toLowerCase()
@@ -134,10 +136,6 @@ export default function Regions() {
     const [geoData, setGeoData] = useState<any>([]);
     const [stateData, setStateData] = useState<any>([]);
 
-    const dataHandler = (keyWord: any) => {
-        setStateData(renameStateKeys(getDeathData(keyWord)[0]))
-    }
-
     const regionSumm: ISummary = {
         title: "Deaths per 100,000 Residents (2022)",
         headers: [
@@ -146,6 +144,48 @@ export default function Regions() {
                 label: "Cause of Death"
             }
         ]
+    }
+
+    const barSumm: ISummary = {
+        title: "Deaths Overall",
+        headers: [
+            {
+                value: <strong>{stateData.cause_of_death}</strong>,
+                label: "Cause of Death"
+            }
+        ]
+    }
+
+    const deathsByAge: IBar = {
+        title: ``,
+        labels: ["Sex"],
+        datasets: [
+            {
+                label: 'Overall',
+                backgroundColor: colors.black,
+                borderColor: 'rgba(16,44,76,0.8)',
+                borderWidth: 1,
+                data: [stateData["Overall"]]
+            },
+            {
+                label: 'Female',
+                backgroundColor: colors.cerise,
+                borderColor: 'rgba(16,44,76,0.8)',
+                borderWidth: 1,
+                data: [stateData["Sex Female"]]
+            },
+            {
+                label: "Male",
+                backgroundColor: colors.mitreBlue,
+                borderColor: 'rgba(16,44,76,0.8)',
+                borderWidth: 1,
+                data: [stateData["Sex Male"]]
+            }
+        ]
+    }
+
+    const dataHandler = (keyWord: any) => {
+        setStateData(renameStateKeys(getDeathData(keyWord)[0]))
     }
 
     //const [lifeExpectancy, saveLifeExpectancy] = React.useState(lineData);
@@ -197,45 +237,36 @@ export default function Regions() {
             <h2 className="title" >Regional Health Status</h2>
             <br />
 
+            <div className="container-fluid">
 
-            <div>
-                <div className="container-fluid">
-
-                    <div className="row">
-                        <div className="col-1">
-                        </div>
-                        <div className="col-10">
-                            <div className="region-container">
-                                <SummaryCard data={regionSumm} />
-
-                                <DropdownButton id="dropdown-basic-button" title="Causes of Death" variant="transparent">
-                                    <Dropdown.Item onClick={() => dataHandler("All causes")}>All Causes</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => dataHandler("Alzheimer disease")}>Alzheimer's Disease</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => dataHandler("COVID-19")}>COVID-19</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => dataHandler("Cancer")}>Cancer</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => dataHandler("Chronic liver disease and cirrhosis")}>Chronic Liver Disease and Cirrhosis</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => dataHandler("Chronic lower respiratory diseases")}>Chronic Lower Respiratory Diseases</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => dataHandler("Diabetes")}>Diabetes</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => dataHandler("Heart disease")}>Heart Disease</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => dataHandler("HIV disease")}>HIV Disease</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => dataHandler("Hypertension")}>Hypertension</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => dataHandler("Influenza and pneumonia")}>Influenza and Pneumonia</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => dataHandler("Kidney disease")}>Kidney Disease</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => dataHandler("Parkinson disease")}>Parkinson Disease</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => dataHandler("Pneumonitis due to solids and liquids")}>Pneumonitis due to solids and liquids</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => dataHandler("Septicemia")}>Septicemia</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => dataHandler("Stroke")}>Stroke</Dropdown.Item>
-                                </DropdownButton>
-                            </div>
-                        </div>
-                        <div className="col-1">
-                        </div>
+                <div className="row">
+                    <div className="col-1">
                     </div>
+                    <div className="col-10">
+                        <div className="region-container">
+                            <SummaryCard data={regionSumm} />
 
-                    <div className="row">
-                        <div style={{ margin: "0 auto" }}>
-                            <div className="blue" style={{ position: "relative", height: "70vh", width: "83%", margin: "0 auto" /*, padding: "10px"*/ }}>
-                                <div style={{ position: "relative", height: "60vh", width: "83%", margin: "0 auto", top: "10%" }}>
+                            <DropdownButton id="dropdown-basic-button" title="Causes of Death" variant="transparent">
+                                <Dropdown.Item onClick={() => dataHandler("All causes")}>All Causes</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Alzheimer disease")}>Alzheimer's Disease</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("COVID-19")}>COVID-19</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Cancer")}>Cancer</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Chronic liver disease and cirrhosis")}>Chronic Liver Disease and Cirrhosis</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Chronic lower respiratory diseases")}>Chronic Lower Respiratory Diseases</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Diabetes")}>Diabetes</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Heart disease")}>Heart Disease</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("HIV disease")}>HIV Disease</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Hypertension")}>Hypertension</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Influenza and pneumonia")}>Influenza and Pneumonia</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Kidney disease")}>Kidney Disease</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Parkinson disease")}>Parkinson Disease</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Pneumonitis due to solids and liquids")}>Pneumonitis due to solids and liquids</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Septicemia")}>Septicemia</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Stroke")}>Stroke</Dropdown.Item>
+                            </DropdownButton>
+
+                            <div className="blue" style={{ position: "relative", height: "70vh", width: "89%", margin: "0 auto" /*, padding: "10px"*/ }}>
+                                <div style={{ position: "relative", height: "60vh", width: "89%", margin: "0 auto", top: "10%" }}>
                                     <Chart
                                         className='blue'
                                         ref={chartRef}
@@ -263,7 +294,7 @@ export default function Regions() {
                                                     display: false
                                                 }
                                             },
-                                            maintainAspectRatio: true,
+                                            maintainAspectRatio: false,
                                             responsive: true,
                                             scales: {
                                                 // xy: {
@@ -276,13 +307,35 @@ export default function Regions() {
                                             }
                                         }}
                                     />
+
                                 </div>
                             </div>
+
+
                         </div>
+                    </div>
+                    <div className="col-1">
                     </div>
                 </div>
 
+
+                <div className="row mt-4">
+                    <div className="col-1">
+                    </div>
+                    <div className="col-10">
+                        <div className="region-container" >
+                            <SummaryCard data={barSumm} />
+                            <BarCard data={deathsByAge} />
+                        </div>
+                    </div>
+                    <div className="col-1">
+                    </div>
+                </div>
+
+
+
             </div>
+
             <div className="foot">
             </div>
         </>
