@@ -2,6 +2,8 @@
 
 import * as React from 'react'
 import Container from 'react-bootstrap/Container';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
@@ -46,9 +48,10 @@ ChartJS.register(
 
 // this is all placeholder data
 
+import { deathData } from '../regionPlaceholderData'
 
 const regionSumm: ISummary = {
-    title: "Overall Death Rate Data by State",
+    title: "Death Rate Data by State",
     headers: [
         {
             value: "Deaths per 100,000",
@@ -82,15 +85,22 @@ function renameStateKeys(data: any) {
     for (var k in data) {
         if (data.hasOwnProperty(k)) {
             if (k.substring(0, 4) === "rate") {
-                var newK = k.slice(5)
-                data[newK.toLowerCase()] = data[k]
+                var spaced = k.slice(5).replace(/_/g, " ")
+                var words = spaced.split(" ");
+                var newK = words.map((word) => {
+                    return word[0].toUpperCase() + word.substring(1);
+                }).join(" ");
+                data[newK] = data[k]
                 delete data[k]
             }
         }
     }
+    console.log(data)
     return data
 }
 
+
+// no longer using this
 function underscoreStates(data: any) {
     for (const obj of data) {
         obj.properties.name = obj.properties.name.replace(/ /g, "_").toLowerCase()
@@ -98,7 +108,16 @@ function underscoreStates(data: any) {
     return data
 }
 
+//TODO make this an async function that makes an api call to the back end 
+// back end should do the parsing that happens here
+function getDeathData(keyWord: string) {
+    const newData = deathData.filter(obj => obj.cause_of_death === keyWord);
+    return newData
+}
 
+
+
+//TODO replace this reset button with API call 
 async function initData(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
     try {
@@ -114,12 +133,66 @@ async function initData(event: React.MouseEvent<HTMLButtonElement>) {
 export default function Regions() {
 
     const chartRef = useRef();
-    const [data, setData] = useState<any>([]);
+    const [geoData, setGeoData] = useState<any>([]);
     const [stateData, setStateData] = useState<any>([]);
-    const [info, setInfo] = useState<any>([]);
+
+    const regionSumm: ISummary = {
+        title: "Deaths per 100,000 Residents (2022)",
+        headers: [
+            {
+                value: <strong>{stateData.cause_of_death}</strong>,
+                label: "Cause of Death"
+            }
+        ]
+    }
+
+    const barSumm: ISummary = {
+        title: "Deaths Overall",
+        headers: [
+            {
+                value: <strong>{stateData.cause_of_death}</strong>,
+                label: "Cause of Death"
+            }
+        ]
+    }
+
+    const deathsByAge: IBar = {
+        title: ``,
+        labels: ["Sex"],
+        datasets: [
+            {
+                label: 'Overall',
+                backgroundColor: colors.black,
+                borderColor: 'rgba(16,44,76,0.8)',
+                borderWidth: 1,
+                data: [stateData["Overall"]]
+            },
+            {
+                label: 'Female',
+                backgroundColor: colors.cerise,
+                borderColor: 'rgba(16,44,76,0.8)',
+                borderWidth: 1,
+                data: [stateData["Sex Female"]]
+            },
+            {
+                label: "Male",
+                backgroundColor: colors.mitreBlue,
+                borderColor: 'rgba(16,44,76,0.8)',
+                borderWidth: 1,
+                data: [stateData["Sex Male"]]
+            }
+        ]
+    }
+
+    const dataHandler = (keyWord: any) => {
+        setStateData(renameStateKeys(getDeathData(keyWord)[0]))
+    }
 
     //const [lifeExpectancy, saveLifeExpectancy] = React.useState(lineData);
     React.useEffect(() => {
+        //TODO replace this API call with one to the endpoint in regionPlaceholderData
+        //https://data.cdc.gov/resource/489q-934x.json?year_and_quarter=2022%20Q3&rate_type=Age-adjusted&time_period=12%20months%20ending%20with%20quarter
+
         /*
         fetch(getJurisdictions)
             .then(response => response.json())
@@ -127,33 +200,23 @@ export default function Regions() {
                 saveLifeExpectancy(data[0]);
             })
             */
-        //let arr = Array.from({ length: 57 }, () => Math.floor(Math.random() * 57));
 
+        setStateData(renameStateKeys(sData))
 
-        const requestOptions = {
-            headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Headers": "*",
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "*"
-            }
-        }
 
         fetch('http://unpkg.com/us-atlas/states-10m.json')
             .then((response) => response.json())
             .then((value) => {
-                setData(underscoreStates(
+                setGeoData(
                     ChartGeo.topojson.feature(
                         value,
                         value.objects["states"]
                         //@ts-ignore
-                    ).features)
+                    ).features
                 );
             });
-        setStateData(renameStateKeys(sData))
 
     }, []);
-    console.log(underscoreStates(data))
     return (
         <>
             <Navbar bg="dark" variant="dark">
@@ -174,43 +237,52 @@ export default function Regions() {
             <h2 className="title" >Regional Health Status</h2>
             <br />
 
+            <div className="container-fluid">
 
-            <div>
-                <div className="container-fluid">
-
-                    <div className="row">
-                        <div className="col-1">
-                        </div>
-                        <div className="col-10">
-                            <div className="region-container">
-                                <SummaryCard data={regionSumm} />
-                            </div>
-                        </div>
-                        <div className="col-1">
-                        </div>
+                <div className="row">
+                    <div className="col-1">
                     </div>
+                    <div className="col-10">
+                        <div className="region-container">
+                            <SummaryCard data={regionSumm} />
 
-                    <div className="row">
-                        <div style={{ margin: "0 auto" }}>
-                            <div className="blue" style={{ position: "relative", height: "70vh", width: "83%", margin: "0 auto" /*, padding: "10px"*/ }}>
-                                <div style={{ position: "relative", height: "60vh", width: "83%", margin: "0 auto", top: "10%" }}>
+                            <DropdownButton id="dropdown-basic-button" title="Causes of Death" variant="transparent">
+                                <Dropdown.Item onClick={() => dataHandler("All causes")}>All Causes</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Alzheimer disease")}>Alzheimer's Disease</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("COVID-19")}>COVID-19</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Cancer")}>Cancer</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Chronic liver disease and cirrhosis")}>Chronic Liver Disease and Cirrhosis</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Chronic lower respiratory diseases")}>Chronic Lower Respiratory Diseases</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Diabetes")}>Diabetes</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Heart disease")}>Heart Disease</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("HIV disease")}>HIV Disease</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Hypertension")}>Hypertension</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Influenza and pneumonia")}>Influenza and Pneumonia</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Kidney disease")}>Kidney Disease</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Parkinson disease")}>Parkinson Disease</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Pneumonitis due to solids and liquids")}>Pneumonitis due to solids and liquids</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Septicemia")}>Septicemia</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Stroke")}>Stroke</Dropdown.Item>
+                            </DropdownButton>
+
+                            <div className="blue" style={{ position: "relative", height: "70vh", width: "89%", margin: "0 auto" /*, padding: "10px"*/ }}>
+                                <div style={{ position: "relative", height: "60vh", width: "89%", margin: "0 auto", top: "10%" }}>
                                     <Chart
                                         className='blue'
                                         ref={chartRef}
                                         type="choropleth"
                                         data={{
-                                            labels: data.map(
+                                            labels: geoData.map(
                                                 (d: any) => d.properties["name"]
                                             ),
                                             datasets: [
                                                 {
-                                                    outline: data,
+                                                    outline: geoData,
                                                     label: "Countries",
-                                                    data: data.map((d: any) => ({
+                                                    data: geoData.map((d: any) => ({
                                                         feature: d,
                                                         value: Number(stateData[d.properties.name])
                                                     })),
-                                                    // backgroundColor: ["#94BA62", "#59A22F", "#1A830C"]
                                                 }
                                             ]
                                         }}
@@ -222,7 +294,7 @@ export default function Regions() {
                                                     display: false
                                                 }
                                             },
-                                            maintainAspectRatio: true,
+                                            maintainAspectRatio: false,
                                             responsive: true,
                                             scales: {
                                                 // xy: {
@@ -235,13 +307,35 @@ export default function Regions() {
                                             }
                                         }}
                                     />
+
                                 </div>
                             </div>
+
+
                         </div>
+                    </div>
+                    <div className="col-1">
                     </div>
                 </div>
 
+
+                <div className="row mt-4">
+                    <div className="col-1">
+                    </div>
+                    <div className="col-10">
+                        <div className="region-container" >
+                            <SummaryCard data={barSumm} />
+                            <BarCard data={deathsByAge} />
+                        </div>
+                    </div>
+                    <div className="col-1">
+                    </div>
+                </div>
+
+
+
             </div>
+
             <div className="foot">
             </div>
         </>
