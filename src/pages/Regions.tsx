@@ -2,6 +2,8 @@
 
 import * as React from 'react'
 import Container from 'react-bootstrap/Container';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
@@ -46,9 +48,10 @@ ChartJS.register(
 
 // this is all placeholder data
 
+import { deathData } from '../regionPlaceholderData'
 
 const regionSumm: ISummary = {
-    title: "Overall Death Rate Data by State",
+    title: "Death Rate Data by State",
     headers: [
         {
             value: "Deaths per 100,000",
@@ -57,24 +60,6 @@ const regionSumm: ISummary = {
     ]
 }
 
-let sData = {
-    "year_and_quarter": "2022 Q3", "time_period": "12 months ending with quarter", "cause_of_death": "All causes",
-    "rate_type": "Age-adjusted", "unit": "Deaths per 100,000", "rate_overall": "833.7", "rate_sex_female": "700.2", "rate_sex_male": "986",
-    "rate_alaska": "888.4", "rate_alabama": "1014.5", "rate_arkansas": "1027", "rate_arizona": "845.8", "rate_california": "710.1",
-    "rate_colorado": "789.1", "rate_connecticut": "716.9", "rate_district_of_columbia": "815.7", "rate_delaware": "848.3",
-    "rate_florida": "747.1", "rate_georgia": "895.7", "rate_hawaii": "633.9", "rate_iowa": "852.6", "rate_idaho": "840.6",
-    "rate_illinois": "814", "rate_indiana": "977.2", "rate_kansas": "906.5", "rate_kentucky": "1083.7", "rate_louisiana": "983.3",
-    "rate_massachusetts": "718.9", "rate_maryland": "776.8", "rate_maine": "902.6", "rate_michigan": "920", "rate_minnesota": "760.9",
-    "rate_missouri": "932.6", "rate_mississippi": "1093.2", "rate_montana": "871.9", "rate_north_carolina": "893.1",
-    "rate_north_dakota": "800.8", "rate_nebraska": "814.5", "rate_new_hampshire": "791.6", "rate_new_jersey": "702.8",
-    "rate_new_mexico": "959", "rate_nevada": "886.6", "rate_new_york": "682.9", "rate_ohio": "983", "rate_oklahoma": "1058.2",
-    "rate_oregon": "840.2", "rate_pennsylvania": "869", "rate_rhode_island": "754.4", "rate_south_carolina": "953.4",
-    "rate_south_dakota": "849.7", "rate_tennessee": "1044.7", "rate_texas": "848.2", "rate_utah": "796.6",
-    "rate_virginia": "835.6", "rate_vermont": "787.8", "rate_washington": "787.8", "rate_wisconsin": "843.5",
-    "rate_west_virginia": "1177.9", "rate_wyoming": "910.3"
-}
-//https://data.cdc.gov/resource/489q-934x.json?year_and_quarter=2022%20Q3
-
 
 
 function renameStateKeys(data: any) {
@@ -82,8 +67,12 @@ function renameStateKeys(data: any) {
     for (var k in data) {
         if (data.hasOwnProperty(k)) {
             if (k.substring(0, 4) === "rate") {
-                var newK = k.slice(5)
-                data[newK.toLowerCase()] = data[k]
+                var spaced = k.slice(5).replace(/_/g, " ")
+                var words = spaced.split(" ");
+                var newK = words.map((word) => {
+                    return word[0].toUpperCase() + word.substring(1);
+                }).join(" ");
+                data[newK] = data[k]
                 delete data[k]
             }
         }
@@ -91,6 +80,8 @@ function renameStateKeys(data: any) {
     return data
 }
 
+
+// no longer using this
 function underscoreStates(data: any) {
     for (const obj of data) {
         obj.properties.name = obj.properties.name.replace(/ /g, "_").toLowerCase()
@@ -98,7 +89,16 @@ function underscoreStates(data: any) {
     return data
 }
 
+//TODO make this an async function that makes an api call to the back end 
+// back end should do the parsing that happens here
+function getDeathData(keyWord: string) {
+    const newData = deathData.filter(obj => obj.cause_of_death === keyWord);
+    return newData
+}
 
+
+
+//TODO replace this reset button with API call 
 async function initData(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
     try {
@@ -114,12 +114,157 @@ async function initData(event: React.MouseEvent<HTMLButtonElement>) {
 export default function Regions() {
 
     const chartRef = useRef();
-    const [data, setData] = useState<any>([]);
+    const [geoData, setGeoData] = useState<any>([]);
     const [stateData, setStateData] = useState<any>([]);
-    const [info, setInfo] = useState<any>([]);
+
+    const regionSumm: ISummary = {
+        title: "Deaths per 100,000 Residents (2022)",
+        headers: [
+            {
+                value: <strong>{stateData.cause_of_death}</strong>,
+                label: "Cause of Death"
+            }
+        ]
+    }
+
+    const sexSumm: ISummary = {
+        title: "By Sex",
+        headers: [
+            {
+                value: <strong>{stateData.cause_of_death}</strong>,
+                label: "Cause of Death"
+            }
+        ]
+    }
+
+    const ageSumm: ISummary = {
+        title: "By Age",
+        headers: [
+            {
+                value: <strong>{stateData.cause_of_death}</strong>,
+                label: "Cause of Death"
+            }
+        ]
+    }
+
+
+    const deathsBySex: IBar = {
+        title: "Deaths per 100,000 Residents",
+        labels: ["Sex"],
+        datasets: [
+            {
+                label: 'Overall',
+                backgroundColor: colors.black,
+                borderColor: 'rgba(16,44,76,0.8)',
+                borderWidth: 1,
+                data: [stateData["Overall"]]
+            },
+            {
+                label: 'Female',
+                backgroundColor: colors.cerise,
+                borderColor: colors.cerise,
+                borderWidth: 1,
+                data: [stateData["Sex Female"]]
+            },
+            {
+                label: "Male",
+                backgroundColor: colors.mitreBlue,
+                borderColor: colors.mitreBlue,
+                borderWidth: 1,
+                data: [stateData["Sex Male"]]
+            }
+        ]
+    }
+
+    // color gradient by transparency
+    var grad: Array<string> = gradient('rgba(0,91,148)', 9)
+
+    const deathsByAge: IBar = {
+        title: "Deaths per 100,000 Residents",
+        labels: ["Age Range"],
+        datasets: [
+            {
+                label: 'Overall',
+                backgroundColor: colors.black,
+                borderColor: colors.black,
+                borderWidth: 1,
+                data: [stateData["Overall"]]
+            },
+            {
+                label: '1-4',
+                backgroundColor: grad[0],
+                borderColor: grad[8],
+                borderWidth: 1,
+                data: [stateData["Age 1 4"]]
+            },
+            {
+                label: "15-24",
+                backgroundColor: grad[1],
+                borderColor: grad[1],
+                borderWidth: 1,
+                data: [stateData["Age 15 24"]]
+            },
+            {
+                label: "25-34",
+                backgroundColor: grad[2],
+                borderColor: grad[2],
+                borderWidth: 1,
+                data: [stateData["Age 25 34"]]
+            },
+            {
+                label: "35-44",
+                backgroundColor: grad[3],
+                borderColor: grad[3],
+                borderWidth: 1,
+                data: [stateData["Age 35 44"]]
+            },
+            {
+                label: "45-54",
+                backgroundColor: grad[4],
+                borderColor: grad[4],
+                borderWidth: 1,
+                data: [stateData["Age 45 54"]]
+            },
+            {
+                label: "55-64",
+                backgroundColor: grad[5],
+                borderColor: grad[5],
+                borderWidth: 1,
+                data: [stateData["Age 55 64"]]
+            },
+            {
+                label: "65-74",
+                backgroundColor: grad[6],
+                borderColor: grad[6],
+                borderWidth: 1,
+                data: [stateData["65 74"]]
+            },
+            {
+                label: "75-84",
+                backgroundColor: grad[7],
+                borderColor: grad[7],
+                borderWidth: 1,
+                data: [stateData["Age 75 84"]]
+            },
+            {
+                label: "85+",
+                backgroundColor: grad[8],
+                borderColor: grad[8],
+                borderWidth: 1,
+                data: [stateData["Age 85 Plus"]]
+            }
+        ]
+    }
+
+    const dataHandler = (keyWord: any) => {
+        setStateData(renameStateKeys(getDeathData(keyWord)[0]))
+    }
 
     //const [lifeExpectancy, saveLifeExpectancy] = React.useState(lineData);
     React.useEffect(() => {
+        //TODO replace this API call with one to the endpoint in regionPlaceholderData
+        //https://data.cdc.gov/resource/489q-934x.json?year_and_quarter=2022%20Q3&rate_type=Age-adjusted&time_period=12%20months%20ending%20with%20quarter
+
         /*
         fetch(getJurisdictions)
             .then(response => response.json())
@@ -127,33 +272,24 @@ export default function Regions() {
                 saveLifeExpectancy(data[0]);
             })
             */
-        //let arr = Array.from({ length: 57 }, () => Math.floor(Math.random() * 57));
 
+        setStateData(renameStateKeys(deathData[0]))
 
-        const requestOptions = {
-            headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Headers": "*",
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "*"
-            }
-        }
 
         fetch('http://unpkg.com/us-atlas/states-10m.json')
             .then((response) => response.json())
             .then((value) => {
-                setData(underscoreStates(
+                setGeoData(
                     ChartGeo.topojson.feature(
                         value,
                         value.objects["states"]
                         //@ts-ignore
-                    ).features)
+                    ).features
                 );
             });
-        setStateData(renameStateKeys(sData))
 
     }, []);
-    console.log(underscoreStates(data))
+    console.log(stateData)
     return (
         <>
             <Navbar bg="dark" variant="dark">
@@ -174,43 +310,52 @@ export default function Regions() {
             <h2 className="title" >Regional Health Status</h2>
             <br />
 
+            <div className="container-fluid">
 
-            <div>
-                <div className="container-fluid">
-
-                    <div className="row">
-                        <div className="col-1">
-                        </div>
-                        <div className="col-10">
-                            <div className="region-container">
-                                <SummaryCard data={regionSumm} />
-                            </div>
-                        </div>
-                        <div className="col-1">
-                        </div>
+                <div className="row">
+                    <div className="col-1">
                     </div>
+                    <div className="col-10">
+                        <div className="region-container">
+                            <SummaryCard data={regionSumm} />
 
-                    <div className="row">
-                        <div style={{ margin: "0 auto" }}>
-                            <div className="blue" style={{ position: "relative", height: "70vh", width: "83%", margin: "0 auto" /*, padding: "10px"*/ }}>
-                                <div style={{ position: "relative", height: "60vh", width: "83%", margin: "0 auto", top: "10%" }}>
+                            <DropdownButton id="dropdown-basic-button" title="Causes of Death" variant="transparent">
+                                <Dropdown.Item onClick={() => dataHandler("All causes")}>All Causes</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Alzheimer disease")}>Alzheimer's Disease</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("COVID-19")}>COVID-19</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Cancer")}>Cancer</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Chronic liver disease and cirrhosis")}>Chronic Liver Disease and Cirrhosis</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Chronic lower respiratory diseases")}>Chronic Lower Respiratory Diseases</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Diabetes")}>Diabetes</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Heart disease")}>Heart Disease</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("HIV disease")}>HIV Disease</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Hypertension")}>Hypertension</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Influenza and pneumonia")}>Influenza and Pneumonia</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Kidney disease")}>Kidney Disease</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Parkinson disease")}>Parkinson Disease</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Pneumonitis due to solids and liquids")}>Pneumonitis due to solids and liquids</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Septicemia")}>Septicemia</Dropdown.Item>
+                                <Dropdown.Item onClick={() => dataHandler("Stroke")}>Stroke</Dropdown.Item>
+                            </DropdownButton>
+
+                            <div className="blue" style={{ position: "relative", height: "70vh", width: "89%", margin: "0 auto" /*, padding: "10px"*/ }}>
+                                <div style={{ position: "relative", height: "60vh", width: "89%", margin: "0 auto", top: "10%" }}>
                                     <Chart
                                         className='blue'
                                         ref={chartRef}
                                         type="choropleth"
                                         data={{
-                                            labels: data.map(
+                                            labels: geoData.map(
                                                 (d: any) => d.properties["name"]
                                             ),
                                             datasets: [
                                                 {
-                                                    outline: data,
+                                                    outline: geoData,
                                                     label: "Countries",
-                                                    data: data.map((d: any) => ({
+                                                    data: geoData.map((d: any) => ({
                                                         feature: d,
                                                         value: Number(stateData[d.properties.name])
                                                     })),
-                                                    // backgroundColor: ["#94BA62", "#59A22F", "#1A830C"]
                                                 }
                                             ]
                                         }}
@@ -222,7 +367,7 @@ export default function Regions() {
                                                     display: false
                                                 }
                                             },
-                                            maintainAspectRatio: true,
+                                            maintainAspectRatio: false,
                                             responsive: true,
                                             scales: {
                                                 // xy: {
@@ -235,14 +380,43 @@ export default function Regions() {
                                             }
                                         }}
                                     />
+
                                     <br/>
                                     <p className='source_small_font'>SOURCE.</p>
                                 </div>
                             </div>
+
+
                         </div>
                     </div>
+                    <div className="col-1">
+                    </div>
                 </div>
+
+
+
+                <div className="row mt-4">
+                    <div className="col-1">
+                    </div>
+                    <div className="col-5">
+                        <div className="region-container" >
+                            <SummaryCard data={sexSumm} />
+                            <BarCard data={deathsBySex} />
+                        </div>
+                    </div>
+                    <div className="col-5">
+                        <div className="region-container" >
+                            <SummaryCard data={ageSumm} />
+                            <BarCard data={deathsByAge} />
+                        </div>
+                    </div>
+                    <div className="col-1">
+                    </div>
+                </div>
+
+
             </div>
+
             <div className="foot">
             </div>
         </>
