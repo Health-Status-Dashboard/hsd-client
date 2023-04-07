@@ -14,8 +14,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/regions" element={<Regions />} />
-        <Route path="/temp" element={<TempPage />} />
-        {/* <Route path="/temp" element={ <TempPage/> } /> */}
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,
