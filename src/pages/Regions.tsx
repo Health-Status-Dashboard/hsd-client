@@ -32,7 +32,7 @@ import { IProportional } from '../interfaces/IProportional';
 import { IBar } from '../interfaces/IBar';
 import { ILine } from '../interfaces/ILine';
 
-import { initLocalJurisdictions, getLocalJurisdictions, initJurisdictions, getJurisdictions } from '../endpoints/lifeExpectancyURLs'
+import { initLifeExpectancy, getLifeExpectancy } from '../endpoints/serverURLs'
 import { colors, gradient } from '../colors/colors'
 
 ChartJS.register(
@@ -102,7 +102,7 @@ function getDeathData(keyWord: string) {
 async function initData(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
     try {
-        const response = await fetch(initJurisdictions);
+        const response = await fetch(initLifeExpectancy);
         const { status } = response;
         return status;
     } catch (err) {
@@ -381,6 +381,8 @@ export default function Regions() {
                                         }}
                                     />
 
+                                    <br/>
+                                    <p className='source_small_font'>SOURCE.</p>
                                 </div>
                             </div>
 
@@ -390,6 +392,7 @@ export default function Regions() {
                     <div className="col-1">
                     </div>
                 </div>
+
 
 
                 <div className="row mt-4">
@@ -410,7 +413,6 @@ export default function Regions() {
                     <div className="col-1">
                     </div>
                 </div>
-
 
 
             </div>
