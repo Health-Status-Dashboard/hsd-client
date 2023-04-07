@@ -30,7 +30,7 @@ import { IProportional } from '../interfaces/IProportional';
 import { IBar } from '../interfaces/IBar';
 import { ILine } from '../interfaces/ILine';
 
-import { initJurisdictions, getJurisdictions } from '../endpoints/lifeExpectancyURLs'
+import { initLifeExpectancy, getLifeExpectancy } from '../endpoints/serverURLs'
 import { colors, gradient } from '../colors/colors'
 
 ChartJS.register(
@@ -102,7 +102,7 @@ function underscoreStates(data: any) {
 async function initData(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
     try {
-        const response = await fetch(initJurisdictions);
+        const response = await fetch(initLifeExpectancy);
         const { status } = response;
         return status;
     } catch (err) {

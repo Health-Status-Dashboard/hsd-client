@@ -175,4 +175,118 @@ const causeOfDeathSummary: ISummary = {
 }
 
 
+const uninsuredSummary: ISummary = {
+    title: "Uninsured Population in the US",
+    headers: [
+        {
+            value: "8.7% of Americans Uninsured",
+            label: "Current Estimate"
+        }
+    ]
+}
+
+
+const uninsuredByEducation: IBar = {
+    title: "US Uninsured Rate by Education Level (% Uninsured)",
+    labels: ["Education Levels"],
+    datasets: [
+        {
+            label: '< High School',
+            backgroundColor: colors.black,
+            borderColor: 'rgba(16,44,76,0.8)',
+            borderWidth: 1,
+            data: [19.1]
+        },
+        {
+            label: 'High School',
+            backgroundColor: colors.mitreBlue,
+            borderColor: 'rgba(16,44,76,0.8)',
+            borderWidth: 1,
+            data: [13.9]
+        },
+        {
+            label: "Some College/Associate's",
+            backgroundColor: colors.white,
+            borderColor: 'rgba(16,44,76,0.8)',
+            borderWidth: 1,
+            data: [8.5]
+        },
+        {
+            label: "Bachelor's or higher",
+            backgroundColor: colors.mitreYellow,
+            borderColor: 'rgba(16,44,76,0.8)',
+            borderWidth: 1,
+            data: [3.0]
+        }
+    ]
+}
+
+const uninsuredByAge: IBar = {
+    title: "US Uninsured Rate by Age (% Uninsured)",
+    labels: ["Ages"],
+    datasets: [
+        {
+            label: '18-24 years',
+            backgroundColor: colors.black,
+            borderColor: 'rgba(16,44,76,0.8)',
+            borderWidth: 1,
+            data: [13.7]
+        },
+        {
+            label: '25-34 years',
+            backgroundColor: colors.mitreBlue,
+            borderColor: 'rgba(16,44,76,0.8)',
+            borderWidth: 1,
+            data: [10.6]
+        },
+        {
+            label: "35-44 years",
+            backgroundColor: colors.white,
+            borderColor: 'rgba(16,44,76,0.8)',
+            borderWidth: 1,
+            data: [9.1]
+        },
+        {
+            label: "45-64 years",
+            backgroundColor: colors.mitreYellow,
+            borderColor: 'rgba(16,44,76,0.8)',
+            borderWidth: 1,
+            data: [6.7]
+        }
+    ]
+}
+
+const USUninsured: ILongitudinal = {
+    title: 'US Uninsured Rate (% Uninsured)',
+    labels: ["October 2022", "November 2022", "December 2022", "January 2023", "February 2023", "March 2023"],
+    datasets: [
+        {
+            label: "Overall National Estimate",
+            data: [10.1, 9.5, 8.9, 8.5, 9.1, 8.7],
+            backgroundColor: colors.black,
+            borderColor: colors.black
+        },
+        {
+            label: "Female National Estimate",
+            data: [9.5, 8.4, 7.5, 7.5, 7.9, 7.4],
+            backgroundColor: colors.cerise,
+            borderColor: colors.cerise
+        },
+        {
+            label: "Male National Estimate",
+            data: [10.9, 10.7, 10.4, 9.5, 10.4, 10.1],
+            backgroundColor: colors.mitreBlue,
+            borderColor: colors.mitreBlue
+        }
+    ]
+}
+// general info: https://www.cdc.gov/nchs/covid19/pulse/health-insurance-coverage.htm
+//api docs: https://dev.socrata.com/foundry/data.cdc.gov/jb9g-gnvr
+// national estimate: https://data.cdc.gov/resource/jb9g-gnvr.json?$where=`group`='National Estimate'
+// by education: https://data.cdc.gov/resource/jb9g-gnvr.json?$where=`group`=%27By%20Education%27
+// by age: https://data.cdc.gov/resource/jb9g-gnvr.json?$where=`group`=%27By%20Age%27
+
+
+
+
 */
