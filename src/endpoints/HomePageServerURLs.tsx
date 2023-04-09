@@ -1,4 +1,3 @@
-
 //use when local
 export const initLifeExpectancy = `http://localhost:3001/api/initLifeExpectancy`
 export const getLifeExpectancy = `http://localhost:3001/api/getLifeExpectancy`
