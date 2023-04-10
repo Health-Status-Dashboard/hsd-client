@@ -27,7 +27,7 @@ import { initLifeExpectancy, getLifeExpectancy, initAlcoholTobaccoData, getAlcoh
 import { colors, gradient } from '../colors/colors'
 
 
-//
+//commment here
 
 async function initData(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
