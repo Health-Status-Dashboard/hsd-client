@@ -28,6 +28,12 @@ import {
     initUninsuredSummary, getUninsuredSummary, initUninsuredByEducation, getUninsuredByEducation, initUninsuredByAge, getUninsuredByAge,
     initUninsuredBySubgroup, getUninsuredBySubgroup, initBirthRateData, getBirthRateData, initGestBirthRates, getGestBirthRates, init12MonthBirthRates, get12MonthBirthRates
 } from '../endpoints/HomePageServerURLs'
+import {
+    initLifeExpectancy, getLifeExpectancy, initAlcoholTobaccoData, getAlcoholTobaccoData, initDCData, getDCData,
+    initNAWData, getNAWData, initUSPopulationData, getUSPopulationData, initCDSummaryData, getCDSummaryData, getWeightSummary,
+    initUninsuredSummary, getUninsuredSummary, initUninsuredByEducation, getUninsuredByEducation, initUninsuredByAge, getUninsuredByAge,
+    initUninsuredBySubgroup, getUninsuredBySubgroup
+} from '../endpoints/serverURLs'
 import { colors, gradient } from '../colors/colors'
 
 
