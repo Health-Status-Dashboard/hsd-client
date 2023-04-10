@@ -1,3 +1,5 @@
+
+
 import * as React from 'react'
 import Container from 'react-bootstrap/Container';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -17,11 +19,20 @@ import {
 } from "chart.js";
 
 import { SummaryCard } from '../cards/SummaryCard'
+import { StatsCard } from '../cards/StatsCard'
+import { LineCard } from '../cards/LineCard'
+import { PieCard } from '../cards/PieCard'
 import { BarCard } from '../cards/BarCard'
+import { SingleLineCard } from '../cards/SingleLineCard'
+
+import { ILongitudinal } from '../interfaces/ILongitudinal';
 import { ISummary } from '../interfaces/ISummary';
+import { IStats } from '../interfaces/IStats';
+import { IProportional } from '../interfaces/IProportional';
 import { IBar } from '../interfaces/IBar';
-import { initLifeExpectancy, getLifeExpectancy } from '../endpoints/HomePageServerURLs'
-import { initRecentYearDCModel, getRecentYearDCModel, getRecentYearDCModelAllCauses, getRecentYearDCModelAlzheimer, getRecentYearDCModelCovid19, getRecentYearDCModelCancer, getRecentYearDCModelLiver, getRecentYearDCModelRespiratory, getRecentYearDCModelDiabetes, getRecentYearDCModelHeart, getRecentYearDCModelHIV, getRecentYearDCModelHypertension, getRecentYearDCModelFluPneu, getRecentYearDCModelKidney, getRecentYearDCModelParkinsons, getRecentYearDCModelPneumonionitis, getRecentYearDCModelSepticimia, getRecentYearDCModelStroke, getRecent3YearDCModel } from '../endpoints/RegionsPageServerURLs'
+import { ILine } from '../interfaces/ILine';
+
+import { initLifeExpectancy, getLifeExpectancy } from '../endpoints/serverURLs'
 import { colors, gradient } from '../colors/colors'
 
 ChartJS.register(
@@ -35,8 +46,24 @@ ChartJS.register(
     ChartGeo.GeoFeature
 );
 
- //Rename data into displayable words such as new_hampshire --> New Hampshire
- function renameStateKeys(data: any) { 
+// this is all placeholder data
+
+import { deathData } from '../regionPlaceholderData'
+
+const regionSumm: ISummary = {
+    title: "Death Rate Data by State",
+    headers: [
+        {
+            value: "Deaths per 100,000",
+            label: "2022"
+        }
+    ]
+}
+
+
+
+function renameStateKeys(data: any) {
+    //const arr = JSON.parse(data);
     for (var k in data) {
         if (data.hasOwnProperty(k)) {
             if (k.substring(0, 4) === "rate") {
@@ -51,7 +78,24 @@ ChartJS.register(
         }
     }
     return data
-  }
+}
+
+
+// no longer using this
+function underscoreStates(data: any) {
+    for (const obj of data) {
+        obj.properties.name = obj.properties.name.replace(/ /g, "_").toLowerCase()
+    }
+    return data
+}
+
+//TODO make this an async function that makes an api call to the back end 
+// back end should do the parsing that happens here
+function getDeathData(keyWord: string) {
+    const newData = deathData.filter(obj => obj.cause_of_death === keyWord);
+    return newData
+}
+
 
 
 //TODO replace this reset button with API call 
@@ -102,6 +146,7 @@ export default function Regions() {
             }
         ]
     }
+
 
     const deathsBySex: IBar = {
         title: "Deaths per 100,000 Residents",
@@ -212,75 +257,25 @@ export default function Regions() {
     }
 
     const dataHandler = (keyWord: any) => {
-
-        var currentDataset = ``;
-        if (keyWord === 'All causes'){
-            currentDataset = getRecentYearDCModelAllCauses;
-        }
-        if (keyWord === 'Alzheimer disease'){
-            currentDataset = getRecentYearDCModelAlzheimer;
-        }
-        if (keyWord === "COVID-19"){
-            currentDataset = getRecentYearDCModelCovid19;
-        }
-        if (keyWord === "Cancer"){
-            currentDataset = getRecentYearDCModelCancer;
-        }
-        if (keyWord === "Chronic liver disease and cirrhosis"){
-            currentDataset = getRecentYearDCModelLiver;
-        }
-        if (keyWord === "Chronic lower respiratory diseases"){
-            currentDataset = getRecentYearDCModelRespiratory;
-        }
-        if (keyWord === "Diabetes"){
-            currentDataset = getRecentYearDCModelDiabetes;
-        }
-        if (keyWord === "Heart disease"){
-            currentDataset = getRecentYearDCModelHeart;
-        }
-        if (keyWord === "HIV disease"){
-            currentDataset = getRecentYearDCModelHIV;
-        }
-        if (keyWord === "Hypertension"){
-            currentDataset = getRecentYearDCModelHypertension;
-        }
-        if (keyWord === "Influenza and pneumonia"){
-            currentDataset = getRecentYearDCModelFluPneu;
-        }
-        if (keyWord === "Kidney disease"){
-            currentDataset = getRecentYearDCModelKidney;
-        }
-        if (keyWord === "Parkinson disease"){
-            currentDataset = getRecentYearDCModelParkinsons;
-        }
-        if (keyWord === "Pneumonitis due to solids and liquids"){
-            currentDataset = getRecentYearDCModelPneumonionitis;
-        }
-        if (keyWord === "Septicemia"){
-            currentDataset = getRecentYearDCModelSepticimia;
-        }
-        if (keyWord === "Stroke"){
-            currentDataset = getRecentYearDCModelStroke;
-        }
-
-        //fetch data with the keyword as the endpoint in the call
-        fetch(currentDataset)
-            .then(response => response.json())
-            .then(data => {
-                setStateData(renameStateKeys(data))
-            });
+        setStateData(renameStateKeys(getDeathData(keyWord)[0]))
     }
 
+    //const [lifeExpectancy, saveLifeExpectancy] = React.useState(lineData);
     React.useEffect(() => {
+        //TODO replace this API call with one to the endpoint in regionPlaceholderData
+        //https://data.cdc.gov/resource/489q-934x.json?year_and_quarter=2022%20Q3&rate_type=Age-adjusted&time_period=12%20months%20ending%20with%20quarter
 
-        //first fetch the data for all diseases on render
-        fetch(getRecentYearDCModelAllCauses)
+        /*
+        fetch(getJurisdictions)
             .then(response => response.json())
             .then(data => {
-                setStateData(renameStateKeys(data))
-            });
+                saveLifeExpectancy(data[0]);
+            })
+            */
 
-        //data to display map
+        setStateData(renameStateKeys(deathData[0]))
+
+
         fetch('http://unpkg.com/us-atlas/states-10m.json')
             .then((response) => response.json())
             .then((value) => {
@@ -292,68 +287,9 @@ export default function Regions() {
                     ).features
                 );
             });
+
     }, []);
-
-   
-
-    const [get3YearDCdata, save3YearDCdata] = React.useState({
-        title: "",
-        labels: ['Q1', "Q2"],
-        datasets: [ {
-            label: 'February 2023',
-            backgroundColor: 'rgba(16,44,76,0.5)',
-            borderColor: 'rgba(16,44,76,0.8)',
-            borderWidth: 0,
-            data: [3051, 45406, 7066, 8936] //data here so no errors, but overwrites this
-        },]
-    });
-
-    //cause of death per quarters, past 4 years
-    React.useEffect(() => { 
-        fetch(getRecent3YearDCModel)
-            .then(response => response.json())
-            .then(data => {
-
-                var index = data[0].datasets.findIndex((obj: { label: any; }) => obj.label === stateData.cause_of_death);
-                var objToDisplay = {
-                    title: "Quarterly data of US Causes of Death for "+ stateData.cause_of_death,
-                    labels : ['Q1', 'Q2', 'Q3', 'Q4'],
-                    datasets: [
-                            {
-                                label: data[0].datasets[index].data[0].year,
-                                backgroundColor: colors.black,
-                                borderColor: colors.black,
-                                borderWidth: 0,
-                                data : data[0].datasets[index].data[0].data
-                            },
-                            {
-                                label: data[0].datasets[index].data[1].year,
-                                backgroundColor: colors.mitreBlue,
-                                borderColor: colors.mitreBlue,
-                                borderWidth: 0,
-                                data : data[0].datasets[index].data[1].data
-                            },
-                            {
-                                label: data[0].datasets[index].data[2].year,
-                                backgroundColor: colors.mitreYellow,
-                                borderColor: colors.mitreYellow,
-                                borderWidth: 0,
-                                data : data[0].datasets[index].data[2].data
-                            },
-                            {
-                                label: data[0].datasets[index].data[3].year,
-                                backgroundColor: colors.darkOrange,
-                                borderColor: colors.darkOrange,
-                                borderWidth: 0,
-                                data : data[0].datasets[index].data[3].data
-                            }
-                        ]
-                }
-                save3YearDCdata(objToDisplay);
-            })
-    }, [stateData]);
-
-
+    console.log(stateData)
     return (
         <>
             <Navbar bg="dark" variant="dark">
@@ -363,6 +299,7 @@ export default function Regions() {
                         <Nav.Link href="regions">Regions</Nav.Link>
                         <Nav.Link href="#risks">Risks</Nav.Link>
                         <Nav.Link href="#systems">Health Systems</Nav.Link>
+
                     </Nav>
                     <Nav className="ml-auto">
                         <Button onClick={initData} variant="light" style={{ marginLeft: "auto" }}>Reset</Button>
@@ -372,13 +309,16 @@ export default function Regions() {
             <br />
             <h2 className="title" >Regional Health Status</h2>
             <br />
+
             <div className="container-fluid">
+
                 <div className="row">
                     <div className="col-1">
                     </div>
                     <div className="col-10">
                         <div className="region-container">
                             <SummaryCard data={regionSumm} />
+
                             <DropdownButton id="dropdown-basic-button" title="Causes of Death" variant="transparent">
                                 <Dropdown.Item onClick={() => dataHandler("All causes")}>All Causes</Dropdown.Item>
                                 <Dropdown.Item onClick={() => dataHandler("Alzheimer disease")}>Alzheimer's Disease</Dropdown.Item>
@@ -397,6 +337,7 @@ export default function Regions() {
                                 <Dropdown.Item onClick={() => dataHandler("Septicemia")}>Septicemia</Dropdown.Item>
                                 <Dropdown.Item onClick={() => dataHandler("Stroke")}>Stroke</Dropdown.Item>
                             </DropdownButton>
+
                             <div className="blue" style={{ position: "relative", height: "70vh", width: "89%", margin: "0 auto" /*, padding: "10px"*/ }}>
                                 <div style={{ position: "relative", height: "60vh", width: "89%", margin: "0 auto", top: "10%" }}>
                                     <Chart
@@ -444,11 +385,16 @@ export default function Regions() {
                                     <p className='source_small_font'>SOURCE.</p>
                                 </div>
                             </div>
+
+
                         </div>
                     </div>
                     <div className="col-1">
                     </div>
                 </div>
+
+
+
                 <div className="row mt-4">
                     <div className="col-1">
                     </div>
@@ -467,23 +413,10 @@ export default function Regions() {
                     <div className="col-1">
                     </div>
                 </div>
-                <div className="row mt-4">
-                    <div className="col-1">
-                    </div>
 
-                    <div className="col-10">
-                        <div className="region-container">
 
-                            <BarCard data={get3YearDCdata} />
-                                <br/>
-                            <p className='source_small_font'>National Center for Health Statistics. NCHS - VSRR Quarterly provisional estimates for selected indicators of mortality. Available from https://data.cdc.gov/d/489q-934x.</p>
-
-                        </div>
-                    <div className="col-1">
-                    </div>
-                    </div>
-                </div>
             </div>
+
             <div className="foot">
             </div>
         </>

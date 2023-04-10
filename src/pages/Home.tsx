@@ -23,7 +23,7 @@ import { ILine } from '../interfaces/ILine';
 import { initLifeExpectancy, getLifeExpectancy, initAlcoholTobaccoData, getAlcoholTobaccoData, initDCData, getDCData, 
     initNAWData, getNAWData, initUSPopulationData, getUSPopulationData, initCDSummaryData, getCDSummaryData, getWeightSummary, 
     initUninsuredSummary, getUninsuredSummary, initUninsuredByEducation,getUninsuredByEducation, initUninsuredByAge, getUninsuredByAge,
-    initUninsuredBySubgroup, getUninsuredBySubgroup} from '../endpoints/HomePageServerURLs'
+    initUninsuredBySubgroup, getUninsuredBySubgroup} from '../endpoints/serverURLs'
 import { colors, gradient } from '../colors/colors'
 
 
@@ -234,9 +234,6 @@ React.useEffect(() => {
             saveUninsuredBySubgroupData(data[0]);
         })
 }, []);
-
-
-
 
 
     return (
