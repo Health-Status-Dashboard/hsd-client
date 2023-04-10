@@ -316,7 +316,7 @@ export default function Regions() {
 
                 var index = data[0].datasets.findIndex((obj: { label: any; }) => obj.label === stateData.cause_of_death);
                 var objToDisplay = {
-                    title: "Quarterly data of US Causes of Death for "+ stateData.cause_of_death,
+                    title: "Quarterly data of US Causes of Death for "+ stateData.cause_of_death + " (rate per 100,000 people)",
                     labels : ['Q1', 'Q2', 'Q3', 'Q4'],
                     datasets: [
                             {

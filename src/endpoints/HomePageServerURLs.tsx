@@ -21,6 +21,11 @@ export const initUninsuredByAge = `http://localhost:3001/api/initUninsuredByAge`
 export const getUninsuredByAge = `http://localhost:3001/api/getUninsuredByAge`
 export const initUninsuredBySubgroup = `http://localhost:3001/api/initUninsuredBySubgroup`
 export const getUninsuredBySubgroup = `http://localhost:3001/api/getUninsuredBySubgroup`
+export const initBirthRateData = `http://localhost:3001/api/initBirthRateData`
+export const getBirthRateData = `http://localhost:3001/api/getBirthRateData`
+export const initGestBirthRates = `http://localhost:3001/api/initGestBirthRates`
+export const getGestBirthRates = `http://localhost:3001/api/getGestBirthRates`
+export const get12MonthBirthRates = `http://localhost:3001/api/getLast12MonthBirthData`
 
 
 
@@ -47,3 +52,8 @@ export const getUninsuredBySubgroup = `http://localhost:3001/api/getUninsuredByS
 // export const getUninsuredByAge = `http://healthdashboard.mitre.org/api/getUninsuredByAge`
 // export const initUninsuredBySubgroup = `http://healthdashboard.mitre.org/api/initUninsuredBySubgroup`
 // export const getUninsuredBySubgroup = `http://healthdashboard.mitre.org/api/getUninsuredBySubgroup`
+// export const initBirthRateData = `http://healthdashboard.mitre.org/api/initBirthRateData`
+// export const getBirthRateData = `http://healthdashboard.mitre.org/api/getBirthRateData`
+// export const initGestBirthRates = `http://healthdashboard.mitre.org/api/initGestBirthRates`
+// export const getGestBirthRates = `http://healthdashboard.mitre.org/api/getGestBirthRates`
+// export const get12MonthBirthRates = `http://healthdashboard.mitre.org/api/getLast12MonthBirthData`

@@ -23,7 +23,7 @@ import { ILine } from '../interfaces/ILine';
 import { initLifeExpectancy, getLifeExpectancy, initAlcoholTobaccoData, getAlcoholTobaccoData, initDCData, getDCData, 
     initNAWData, getNAWData, initUSPopulationData, getUSPopulationData, initCDSummaryData, getCDSummaryData, getWeightSummary, 
     initUninsuredSummary, getUninsuredSummary, initUninsuredByEducation,getUninsuredByEducation, initUninsuredByAge, getUninsuredByAge,
-    initUninsuredBySubgroup, getUninsuredBySubgroup} from '../endpoints/HomePageServerURLs'
+    initUninsuredBySubgroup, getUninsuredBySubgroup, getBirthRateData, getGestBirthRates, get12MonthBirthRates} from '../endpoints/HomePageServerURLs'
 import { colors, gradient } from '../colors/colors'
 
 
@@ -235,8 +235,58 @@ React.useEffect(() => {
         })
 }, []);
 
+const [birthRateData, saveBirthRateData] = React.useState({
+    title: '',
+        labels: [],
+        datasets: []
+    });
+    React.useEffect(() => { 
+        fetch(getBirthRateData)
+            .then(response => response.json())
+            .then(data => {
+                const chosenColors = [colors.black, colors.cerise, colors.mitreBlue, colors.darkOrange, colors.green, colors.saffron, colors.vermilion, colors.pink];
+    
+                for (var i = 0; i < chosenColors.length; i++){
+                    data[0].datasets[i].backgroundColor= chosenColors[i];
+                    data[0].datasets[i].borderColor= chosenColors[i];
+                }
+                saveBirthRateData(data[0])
+            })
+    }, []);
 
+    const [birthRateGestationalData, saveBirthRateGestationalData] = React.useState({
+        title: '',
+        labels: [],
+        datasets: []
+        });
+        React.useEffect(() => { 
+            fetch(getGestBirthRates)
+                .then(response => response.json())
+                .then(data => {
 
+                    const chosenColors = [colors.black, colors.mitreBlue, colors.white];
+
+                    for (var i = 0; i < chosenColors.length; i++){
+                        data[0].datasets[i].backgroundColor= chosenColors[i];
+                        data[0].datasets[i].borderColor= 'rgba(16,44,76,0.8)';
+                        data[0].datasets[i].borderWidth= 1;
+                    }
+                    saveBirthRateGestationalData(data[0]);
+                })
+        }, []);
+    
+        const [last12MonthBirthData, saveLast12MonthBirthData] = React.useState({
+            title: '',
+            labels: [],
+            datasets: []
+            });
+            React.useEffect(() => { 
+                fetch(get12MonthBirthRates)
+                    .then(response => response.json())
+                    .then(data => {
+                        saveLast12MonthBirthData(data[0]);
+                    })
+            }, []);
 
 
     return (
@@ -330,8 +380,31 @@ React.useEffect(() => {
                             </div>
                         </div>
                     </div>
+
+                    <div className="row g-0">
+                        <div className="col-5">
+                            <div className="region-container">
+                            <h1>Birth and Fertility in the US</h1>
+                            <BarCard data={birthRateGestationalData} />
+                            <p className='source_small_font'>National Center for Health Statistics. NCHS - VSRR Quarterly provisional estimates for selected birth indicators. Available from https://data.cdc.gov/d/76vv-a7x8.</p>
+                
+                            {/* <SummaryCard data={last12MonthBirthData} />   */}
+                            </div>
+                        </div>
+
+                        <div className="col-7">
+                            <div className="region-container">
+                                <div className="summ-space">
+                                </div>
+                                <LineCard data={birthRateData} />
+                                <br/>
+                                <p className='source_small_font'>National Center for Health Statistics. Indicators of Health Insurance Coverage at the Time of Interview. Available from: https://data.cdc.gov/d/jb9g-gnvr.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            
             <div className="foot">
             </div>
         </>
