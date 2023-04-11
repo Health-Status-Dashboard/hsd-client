@@ -25,6 +25,7 @@ export const initBirthRateData = `http://localhost:3001/api/initBirthRateData`
 export const getBirthRateData = `http://localhost:3001/api/getBirthRateData`
 export const initGestBirthRates = `http://localhost:3001/api/initGestBirthRates`
 export const getGestBirthRates = `http://localhost:3001/api/getGestBirthRates`
+export const init12MonthBirthRates = `http://localhost:3001/api/initLast12MonthBirthData`
 export const get12MonthBirthRates = `http://localhost:3001/api/getLast12MonthBirthData`
 
 
@@ -56,4 +57,5 @@ export const get12MonthBirthRates = `http://localhost:3001/api/getLast12MonthBir
 // export const getBirthRateData = `http://healthdashboard.mitre.org/api/getBirthRateData`
 // export const initGestBirthRates = `http://healthdashboard.mitre.org/api/initGestBirthRates`
 // export const getGestBirthRates = `http://healthdashboard.mitre.org/api/getGestBirthRates`
+// export const init12MonthBirthRates = `http://healthdashboard.mitre.org/api/initLast12MonthBirthData`
 // export const get12MonthBirthRates = `http://healthdashboard.mitre.org/api/getLast12MonthBirthData`

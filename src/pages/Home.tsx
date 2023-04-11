@@ -21,9 +21,9 @@ import { IBar } from '../interfaces/IBar';
 import { ILine } from '../interfaces/ILine';
 
 import { initLifeExpectancy, getLifeExpectancy, initAlcoholTobaccoData, getAlcoholTobaccoData, initDCData, getDCData, 
-    initNAWData, getNAWData, initUSPopulationData, getUSPopulationData, initCDSummaryData, getCDSummaryData, getWeightSummary, 
+    initNAWData, getNAWData, initUSPopulationData, getUSPopulationData, initCDSummaryData, getCDSummaryData, initWeightSummary, getWeightSummary, 
     initUninsuredSummary, getUninsuredSummary, initUninsuredByEducation,getUninsuredByEducation, initUninsuredByAge, getUninsuredByAge,
-    initUninsuredBySubgroup, getUninsuredBySubgroup, getBirthRateData, getGestBirthRates, get12MonthBirthRates} from '../endpoints/HomePageServerURLs'
+    initUninsuredBySubgroup, getUninsuredBySubgroup, initBirthRateData, getBirthRateData, initGestBirthRates, getGestBirthRates, init12MonthBirthRates, get12MonthBirthRates} from '../endpoints/HomePageServerURLs'
 import { colors, gradient } from '../colors/colors'
 
 
@@ -35,6 +35,17 @@ async function initData(event: React.MouseEvent<HTMLButtonElement>) {
         var response = await fetch(initLifeExpectancy);
         response = await fetch(initAlcoholTobaccoData);
         response = await fetch (initDCData); //TODO resaves
+        response = await fetch (initNAWData); //TODO resaves
+        response = await fetch (initUSPopulationData); //TODO resaves
+        response = await fetch (initCDSummaryData); //TODO resaves
+        response = await fetch (initWeightSummary); //TODO resaves
+        response = await fetch (initUninsuredSummary); //TODO resaves
+        response = await fetch (initUninsuredByEducation); //TODO resaves
+        response = await fetch (initUninsuredByAge); //TODO resaves
+        response = await fetch (initUninsuredBySubgroup); //TODO resaves
+        response = await fetch (initBirthRateData); //TODO resaves
+        response = await fetch (initGestBirthRates); //TODO resaves
+        response = await fetch (init12MonthBirthRates); //TODO resaves
         const { status } = response;
         return status;
     } catch (err) {

@@ -20,8 +20,7 @@ import { SummaryCard } from '../cards/SummaryCard'
 import { BarCard } from '../cards/BarCard'
 import { ISummary } from '../interfaces/ISummary';
 import { IBar } from '../interfaces/IBar';
-import { initLifeExpectancy, getLifeExpectancy } from '../endpoints/HomePageServerURLs'
-import { initRecentYearDCModel, getRecentYearDCModel, getRecentYearDCModelAllCauses, getRecentYearDCModelAlzheimer, getRecentYearDCModelCovid19, getRecentYearDCModelCancer, getRecentYearDCModelLiver, getRecentYearDCModelRespiratory, getRecentYearDCModelDiabetes, getRecentYearDCModelHeart, getRecentYearDCModelHIV, getRecentYearDCModelHypertension, getRecentYearDCModelFluPneu, getRecentYearDCModelKidney, getRecentYearDCModelParkinsons, getRecentYearDCModelPneumonionitis, getRecentYearDCModelSepticimia, getRecentYearDCModelStroke, getRecent3YearDCModel } from '../endpoints/RegionsPageServerURLs'
+import { initRecentYearDCModel, getRecentYearDCModelAllCauses, getRecentYearDCModelAlzheimer, getRecentYearDCModelCovid19, getRecentYearDCModelCancer, getRecentYearDCModelLiver, getRecentYearDCModelRespiratory, getRecentYearDCModelDiabetes, getRecentYearDCModelHeart, getRecentYearDCModelHIV, getRecentYearDCModelHypertension, getRecentYearDCModelFluPneu, getRecentYearDCModelKidney, getRecentYearDCModelParkinsons, getRecentYearDCModelPneumonionitis, getRecentYearDCModelSepticimia, getRecentYearDCModelStroke, initRecent3YearDCModel, getRecent3YearDCModel } from '../endpoints/RegionsPageServerURLs'
 import { colors, gradient } from '../colors/colors'
 
 ChartJS.register(
@@ -58,7 +57,8 @@ ChartJS.register(
 async function initData(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
     try {
-        const response = await fetch(initLifeExpectancy);
+        var response = await fetch(initRecentYearDCModel); 
+        response = await fetch(initRecent3YearDCModel);
         const { status } = response;
         return status;
     } catch (err) {
