@@ -1,7 +1,3 @@
-
-
-
-
 import * as React from 'react'
 import Container from 'react-bootstrap/Container';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -21,22 +17,11 @@ import {
 } from "chart.js";
 
 import { SummaryCard } from '../cards/SummaryCard'
-import { StatsCard } from '../cards/StatsCard'
-import { LineCard } from '../cards/LineCard'
-import { PieCard } from '../cards/PieCard'
 import { BarCard } from '../cards/BarCard'
-import { SingleLineCard } from '../cards/SingleLineCard'
-
-import { ILongitudinal } from '../interfaces/ILongitudinal';
 import { MiniBarCard } from '../cards/MiniBarCard'
 import { ISummary } from '../interfaces/ISummary';
-import { IStats } from '../interfaces/IStats';
-import { IProportional } from '../interfaces/IProportional';
 import { IBar } from '../interfaces/IBar';
 import { initRecentYearDCModel, getRecentYearDCModelAllCauses, getRecentYearDCModelAlzheimer, getRecentYearDCModelCovid19, getRecentYearDCModelCancer, getRecentYearDCModelLiver, getRecentYearDCModelRespiratory, getRecentYearDCModelDiabetes, getRecentYearDCModelHeart, getRecentYearDCModelHIV, getRecentYearDCModelHypertension, getRecentYearDCModelFluPneu, getRecentYearDCModelKidney, getRecentYearDCModelParkinsons, getRecentYearDCModelPneumonionitis, getRecentYearDCModelSepticimia, getRecentYearDCModelStroke, initRecent3YearDCModel, getRecent3YearDCModel } from '../endpoints/RegionsPageServerURLs'
-import { ILine } from '../interfaces/ILine';
-
-import { initLifeExpectancy, getLifeExpectancy } from '../endpoints/serverURLs'
 import { colors, gradient } from '../colors/colors'
 
 ChartJS.register(
@@ -67,24 +52,6 @@ function renameStateKeys(data: any) {
     }
     return data
 }
-}
-
-
-// no longer using this
-function underscoreStates(data: any) {
-    for (const obj of data) {
-        obj.properties.name = obj.properties.name.replace(/ /g, "_").toLowerCase()
-    }
-    return data
-}
-
-//TODO make this an async function that makes an api call to the back end 
-// back end should do the parsing that happens here
-function getDeathData(keyWord: string) {
-    const newData = deathData.filter(obj => obj.cause_of_death === keyWord);
-    return newData
-}
-
 
 export default function Regions() {
 
@@ -121,7 +88,6 @@ export default function Regions() {
             }
         ]
     }
-
 
     const deathsBySex: IBar = {
         title: "Deaths per 100,000 Residents",
@@ -291,22 +257,16 @@ export default function Regions() {
             });
     }
 
-    //const [lifeExpectancy, saveLifeExpectancy] = React.useState(lineData);
     React.useEffect(() => {
-        //TODO replace this API call with one to the endpoint in regionPlaceholderData
-        //https://data.cdc.gov/resource/489q-934x.json?year_and_quarter=2022%20Q3&rate_type=Age-adjusted&time_period=12%20months%20ending%20with%20quarter
 
-        /*
-        fetch(getJurisdictions)
+        //first fetch the data for all diseases on render
+        fetch(getRecentYearDCModelAllCauses)
             .then(response => response.json())
             .then(data => {
-                saveLifeExpectancy(data[0]);
-            })
-            */
+                setStateData(renameStateKeys(data))
+            });
 
-        setStateData(renameStateKeys(deathData[0]))
-
-
+        //data to display map
         fetch('http://unpkg.com/us-atlas/states-10m.json')
             .then((response) => response.json())
             .then((value) => {
@@ -318,7 +278,6 @@ export default function Regions() {
                     ).features
                 );
             });
-
     }, []);
 
 
@@ -390,7 +349,6 @@ export default function Regions() {
                         <Nav.Link href="regions">Regions</Nav.Link>
                         <Nav.Link href="#risks">Risks</Nav.Link>
                         <Nav.Link href="#systems">Health Systems</Nav.Link>
-
                     </Nav>
                     <Nav className="ml-auto">
                         <Button variant="light" style={{ marginLeft: "auto" }}>Reset</Button>
@@ -400,16 +358,13 @@ export default function Regions() {
             <br />
             <h2 className="title" >Regional Health Status</h2>
             <br />
-
             <div className="container-fluid">
-
                 <div className="row">
                     <div className="col-1">
                     </div>
                     <div className="col-10">
                         <div className="region-container">
                             <SummaryCard data={regionSumm} />
-
                             <DropdownButton id="dropdown-basic-button" title="Causes of Death" variant="transparent">
                                 <Dropdown.Item onClick={() => dataHandler("All causes")}>All Causes</Dropdown.Item>
                                 <Dropdown.Item onClick={() => dataHandler("Alzheimer disease")}>Alzheimer's Disease</Dropdown.Item>
@@ -475,16 +430,11 @@ export default function Regions() {
                                     <p className='source_small_font'>National Center for Health Statistics. NCHS - VSRR Quarterly provisional estimates for selected indicators of mortality. Available from https://data.cdc.gov/d/489q-934x</p>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
                     <div className="col-1">
                     </div>
                 </div>
-
-
-
                 <div className="row mt-4">
                     <div className="col-1">
                     </div>
@@ -517,10 +467,9 @@ export default function Regions() {
                         </div>
                         <div className="col-1">
                         </div>
-                    </div >
-                </div >
-            </div >
-
+                    </div>
+                </div>
+            </div>
             <div className="foot">
             </div>
         </>
