@@ -228,47 +228,8 @@ export default function Home() {
             })
     }, []);
 
-    const [birthRateData, saveBirthRateData] = React.useState({
-        title: '',
-        labels: [],
-        datasets: []
-    });
-    React.useEffect(() => {
-        fetch(getBirthRateData)
-            .then(response => response.json())
-            .then(data => {
-                const chosenColors = [colors.black, colors.cerise, colors.mitreBlue, colors.darkOrange, colors.green, colors.saffron, colors.vermilion, colors.pink];
 
-                for (var i = 0; i < chosenColors.length; i++) {
-                    data[0].datasets[i].backgroundColor = chosenColors[i];
-                    data[0].datasets[i].borderColor = chosenColors[i];
-                }
-                saveBirthRateData(data[0])
-            })
-    }, []);
 
-    const [birthRateGestationalData, saveBirthRateGestationalData] = React.useState({
-        title: '',
-        labels: [],
-        datasets: []
-    });
-    React.useEffect(() => {
-        fetch(getGestBirthRates)
-            .then(response => response.json())
-            .then(data => {
-
-                //const chosenColors = [colors.black, colors.mitreBlue, colors.white];
-                const chosenColors = [colors.black, colors.mitreBlue, colors.saffron];
-
-                for (var i = 0; i < chosenColors.length; i++) {
-                    data[0].datasets[i].backgroundColor = chosenColors[i];
-                    data[0].datasets[i].borderColor = chosenColors[i];
-                    //data[0].datasets[i].borderColor = 'rgba(16,44,76,0.8)';
-                    //data[0].datasets[i].borderWidth = 2;
-                }
-                saveBirthRateGestationalData(data[0]);
-            })
-    }, []);
 
     const [last12MonthBirthData, saveLast12MonthBirthData] = React.useState({
         title: '',
