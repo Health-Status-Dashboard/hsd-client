@@ -135,14 +135,14 @@ export default function Home() {
             .then(data => {
                 var dataObj = data[0];
                 data[0].datasets[0].backgroundColor = [
+                    colors.green,
                     colors.vermilion,
                     colors.saffron,
-                    colors.green,
                     colors.mitreDarkBlue];
                 data[0].datasets[0].borderColor = [
+                    colors.green,
                     colors.vermilion,
                     colors.saffron,
-                    colors.green,
                     colors.white];
                 data[0].datasets[0].borderWidth = 0;
                 saveNAWData(dataObj);

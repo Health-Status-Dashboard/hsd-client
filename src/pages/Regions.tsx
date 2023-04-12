@@ -321,16 +321,16 @@ export default function Regions() {
                         },
                         {
                             label: data[0].datasets[index].data[2].year,
-                            backgroundColor: colors.mitreYellow,
-                            borderColor: colors.mitreYellow,
-                            borderWidth: 0,
+                            backgroundColor: colors.white,
+                            borderColor: colors.mitreDarkBlue,
+                            borderWidth: 1,
                             data: data[0].datasets[index].data[2].data
                         },
                         {
                             label: data[0].datasets[index].data[3].year,
-                            backgroundColor: colors.darkOrange,
-                            borderColor: colors.darkOrange,
-                            borderWidth: 0,
+                            backgroundColor: colors.mitreYellow,
+                            borderColor: colors.mitreDarkBlue,
+                            borderWidth: 1,
                             data: data[0].datasets[index].data[3].data
                         }
                     ]
