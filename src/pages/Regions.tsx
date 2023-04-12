@@ -18,6 +18,7 @@ import {
 
 import { SummaryCard } from '../cards/SummaryCard'
 import { BarCard } from '../cards/BarCard'
+import { MiniBarCard } from '../cards/MiniBarCard'
 import { ISummary } from '../interfaces/ISummary';
 import { IBar } from '../interfaces/IBar';
 import { initRecentYearDCModel, getRecentYearDCModelAllCauses, getRecentYearDCModelAlzheimer, getRecentYearDCModelCovid19, getRecentYearDCModelCancer, getRecentYearDCModelLiver, getRecentYearDCModelRespiratory, getRecentYearDCModelDiabetes, getRecentYearDCModelHeart, getRecentYearDCModelHIV, getRecentYearDCModelHypertension, getRecentYearDCModelFluPneu, getRecentYearDCModelKidney, getRecentYearDCModelParkinsons, getRecentYearDCModelPneumonionitis, getRecentYearDCModelSepticimia, getRecentYearDCModelStroke, initRecent3YearDCModel, getRecent3YearDCModel } from '../endpoints/RegionsPageServerURLs'
@@ -382,7 +383,7 @@ export default function Regions() {
                                 <Dropdown.Item onClick={() => dataHandler("Septicemia")}>Septicemia</Dropdown.Item>
                                 <Dropdown.Item onClick={() => dataHandler("Stroke")}>Stroke</Dropdown.Item>
                             </DropdownButton>
-                            <div className="blue" style={{ position: "relative", height: "70vh", width: "89%", margin: "0 auto" /*, padding: "10px"*/ }}>
+                            <div className="blue" style={{ position: "relative", height: "75vh", width: "89%", margin: "0 auto" /*, padding: "10px"*/ }}>
                                 <div style={{ position: "relative", height: "60vh", width: "89%", margin: "0 auto", top: "10%" }}>
                                     <Chart
                                         className='blue'
@@ -426,7 +427,7 @@ export default function Regions() {
                                     />
 
                                     <br />
-                                    <p className='source_small_font'>SOURCE.</p>
+                                    <p className='source_small_font'>National Center for Health Statistics. NCHS - VSRR Quarterly provisional estimates for selected indicators of mortality. Available from https://data.cdc.gov/d/489q-934x</p>
                                 </div>
                             </div>
                         </div>
@@ -440,13 +441,13 @@ export default function Regions() {
                     <div className="col-5">
                         <div className="region-container" >
                             <SummaryCard data={sexSumm} />
-                            <BarCard data={deathsBySex} />
+                            <MiniBarCard data={deathsBySex} />
                         </div>
                     </div>
                     <div className="col-5">
                         <div className="region-container" >
                             <SummaryCard data={ageSumm} />
-                            <BarCard data={deathsByAge} />
+                            <MiniBarCard data={deathsByAge} />
                         </div>
                     </div>
                     <div className="col-1">

@@ -9,8 +9,10 @@ import Button from 'react-bootstrap/Button';
 import { SummaryCard } from '../cards/SummaryCard'
 import { StatsCard } from '../cards/StatsCard'
 import { LineCard } from '../cards/LineCard'
+import { MiniLineCard } from '../cards/MiniLineCard'
 import { PieCard } from '../cards/PieCard'
 import { BarCard } from '../cards/BarCard'
+import { MiniBarCard } from '../cards/MiniBarCard'
 import { SingleLineCard } from '../cards/SingleLineCard'
 
 import { ILongitudinal } from '../interfaces/ILongitudinal';
@@ -112,7 +114,7 @@ export default function Home() {
 
     const [weightSummary, saveWeightSummary] = React.useState({
         title: "",
-        headers: [],
+        stats: [],
     });
     React.useEffect(() => {
         fetch(getWeightSummary)
@@ -121,7 +123,6 @@ export default function Home() {
                 saveWeightSummary(data[0]);
             })
     }, []);
-
 
     const [NAWDataset, saveNAWData] = React.useState({
         title: '',
@@ -250,12 +251,14 @@ export default function Home() {
             .then(response => response.json())
             .then(data => {
 
-                const chosenColors = [colors.black, colors.mitreBlue, colors.white];
+                //const chosenColors = [colors.black, colors.mitreBlue, colors.white];
+                const chosenColors = [colors.black, colors.mitreBlue, colors.saffron];
 
                 for (var i = 0; i < chosenColors.length; i++) {
                     data[0].datasets[i].backgroundColor = chosenColors[i];
-                    data[0].datasets[i].borderColor = 'rgba(16,44,76,0.8)';
-                    data[0].datasets[i].borderWidth = 1;
+                    data[0].datasets[i].borderColor = chosenColors[i];
+                    //data[0].datasets[i].borderColor = 'rgba(16,44,76,0.8)';
+                    //data[0].datasets[i].borderWidth = 2;
                 }
                 saveBirthRateGestationalData(data[0]);
             })
@@ -295,7 +298,9 @@ export default function Home() {
             <div>
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-12 align-items-center">
+                        <div className="col-1">
+                        </div>
+                        <div className="col-10 align-items-center">
                             <div className="region-container">
                                 <SummaryCard data={populationData} />
                                 <SingleLineCard data={lifeExpectancy} />
@@ -304,10 +309,15 @@ export default function Home() {
                             </div>
                         </div>
                     </div>
+                    <div className="col-1">
+                    </div>
 
                     <div className="row mt-4">
 
-                        <div className="col-5">
+                        <div className="col-1">
+                        </div>
+
+                        <div className="col-4">
                             <div className="region-container">
                                 <StatsCard data={alcoholDataset} />
                                 <br />
@@ -315,22 +325,27 @@ export default function Home() {
                             </div>
                         </div>
 
-                        <div className="col-7">
+                        <div className="col-6">
                             <div className="region-container">
-                                <SummaryCard data={weightSummary} />
-                                <br />
-                                <div className="pad">
-                                    <PieCard data={NAWDataset} />
+                                <div className="summ-space">
+                                    <StatsCard data={weightSummary} />
                                 </div>
-                                <br />
-                                <p className='source_small_font'>SOURCE 1; DPH Public Inquiries- CDC Chronic Data- US Chronic Disease Indicators (CDI). Sourced from: 	http://www.cdc.gov/nccdphp/dph/. </p>
+                                <div className='pie'>
+                                    <PieCard data={NAWDataset} />
+                                    <br />
+                                    <p className='source_small_font'>SOURCE 1; DPH Public Inquiries- CDC Chronic Data- US Chronic Disease Indicators (CDI). Sourced from: 	http://www.cdc.gov/nccdphp/dph/. </p>
+                                </div>
+
                             </div>
                         </div>
-
+                        <div className="col-1">
+                        </div>
                     </div>
 
                     <div className="row mt-4">
-                        <div className="col-12">
+                        <div className="col-1">
+                        </div>
+                        <div className="col-10">
                             <div className="region-container">
                                 <SummaryCard data={causeOfDeathSummary} />
                                 <BarCard data={DCDataset} />
@@ -339,54 +354,88 @@ export default function Home() {
 
                             </div>
                         </div>
+                        <div className="col-1">
+                        </div>
                     </div>
 
                     <div className="row mt-4">
-                        <div className="col-12">
+                        <div className="col-1">
+                        </div>
+                        <div className="col-10">
                             <div className="region-container">
                                 <SummaryCard data={uninsuredSummaryData} />
                             </div>
                         </div>
+                        <div className="col-1">
+                        </div>
                     </div>
+
+
                     <div className="row g-0">
-                        <div className="col-7">
+                        <div className="col-1">
+                        </div>
+                        <div className="col-6">
                             <div className="region-container">
-                                <div className="summ-space">
-                                </div>
-                                <LineCard data={uninsuredBySubgroupData} />
+
+                                <MiniLineCard data={uninsuredBySubgroupData} />
                                 <br />
                                 <p className='source_small_font'>National Center for Health Statistics. Indicators of Health Insurance Coverage at the Time of Interview. Available from: https://data.cdc.gov/d/jb9g-gnvr.</p>
                             </div>
                         </div>
 
-                        <div className="col-5">
+                        <div className="col-4">
                             <div className="region-container">
-                                <BarCard data={uninsuredByEducationData} />
-                                <BarCard data={uninsuredByAgeData} />
+                                <MiniBarCard data={uninsuredByEducationData} />
+                                <MiniBarCard data={uninsuredByAgeData} />
                             </div>
+                        </div>
+
+                        <div className="col-1">
                         </div>
                     </div>
 
                     <div className="row mt-4 g-0">
-                        <div className="region-container">
-                            <h4>Fertility in the US</h4>
-                            <SummaryCard data={last12MonthBirthData} />
+                        <div className="col-1">
                         </div>
-                        <div className="col-6">
+                        <div className="col-10">
                             <div className="region-container">
-                                <BarCard data={birthRateGestationalData} />
-                                <p className='source_small_font'>National Center for Health Statistics. NCHS - VSRR Quarterly provisional estimates for selected birth indicators. Available from https://data.cdc.gov/d/76vv-a7x8.</p>
-
+                                <h4 className="header">Fertility in the US</h4>
+                                <SummaryCard data={last12MonthBirthData} />
                             </div>
                         </div>
-                        <div className="col-6">
+                        <div className="col-1">
+                        </div>
+
+                    </div>
+
+                    <div className="row g-0">
+                        <div className="col-1">
+                        </div>
+
+                        <div className="col-10">
                             <div className="region-container">
                                 <LineCard data={birthRateData} />
                                 <p className='source_small_font'>National Center for Health Statistics. Indicators of Health Insurance Coverage at the Time of Interview. Available from: https://data.cdc.gov/d/jb9g-gnvr.</p>
                             </div>
                         </div>
-
+                        <div className="col-1">
+                        </div>
                     </div>
+
+                    <div className="row g-0">
+                        <div className="col-1">
+                        </div>
+                        <div className="col-10">
+                            <div className="region-container">
+                                <LineCard data={birthRateGestationalData} />
+                                <p className='source_small_font'>National Center for Health Statistics. NCHS - VSRR Quarterly provisional estimates for selected birth indicators. Available from https://data.cdc.gov/d/76vv-a7x8.</p>
+                            </div>
+                        </div>
+
+                        <div className="col-1">
+                        </div>
+                    </div>
+
                 </div>
             </div>
 

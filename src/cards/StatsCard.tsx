@@ -9,11 +9,11 @@ export const StatsCard = (statsData: StatsData) => {
         <div key={stat.label} className="item">
             <br />
             <div className="row">
-                <div className="col-4">
-                    <h5>{stat.value}</h5>
+                <div className="col-5">
+                    <h6 className="stat_val">{stat.value}</h6>
                 </div>
-                <div className="col-8">
-                    <h6 key={stat.label}> {stat.label}</h6>
+                <div className="col-7">
+                    <div key={stat.label}> {stat.label}</div>
                 </div>
             </div>
         </div >
@@ -21,7 +21,7 @@ export const StatsCard = (statsData: StatsData) => {
     return (
         <div>
             <div>
-                <h4>{statsData.data.title}</h4>
+                <h4 className="header">{statsData.data.title}</h4>
             </div>
             <>
                 <div>{descriptors}</div>
