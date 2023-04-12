@@ -7,13 +7,13 @@ type SummaryData = { data: ISummary };
 export const SummaryCard = (sumData: SummaryData) => {
     const descriptors = sumData.data.headers.map((h: Header) =>
         <div key={h.label}>
-            <h6 key={h.label}>{h.label}: {h.value}</h6>
+            <div key={h.label}>{h.label}: <strong>{h.value}</strong></div>
         </div >
     );
     return (
         <div>
             <div>
-                <h4>{sumData.data.title}</h4>
+                <h4 className="header">{sumData.data.title}</h4>
             </div>
             <>
                 <div>{descriptors}</div>

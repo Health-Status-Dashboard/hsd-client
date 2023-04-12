@@ -1,7 +1,7 @@
 .region-container {
   text-align: center;
   background-color: #EEF4FF;
-  padding: 20px;
+  padding: 30px;
   height: 100%;
 }
 
@@ -14,11 +14,26 @@
   margin-left: 100px;*/
 }
 
+.pad {
+  text-align: center;
+  margin: 40px;
+  height: 30%;
+}
+
+.pie {
+  text-align: center;
+  margin: 15%;
+}
 
 .title {
   text-align: center;
   color: rgba(16, 44, 76);
+  font-size: calc(1rem + 2vw);
 
+}
+
+.header {
+  font-size: calc(1rem + 1vw);
 }
 
 .chart {
@@ -43,7 +58,7 @@
 }
 
 .summ-space {
-  margin-bottom: 10%
+  margin-bottom: 35%
 }
 
 .narrow-container {
@@ -58,6 +73,17 @@
 .source_small_font {
   font-size: xx-small;
 }
+
+div {
+  font-size: calc(0.5rem + 0.7vw);
+}
+
+.stat_val {
+  font-size: calc(0.7rem + 1vw);
+  font-weight: bold;
+}
+
+
 
 /*
 .center {
