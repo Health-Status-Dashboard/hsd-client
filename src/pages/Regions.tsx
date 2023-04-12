@@ -34,8 +34,8 @@ ChartJS.register(
     ChartGeo.GeoFeature
 );
 
- //Rename data into displayable words such as new_hampshire --> New Hampshire
- function renameStateKeys(data: any) { 
+//Rename data into displayable words such as new_hampshire --> New Hampshire
+function renameStateKeys(data: any) {
     for (var k in data) {
         if (data.hasOwnProperty(k)) {
             if (k.substring(0, 4) === "rate") {
@@ -50,21 +50,6 @@ ChartJS.register(
         }
     }
     return data
-  }
-
-
-//TODO replace this reset button with API call 
-async function initData(event: React.MouseEvent<HTMLButtonElement>) {
-    event.preventDefault();
-    try {
-        var response = await fetch(initRecentYearDCModel); 
-        response = await fetch(initRecent3YearDCModel);
-        const { status } = response;
-        return status;
-    } catch (err) {
-        // handle error
-        console.error(err);
-    }
 }
 
 export default function Regions() {
@@ -214,52 +199,52 @@ export default function Regions() {
     const dataHandler = (keyWord: any) => {
 
         var currentDataset = ``;
-        if (keyWord === 'All causes'){
+        if (keyWord === 'All causes') {
             currentDataset = getRecentYearDCModelAllCauses;
         }
-        if (keyWord === 'Alzheimer disease'){
+        if (keyWord === 'Alzheimer disease') {
             currentDataset = getRecentYearDCModelAlzheimer;
         }
-        if (keyWord === "COVID-19"){
+        if (keyWord === "COVID-19") {
             currentDataset = getRecentYearDCModelCovid19;
         }
-        if (keyWord === "Cancer"){
+        if (keyWord === "Cancer") {
             currentDataset = getRecentYearDCModelCancer;
         }
-        if (keyWord === "Chronic liver disease and cirrhosis"){
+        if (keyWord === "Chronic liver disease and cirrhosis") {
             currentDataset = getRecentYearDCModelLiver;
         }
-        if (keyWord === "Chronic lower respiratory diseases"){
+        if (keyWord === "Chronic lower respiratory diseases") {
             currentDataset = getRecentYearDCModelRespiratory;
         }
-        if (keyWord === "Diabetes"){
+        if (keyWord === "Diabetes") {
             currentDataset = getRecentYearDCModelDiabetes;
         }
-        if (keyWord === "Heart disease"){
+        if (keyWord === "Heart disease") {
             currentDataset = getRecentYearDCModelHeart;
         }
-        if (keyWord === "HIV disease"){
+        if (keyWord === "HIV disease") {
             currentDataset = getRecentYearDCModelHIV;
         }
-        if (keyWord === "Hypertension"){
+        if (keyWord === "Hypertension") {
             currentDataset = getRecentYearDCModelHypertension;
         }
-        if (keyWord === "Influenza and pneumonia"){
+        if (keyWord === "Influenza and pneumonia") {
             currentDataset = getRecentYearDCModelFluPneu;
         }
-        if (keyWord === "Kidney disease"){
+        if (keyWord === "Kidney disease") {
             currentDataset = getRecentYearDCModelKidney;
         }
-        if (keyWord === "Parkinson disease"){
+        if (keyWord === "Parkinson disease") {
             currentDataset = getRecentYearDCModelParkinsons;
         }
-        if (keyWord === "Pneumonitis due to solids and liquids"){
+        if (keyWord === "Pneumonitis due to solids and liquids") {
             currentDataset = getRecentYearDCModelPneumonionitis;
         }
-        if (keyWord === "Septicemia"){
+        if (keyWord === "Septicemia") {
             currentDataset = getRecentYearDCModelSepticimia;
         }
-        if (keyWord === "Stroke"){
+        if (keyWord === "Stroke") {
             currentDataset = getRecentYearDCModelStroke;
         }
 
@@ -294,12 +279,12 @@ export default function Regions() {
             });
     }, []);
 
-   
+
 
     const [get3YearDCdata, save3YearDCdata] = React.useState({
         title: "",
         labels: ['Q1', "Q2"],
-        datasets: [ {
+        datasets: [{
             label: 'February 2023',
             backgroundColor: 'rgba(16,44,76,0.5)',
             borderColor: 'rgba(16,44,76,0.8)',
@@ -309,45 +294,45 @@ export default function Regions() {
     });
 
     //cause of death per quarters, past 4 years
-    React.useEffect(() => { 
+    React.useEffect(() => {
         fetch(getRecent3YearDCModel)
             .then(response => response.json())
             .then(data => {
 
                 var index = data[0].datasets.findIndex((obj: { label: any; }) => obj.label === stateData.cause_of_death);
                 var objToDisplay = {
-                    title: "Quarterly data of US Causes of Death for "+ stateData.cause_of_death + " (rate per 100,000 people)",
-                    labels : ['Q1', 'Q2', 'Q3', 'Q4'],
+                    title: "Quarterly data of US Causes of Death for " + stateData.cause_of_death + " (rate per 100,000 people)",
+                    labels: ['Q1', 'Q2', 'Q3', 'Q4'],
                     datasets: [
-                            {
-                                label: data[0].datasets[index].data[0].year,
-                                backgroundColor: colors.black,
-                                borderColor: colors.black,
-                                borderWidth: 0,
-                                data : data[0].datasets[index].data[0].data
-                            },
-                            {
-                                label: data[0].datasets[index].data[1].year,
-                                backgroundColor: colors.mitreBlue,
-                                borderColor: colors.mitreBlue,
-                                borderWidth: 0,
-                                data : data[0].datasets[index].data[1].data
-                            },
-                            {
-                                label: data[0].datasets[index].data[2].year,
-                                backgroundColor: colors.mitreYellow,
-                                borderColor: colors.mitreYellow,
-                                borderWidth: 0,
-                                data : data[0].datasets[index].data[2].data
-                            },
-                            {
-                                label: data[0].datasets[index].data[3].year,
-                                backgroundColor: colors.darkOrange,
-                                borderColor: colors.darkOrange,
-                                borderWidth: 0,
-                                data : data[0].datasets[index].data[3].data
-                            }
-                        ]
+                        {
+                            label: data[0].datasets[index].data[0].year,
+                            backgroundColor: colors.black,
+                            borderColor: colors.black,
+                            borderWidth: 0,
+                            data: data[0].datasets[index].data[0].data
+                        },
+                        {
+                            label: data[0].datasets[index].data[1].year,
+                            backgroundColor: colors.mitreBlue,
+                            borderColor: colors.mitreBlue,
+                            borderWidth: 0,
+                            data: data[0].datasets[index].data[1].data
+                        },
+                        {
+                            label: data[0].datasets[index].data[2].year,
+                            backgroundColor: colors.mitreYellow,
+                            borderColor: colors.mitreYellow,
+                            borderWidth: 0,
+                            data: data[0].datasets[index].data[2].data
+                        },
+                        {
+                            label: data[0].datasets[index].data[3].year,
+                            backgroundColor: colors.darkOrange,
+                            borderColor: colors.darkOrange,
+                            borderWidth: 0,
+                            data: data[0].datasets[index].data[3].data
+                        }
+                    ]
                 }
                 save3YearDCdata(objToDisplay);
             })
@@ -365,7 +350,7 @@ export default function Regions() {
                         <Nav.Link href="#systems">Health Systems</Nav.Link>
                     </Nav>
                     <Nav className="ml-auto">
-                        <Button onClick={initData} variant="light" style={{ marginLeft: "auto" }}>Reset</Button>
+                        <Button variant="light" style={{ marginLeft: "auto" }}>Reset</Button>
                     </Nav>
                 </Container>
             </Navbar>
@@ -440,7 +425,7 @@ export default function Regions() {
                                         }}
                                     />
 
-                                    <br/>
+                                    <br />
                                     <p className='source_small_font'>SOURCE.</p>
                                 </div>
                             </div>
@@ -475,12 +460,12 @@ export default function Regions() {
                         <div className="region-container">
 
                             <BarCard data={get3YearDCdata} />
-                                <br/>
+                            <br />
                             <p className='source_small_font'>National Center for Health Statistics. NCHS - VSRR Quarterly provisional estimates for selected indicators of mortality. Available from https://data.cdc.gov/d/489q-934x.</p>
 
                         </div>
-                    <div className="col-1">
-                    </div>
+                        <div className="col-1">
+                        </div>
                     </div>
                 </div>
             </div>

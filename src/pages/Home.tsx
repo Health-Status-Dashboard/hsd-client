@@ -20,44 +20,19 @@ import { IProportional } from '../interfaces/IProportional';
 import { IBar } from '../interfaces/IBar';
 import { ILine } from '../interfaces/ILine';
 
-import { initLifeExpectancy, getLifeExpectancy, initAlcoholTobaccoData, getAlcoholTobaccoData, initDCData, getDCData, 
-    initNAWData, getNAWData, initUSPopulationData, getUSPopulationData, initCDSummaryData, getCDSummaryData, initWeightSummary, getWeightSummary, 
-    initUninsuredSummary, getUninsuredSummary, initUninsuredByEducation,getUninsuredByEducation, initUninsuredByAge, getUninsuredByAge,
-    initUninsuredBySubgroup, getUninsuredBySubgroup, initBirthRateData, getBirthRateData, initGestBirthRates, getGestBirthRates, init12MonthBirthRates, get12MonthBirthRates} from '../endpoints/HomePageServerURLs'
+import {
+    initLifeExpectancy, getLifeExpectancy, initAlcoholTobaccoData, getAlcoholTobaccoData, initDCData, getDCData,
+    initNAWData, getNAWData, initUSPopulationData, getUSPopulationData, initCDSummaryData, getCDSummaryData, initWeightSummary, getWeightSummary,
+    initUninsuredSummary, getUninsuredSummary, initUninsuredByEducation, getUninsuredByEducation, initUninsuredByAge, getUninsuredByAge,
+    initUninsuredBySubgroup, getUninsuredBySubgroup, initBirthRateData, getBirthRateData, initGestBirthRates, getGestBirthRates, init12MonthBirthRates, get12MonthBirthRates
+} from '../endpoints/HomePageServerURLs'
 import { colors, gradient } from '../colors/colors'
 
 
 
-
-async function initData(event: React.MouseEvent<HTMLButtonElement>) {
-    event.preventDefault();
-    try {
-        var response = await fetch(initLifeExpectancy);
-        response = await fetch(initAlcoholTobaccoData);
-        response = await fetch (initDCData); //TODO resaves
-        response = await fetch (initNAWData); //TODO resaves
-        response = await fetch (initUSPopulationData); //TODO resaves
-        response = await fetch (initCDSummaryData); //TODO resaves
-        response = await fetch (initWeightSummary); //TODO resaves
-        response = await fetch (initUninsuredSummary); //TODO resaves
-        response = await fetch (initUninsuredByEducation); //TODO resaves
-        response = await fetch (initUninsuredByAge); //TODO resaves
-        response = await fetch (initUninsuredBySubgroup); //TODO resaves
-        response = await fetch (initBirthRateData); //TODO resaves
-        response = await fetch (initGestBirthRates); //TODO resaves
-        response = await fetch (init12MonthBirthRates); //TODO resaves
-        const { status } = response;
-        return status;
-    } catch (err) {
-        // handle error
-        console.error(err);
-    }
-}
-
-
 export default function Home() {
 
-//general Us population data
+    //general Us population data
     const [populationData, savePopulationData] = React.useState({
         title: "",
         headers: []
@@ -71,7 +46,7 @@ export default function Home() {
     }, []);
 
 
-//life expectancy data section
+    //life expectancy data section
     const [lifeExpectancy, saveLifeExpectancy] = React.useState({
         title: '',
         label: '',
@@ -87,7 +62,7 @@ export default function Home() {
             })
     }, []);
 
-//alcohol and tobacco data section
+    //alcohol and tobacco data section
     const [alcoholDataset, saveAlcoholData] = React.useState({
         title: "",
         stats: []
@@ -99,14 +74,14 @@ export default function Home() {
                 saveAlcoholData(data[0]);
             })
     }, []);
-    
-//death causes data section
+
+    //death causes data section
 
     const [causeOfDeathSummary, savecauseOfDeathSummary] = React.useState({
         title: "",
         headers: [],
     });
-    React.useEffect(() => { 
+    React.useEffect(() => {
         fetch(getCDSummaryData)
             .then(response => response.json())
             .then(data => {
@@ -119,27 +94,27 @@ export default function Home() {
         labels: [],
         datasets: []
     });
-    React.useEffect(() => { 
+    React.useEffect(() => {
         fetch(getDCData)
             .then(response => response.json())
             .then(data => {
                 var barChartColors = Object.values(colors);
-                for (var i = 0; i < data[0].datasets.length; i++){
-                    data[0].datasets[i].backgroundColor= barChartColors[i];
+                for (var i = 0; i < data[0].datasets.length; i++) {
+                    data[0].datasets[i].backgroundColor = barChartColors[i];
                     data[0].datasets[i].borderColor = barChartColors[i];
-                    data[0].datasets[i].borderWidth= 1;
+                    data[0].datasets[i].borderWidth = 1;
                 }
                 saveDCData(data[0]);
             })
     }, []);
 
-//nutrition, activity and weight data section
+    //nutrition, activity and weight data section
 
     const [weightSummary, saveWeightSummary] = React.useState({
         title: "",
         headers: [],
     });
-    React.useEffect(() => { 
+    React.useEffect(() => {
         fetch(getWeightSummary)
             .then(response => response.json())
             .then(data => {
@@ -153,113 +128,113 @@ export default function Home() {
         labels: [],
         datasets: []
     });
-    React.useEffect(() => { 
+    React.useEffect(() => {
         fetch(getNAWData)
             .then(response => response.json())
             .then(data => {
                 var dataObj = data[0];
-                data[0].datasets[0].backgroundColor= [
+                data[0].datasets[0].backgroundColor = [
                     colors.vermilion,
                     colors.saffron,
                     colors.green,
                     colors.mitreDarkBlue];
-                data[0].datasets[0].borderColor= [
+                data[0].datasets[0].borderColor = [
                     colors.vermilion,
                     colors.saffron,
                     colors.green,
                     colors.white];
-                data[0].datasets[0].borderWidth= 0;
+                data[0].datasets[0].borderWidth = 0;
                 saveNAWData(dataObj);
             })
     }, []);
 
-//uninsured population section
+    //uninsured population section
 
-const [uninsuredSummaryData, saveUninsuredSummary] = React.useState({
-    title: "",
-    headers: [],
-});
-React.useEffect(() => { 
-    fetch(getUninsuredSummary)
-        .then(response => response.json())
-        .then(data => {
-            saveUninsuredSummary(data[0]);
-        })
-}, []);
+    const [uninsuredSummaryData, saveUninsuredSummary] = React.useState({
+        title: "",
+        headers: [],
+    });
+    React.useEffect(() => {
+        fetch(getUninsuredSummary)
+            .then(response => response.json())
+            .then(data => {
+                saveUninsuredSummary(data[0]);
+            })
+    }, []);
 
 
-const [uninsuredByEducationData, saveUninsuredByEducationData] = React.useState({
-    title: "",
-    labels: [],
-    datasets: []
-});
-React.useEffect(() => { 
-    fetch(getUninsuredByEducation)
-        .then(response => response.json())
-        .then(data => {
-            const chosenColors = [colors.black, colors.mitreBlue, colors.white, colors.mitreYellow];
-
-            for (var i = 0; i < chosenColors.length; i++){
-                data[0].datasets[i].backgroundColor= chosenColors[i];
-                data[0].datasets[i].borderColor= 'rgba(16,44,76,0.8)';
-                data[0].datasets[i].borderWidth= 1;
-            }
-            saveUninsuredByEducationData(data[0]);
-        })
-}, []);
-const [uninsuredByAgeData, saveUninsuredByAgeData] = React.useState({
-    title: "",
-    labels: [],
-    datasets: []
-});
-React.useEffect(() => { 
-    fetch(getUninsuredByAge)
-        .then(response => response.json())
-        .then(data => {
-            const chosenColors = [colors.black, colors.mitreBlue, colors.white, colors.mitreYellow];
-
-            for (var i = 0; i < chosenColors.length; i++){
-                data[0].datasets[i].backgroundColor= chosenColors[i];
-                data[0].datasets[i].borderColor= 'rgba(16,44,76,0.8)';
-                data[0].datasets[i].borderWidth= 1;
-            }
-            saveUninsuredByAgeData(data[0]);
-        })
-}, []);
-
-const [uninsuredBySubgroupData, saveUninsuredBySubgroupData] = React.useState({
-title: '',
-    labels: [],
-    datasets: []
-});
-React.useEffect(() => { 
-    fetch(getUninsuredBySubgroup)
-        .then(response => response.json())
-        .then(data => {
-            const chosenColors = [colors.black, colors.cerise, colors.mitreBlue];
-
-            for (var i = 0; i < chosenColors.length; i++){
-                data[0].datasets[i].backgroundColor= chosenColors[i];
-                data[0].datasets[i].borderColor= chosenColors[i];
-            }
-            saveUninsuredBySubgroupData(data[0]);
-        })
-}, []);
-
-const [birthRateData, saveBirthRateData] = React.useState({
-    title: '',
+    const [uninsuredByEducationData, saveUninsuredByEducationData] = React.useState({
+        title: "",
         labels: [],
         datasets: []
     });
-    React.useEffect(() => { 
+    React.useEffect(() => {
+        fetch(getUninsuredByEducation)
+            .then(response => response.json())
+            .then(data => {
+                const chosenColors = [colors.black, colors.mitreBlue, colors.white, colors.mitreYellow];
+
+                for (var i = 0; i < chosenColors.length; i++) {
+                    data[0].datasets[i].backgroundColor = chosenColors[i];
+                    data[0].datasets[i].borderColor = 'rgba(16,44,76,0.8)';
+                    data[0].datasets[i].borderWidth = 1;
+                }
+                saveUninsuredByEducationData(data[0]);
+            })
+    }, []);
+    const [uninsuredByAgeData, saveUninsuredByAgeData] = React.useState({
+        title: "",
+        labels: [],
+        datasets: []
+    });
+    React.useEffect(() => {
+        fetch(getUninsuredByAge)
+            .then(response => response.json())
+            .then(data => {
+                const chosenColors = [colors.black, colors.mitreBlue, colors.white, colors.mitreYellow];
+
+                for (var i = 0; i < chosenColors.length; i++) {
+                    data[0].datasets[i].backgroundColor = chosenColors[i];
+                    data[0].datasets[i].borderColor = 'rgba(16,44,76,0.8)';
+                    data[0].datasets[i].borderWidth = 1;
+                }
+                saveUninsuredByAgeData(data[0]);
+            })
+    }, []);
+
+    const [uninsuredBySubgroupData, saveUninsuredBySubgroupData] = React.useState({
+        title: '',
+        labels: [],
+        datasets: []
+    });
+    React.useEffect(() => {
+        fetch(getUninsuredBySubgroup)
+            .then(response => response.json())
+            .then(data => {
+                const chosenColors = [colors.black, colors.cerise, colors.mitreBlue];
+
+                for (var i = 0; i < chosenColors.length; i++) {
+                    data[0].datasets[i].backgroundColor = chosenColors[i];
+                    data[0].datasets[i].borderColor = chosenColors[i];
+                }
+                saveUninsuredBySubgroupData(data[0]);
+            })
+    }, []);
+
+    const [birthRateData, saveBirthRateData] = React.useState({
+        title: '',
+        labels: [],
+        datasets: []
+    });
+    React.useEffect(() => {
         fetch(getBirthRateData)
             .then(response => response.json())
             .then(data => {
                 const chosenColors = [colors.black, colors.cerise, colors.mitreBlue, colors.darkOrange, colors.green, colors.saffron, colors.vermilion, colors.pink];
-    
-                for (var i = 0; i < chosenColors.length; i++){
-                    data[0].datasets[i].backgroundColor= chosenColors[i];
-                    data[0].datasets[i].borderColor= chosenColors[i];
+
+                for (var i = 0; i < chosenColors.length; i++) {
+                    data[0].datasets[i].backgroundColor = chosenColors[i];
+                    data[0].datasets[i].borderColor = chosenColors[i];
                 }
                 saveBirthRateData(data[0])
             })
@@ -269,36 +244,34 @@ const [birthRateData, saveBirthRateData] = React.useState({
         title: '',
         labels: [],
         datasets: []
-        });
-        React.useEffect(() => { 
-            fetch(getGestBirthRates)
-                .then(response => response.json())
-                .then(data => {
+    });
+    React.useEffect(() => {
+        fetch(getGestBirthRates)
+            .then(response => response.json())
+            .then(data => {
 
-                    const chosenColors = [colors.black, colors.mitreBlue, colors.white];
+                const chosenColors = [colors.black, colors.mitreBlue, colors.white];
 
-                    for (var i = 0; i < chosenColors.length; i++){
-                        data[0].datasets[i].backgroundColor= chosenColors[i];
-                        data[0].datasets[i].borderColor= 'rgba(16,44,76,0.8)';
-                        data[0].datasets[i].borderWidth= 1;
-                    }
-                    saveBirthRateGestationalData(data[0]);
-                })
-        }, []);
-    
-        const [last12MonthBirthData, saveLast12MonthBirthData] = React.useState({
-            title: '',
-            labels: [],
-            datasets: []
-            });
-            React.useEffect(() => { 
-                fetch(get12MonthBirthRates)
-                    .then(response => response.json())
-                    .then(data => {
-                        saveLast12MonthBirthData(data[0]);
-                    })
-            }, []);
+                for (var i = 0; i < chosenColors.length; i++) {
+                    data[0].datasets[i].backgroundColor = chosenColors[i];
+                    data[0].datasets[i].borderColor = 'rgba(16,44,76,0.8)';
+                    data[0].datasets[i].borderWidth = 1;
+                }
+                saveBirthRateGestationalData(data[0]);
+            })
+    }, []);
 
+    const [last12MonthBirthData, saveLast12MonthBirthData] = React.useState({
+        title: '',
+        headers: []
+    });
+    React.useEffect(() => {
+        fetch(get12MonthBirthRates)
+            .then(response => response.json())
+            .then(data => {
+                saveLast12MonthBirthData(data[0]);
+            })
+    }, []);
 
     return (
         <>
@@ -312,7 +285,7 @@ const [birthRateData, saveBirthRateData] = React.useState({
 
                     </Nav>
                     <Nav className="ml-auto">
-                        <Button onClick={initData} variant="light" style={{ marginLeft: "auto" }}>Reset</Button>
+                        <Button variant="light" style={{ marginLeft: "auto" }}>Reset</Button>
                     </Nav>
                 </Container>
             </Navbar>
@@ -322,36 +295,38 @@ const [birthRateData, saveBirthRateData] = React.useState({
             <div>
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-3">
+                        <div className="col-12 align-items-center">
+                            <div className="region-container">
+                                <SummaryCard data={populationData} />
+                                <SingleLineCard data={lifeExpectancy} />
+                                <br />
+                                <p className='source_small_font'>Population, fertility datasets: US Census Data 2021, SOURCE#2; Life Expectancy Dataset: National Center for Health Statistics. NCHS - Death rates and life expectancy at birth. Available from https://data.cdc.gov/d/w9j2-ggv5.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="row mt-4">
+
+                        <div className="col-5">
                             <div className="region-container">
                                 <StatsCard data={alcoholDataset} />
-                                <br/>
+                                <br />
                                 <p className='source_small_font'>DPH Public Inquiries- CDC Chronic Data- Alcohol; Tobacco. Sourced from: http://www.cdc.gov/nccdphp/dph/. </p>
                             </div>
                         </div>
 
-
-                        <div className="col-6 align-items-center">
-                            <div className="region-container">
-                                <div className="summ-space">
-                                    <SummaryCard data={populationData} />
-                                </div>
-                                <SingleLineCard data={lifeExpectancy} />
-                                <br/>
-                                <p className='source_small_font'>Population, fertility datasets: US Census Data 2021, SOURCE#2; Life Expectancy Dataset: National Center for Health Statistics. NCHS - Death rates and life expectancy at birth. Available from https://data.cdc.gov/d/w9j2-ggv5.</p>
-                            </div>
-                        </div>
-
-
-                        <div className="col-3">
+                        <div className="col-7">
                             <div className="region-container">
                                 <SummaryCard data={weightSummary} />
                                 <br />
-                                <PieCard data={NAWDataset} />
+                                <div className="pad">
+                                    <PieCard data={NAWDataset} />
+                                </div>
                                 <br />
                                 <p className='source_small_font'>SOURCE 1; DPH Public Inquiries- CDC Chronic Data- US Chronic Disease Indicators (CDI). Sourced from: 	http://www.cdc.gov/nccdphp/dph/. </p>
                             </div>
                         </div>
+
                     </div>
 
                     <div className="row mt-4">
@@ -359,7 +334,7 @@ const [birthRateData, saveBirthRateData] = React.useState({
                             <div className="region-container">
                                 <SummaryCard data={causeOfDeathSummary} />
                                 <BarCard data={DCDataset} />
-                                <br/>
+                                <br />
                                 <p className='source_small_font'>National Center for Health Statistics. Monthly Provisional Counts of Deaths by Select Causes, 2020-2023. Available from https://data.cdc.gov/d/9dzk-mvmi.</p>
 
                             </div>
@@ -379,7 +354,7 @@ const [birthRateData, saveBirthRateData] = React.useState({
                                 <div className="summ-space">
                                 </div>
                                 <LineCard data={uninsuredBySubgroupData} />
-                                <br/>
+                                <br />
                                 <p className='source_small_font'>National Center for Health Statistics. Indicators of Health Insurance Coverage at the Time of Interview. Available from: https://data.cdc.gov/d/jb9g-gnvr.</p>
                             </div>
                         </div>
@@ -392,30 +367,29 @@ const [birthRateData, saveBirthRateData] = React.useState({
                         </div>
                     </div>
 
-                    <div className="row g-0">
-                        <div className="col-5">
+                    <div className="row mt-4 g-0">
+                        <div className="region-container">
+                            <h4>Fertility in the US</h4>
+                            <SummaryCard data={last12MonthBirthData} />
+                        </div>
+                        <div className="col-6">
                             <div className="region-container">
-                            <h1>Birth and Fertility in the US</h1>
-                            <BarCard data={birthRateGestationalData} />
-                            <p className='source_small_font'>National Center for Health Statistics. NCHS - VSRR Quarterly provisional estimates for selected birth indicators. Available from https://data.cdc.gov/d/76vv-a7x8.</p>
-                
-                            {/* <SummaryCard data={last12MonthBirthData} />   */}
+                                <BarCard data={birthRateGestationalData} />
+                                <p className='source_small_font'>National Center for Health Statistics. NCHS - VSRR Quarterly provisional estimates for selected birth indicators. Available from https://data.cdc.gov/d/76vv-a7x8.</p>
+
                             </div>
                         </div>
-
-                        <div className="col-7">
+                        <div className="col-6">
                             <div className="region-container">
-                                <div className="summ-space">
-                                </div>
                                 <LineCard data={birthRateData} />
-                                <br/>
                                 <p className='source_small_font'>National Center for Health Statistics. Indicators of Health Insurance Coverage at the Time of Interview. Available from: https://data.cdc.gov/d/jb9g-gnvr.</p>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
-            
+
             <div className="foot">
             </div>
         </>
