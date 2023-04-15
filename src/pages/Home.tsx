@@ -244,7 +244,7 @@ React.useEffect(() => {
                     <Nav className="me-auto">
                         <Nav.Link href="/regions">Regions</Nav.Link>
                         <Nav.Link href="#risks">Risks</Nav.Link>
-                        <Nav.Link href="#systems">Health Systems</Nav.Link>
+                        <Nav.Link href="/systems">Health Systems</Nav.Link>
 
                     </Nav>
                     <Nav className="ml-auto">
