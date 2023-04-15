@@ -32,6 +32,8 @@ export const PieCard = (myData: propData) => {
         datasets: datasets
     }
     var options = {
+        maintainAspectRatio: true,
+        responsive: true,
         plugins: {
             title: {
                 display: true,
@@ -42,8 +44,8 @@ export const PieCard = (myData: propData) => {
     return (
         <Pie
             data={propData}
-            height={800}
-            width={800}
+            height={400}
+            width={400}
             options={options} />
 
     );
