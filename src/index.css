@@ -1,8 +1,23 @@
 .region-container {
   text-align: center;
   background-color: #EEF4FF;
-  padding: 30px;
+  /*padding: 30px;*/
+  padding: 10%;
   height: 100%;
+}
+
+.header-container {
+  text-align: center;
+  background-color: #EEF4FF;
+  /*padding: 30px;*/
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-top: 5%;
+  height: 100%;
+}
+
+.vert-center {
+  padding-top: 25%;
 }
 
 
@@ -58,7 +73,8 @@
 }
 
 .summ-space {
-  margin-bottom: 35%
+  margin-top: 2%;
+  margin-bottom: 10%;
 }
 
 .narrow-container {
