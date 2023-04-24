@@ -43,6 +43,12 @@ export const SingleLineCard = (data: LongData) => {
     }
 
     var options = {
+        legend: {
+            display: true,
+            labels: {
+                fontSize: window.innerWidth > 350 ? 30 : 10
+            }
+        },
         responsive: true,
         maintainAspectRatio: true,
         scales: {
@@ -51,6 +57,16 @@ export const SingleLineCard = (data: LongData) => {
                     autoSkip: true,
                     maxRotation: 50,
                     minRotation: 30,
+                    font: {
+                        size: 12
+                    }
+                }
+            },
+            y: {
+                ticks: {
+                    font: {
+                        size: 12
+                    }
                 }
             }
         },
@@ -58,14 +74,36 @@ export const SingleLineCard = (data: LongData) => {
             title: {
                 display: true,
                 text: data.data.title,
+                font: function (context: any) {
+                    var width = context.chart.width;
+                    var size = Math.round(width / 128) + 8;
+
+                    return {
+                        weight: 'bold',
+                        size: size
+                    };
+                }
             }
+
         }
     }
+
+    var plugins = [{
+        beforeDraw: function (c: any) {
+            var chartHeight = c.height;
+            c.options.scales.x.ticks.font.size = (chartHeight / 64) + 4;
+            c.options.scales.y.ticks.font.size = (chartHeight / 64) + 4;
+            c.options.legend.labels.fontsize = (chartHeight / 64) + 4;
+            //c.scales['y-axis-0'].options.x.ticks.font.size = chartHeight * 100;
+        }
+    }]
+
     return (
         <Line data={longData}
             height={500}
             width={800}
-            options={options} />
+            options={options}
+            plugins={plugins} />
 
     );
 };

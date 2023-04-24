@@ -363,7 +363,7 @@ export default function Regions() {
                     <div className="col-1">
                     </div>
                     <div className="col-10">
-                        <div className="region-container">
+                        <div className="header-container">
                             <SummaryCard data={regionSumm} />
                             <DropdownButton id="dropdown-basic-button" title="Causes of Death" variant="transparent">
                                 <Dropdown.Item onClick={() => dataHandler("All causes")}>All Causes</Dropdown.Item>
@@ -458,7 +458,7 @@ export default function Regions() {
                     </div>
 
                     <div className="col-10">
-                        <div className="region-container">
+                        <div className="header-container">
 
                             <BarCard data={get3YearDCdata} />
                             <br />

@@ -301,7 +301,7 @@ export default function Home() {
                         <div className="col-1">
                         </div>
                         <div className="col-10 align-items-center">
-                            <div className="region-container">
+                            <div className="header-container">
                                 <SummaryCard data={populationData} />
                                 <SingleLineCard data={lifeExpectancy} />
                                 <br />
@@ -326,8 +326,8 @@ export default function Home() {
                         </div>
 
                         <div className="col-6">
-                            <div className="region-container">
-                                <div className="summ-space">
+                            <div className="header-container">
+                                <div className='summ-space'>
                                     <StatsCard data={weightSummary} />
                                 </div>
                                 <div className='pie'>
@@ -346,7 +346,7 @@ export default function Home() {
                         <div className="col-1">
                         </div>
                         <div className="col-10">
-                            <div className="region-container">
+                            <div className="header-container">
                                 <SummaryCard data={causeOfDeathSummary} />
                                 <BarCard data={DCDataset} />
                                 <br />
@@ -362,7 +362,7 @@ export default function Home() {
                         <div className="col-1">
                         </div>
                         <div className="col-10">
-                            <div className="region-container">
+                            <div className="header-container">
                                 <SummaryCard data={uninsuredSummaryData} />
                             </div>
                         </div>
@@ -375,7 +375,7 @@ export default function Home() {
                         <div className="col-1">
                         </div>
                         <div className="col-6">
-                            <div className="region-container">
+                            <div className="region-container vert-center">
 
                                 <MiniLineCard data={uninsuredBySubgroupData} />
                                 <br />
@@ -398,7 +398,7 @@ export default function Home() {
                         <div className="col-1">
                         </div>
                         <div className="col-10">
-                            <div className="region-container">
+                            <div className="header-container">
                                 <h4 className="header">Fertility in the US</h4>
                                 <SummaryCard data={last12MonthBirthData} />
                             </div>
@@ -413,7 +413,7 @@ export default function Home() {
                         </div>
 
                         <div className="col-10">
-                            <div className="region-container">
+                            <div className="header-container">
                                 <LineCard data={birthRateData} />
                                 <p className='source_small_font'>National Center for Health Statistics. Indicators of Health Insurance Coverage at the Time of Interview. Available from: https://data.cdc.gov/d/jb9g-gnvr.</p>
                             </div>
@@ -426,7 +426,7 @@ export default function Home() {
                         <div className="col-1">
                         </div>
                         <div className="col-10">
-                            <div className="region-container">
+                            <div className="header-container">
                                 <LineCard data={birthRateGestationalData} />
                                 <p className='source_small_font'>National Center for Health Statistics. NCHS - VSRR Quarterly provisional estimates for selected birth indicators. Available from https://data.cdc.gov/d/76vv-a7x8.</p>
                             </div>
